@@ -8,9 +8,8 @@ void setup(){
 }
 
 void loop(){
-  delay(50); 
+  delay(30); 
   if(oldmode != mode){oled_draw_bg = 1;};
-  keypad_readKeys();
   if(mode == 1){mode1(oled_draw_bg);};
   oled_draw_bg = 0;
   oldmode = mode;

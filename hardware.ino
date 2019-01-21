@@ -4,6 +4,7 @@
 #define numKeys 16
 Adafruit_Trellis matrix0 = Adafruit_Trellis();
 Adafruit_TrellisSet trellis =  Adafruit_TrellisSet(&matrix0);
+
 //OLED
 #include <Arduino.h>
 #include <U8g2lib.h>
