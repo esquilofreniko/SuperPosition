@@ -15,7 +15,7 @@ void hardwareTest(){
   if(key_pressed == 1){
     for (int i=0;i<16;i++){
       u8g2.setCursor((i%4)*(128/4)+1,int(i/4)*(128/4)+10);
-      u8g2.print(dectohex(key[i]));
+      u8g2.print(key[i]);
     }
     u8g2.sendBuffer();
   }

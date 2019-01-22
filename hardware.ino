@@ -86,8 +86,8 @@ void buttons_read(){
   else{b1_held = 0; b1_held_count = 0;}
   if(b2_pressed == 1){b2_held_count++;}
   else{b2_held = 0; b2_held_count = 0;}
-  if(b1_held_count > 1000){b1_held = 1;b1_released=0;}
-  if(b2_held_count > 1000){b2_held = 1;b2_released=0;}
+  if(b1_held_count > 10000){b1_held = 1;b1_released=0;}
+  if(b2_held_count > 10000){b2_held = 1;b2_released=0;}
 }
 
 void encoder_read(){
@@ -100,26 +100,27 @@ void encoder_read(){
   if(enc_pressed == 0 && enc_released == -1){enc_released = 1;}
   if(enc_pressed == 1){enc_held_count++;}
   else{enc_held = 0; enc_held_count = 0;}
-  if(enc_held_count > 1000){enc_held = 1;enc_released = 0;}
+  if(enc_held_count > 10000){enc_held = 1;enc_released = 0;}
   if(enc_held == 1){mode = 0;}
-  if(count%250==0){
-    if(enc_post == 1){
-      if(encPos > 0){enc_status = 1;}
-      if(encPos < 0){enc_status = -1;}
-      enc_post = 0;
+  
+  if (encPos != myEnc.read()) {
+    encPos = myEnc.read();
+    if(encPos > 3 || encPos < -3){
+      myEnc.write(0);
+      enc_post = 1;
     }
   }
-  if (encPos != myEnc.read()) {
-    if(myEnc.read() != 0){
-      encPos = myEnc.read();
-      enc_post = 1;
-      myEnc.write(0);
-    }
+  if(enc_post == 1){
+    if(encPos > 3){enc_status = 1;}
+    if(encPos < -3){enc_status = -1;}
+    Serial.println(enc_status);
+    enc_post = 0;
   }
 }
 
 void keypad_read(){
-  if(count%25==0){
+  //NEEDS DELAY (300)
+  if(count%300==0){
     if (trellis.readSwitches()) {
       for (uint8_t i=0; i<numKeys; i++) {
         if (trellis.justPressed(i)){

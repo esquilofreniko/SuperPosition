@@ -42,7 +42,7 @@ void probSeq(){
   }
 
   if(pS_set == 0){
-    u8g2.drawFrame(0,9,30,10);
+    u8g2.drawFrame(0,8,35,10);
     if(enc_status != 0){
       pS_prob += enc_status;
       if(pS_prob>10){pS_prob = 10;}
@@ -76,7 +76,7 @@ void probSeq(){
     u8g2.setCursor(0,8);
     u8g2.print("Probability Sequencer" );
     u8g2.setCursor(0,16);
-    u8g2.print("Prob:" + dectohex(pS_prob));
+    u8g2.print("Prob:" + String(pS_prob));
     u8g2.sendBuffer();
   }
 }
