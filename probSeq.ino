@@ -1,5 +1,5 @@
 int pS_selected=0;
-int pS_selected_o = 0;
+int pS_selected_old = 0;
 int pS_probs[4][16];
 bool pS_gate[4];
 int pS_prob = 5;
@@ -13,7 +13,7 @@ void probSeq(){
       if(key[i]==1){
         pS_probs[pS_selected][i] = pS_prob;
         u8x8.setInverseFont(1);
-        u8x8.drawString(((i%4)*2)+((pS_selected%2)*8),((i/4)*1)+((pS_selected/2)*4)+8,String(dectohex(pS_probs[pS_selected][i])+" ").c_str());
+        u8x8.drawString(((i%4)*2)+((pS_selected%2)*8),((i/4)*1)+((pS_selected/2)*4)+8,String(dectohex(pS_probs[pS_selected][i])).c_str());
         u8x8.setInverseFont(0);
       }
     }
@@ -22,17 +22,15 @@ void probSeq(){
   if(b2_released == 1){
     pS_selected+= 1;
     pS_selected%= 4;
-    pS_draw1Matrix(pS_selected_o);
-    pS_draw1Matrix(pS_selected);
-    pS_selected_o = pS_selected;
+    pS_drawMatrix(pS_selected);
+    pS_drawMatrix(pS_selected_old);
+    pS_selected_old = pS_selected;
   }
   if(b2_held == 1){
     for(int i=0;i<16;i++){
       pS_probs[pS_selected][i] = pS_prob;
-      u8x8.setInverseFont(1);
-      u8x8.drawString(((i%4)*2)+((pS_selected%2)*8),((i/4)*1)+((pS_selected/2)*4)+8,String(dectohex(pS_probs[pS_selected][i])+" ").c_str());
-      u8x8.setInverseFont(0);
     }
+    pS_drawMatrix(pS_selected);
   }
   if(enc_released == 1){
     pS_set += 1;
@@ -52,30 +50,18 @@ void probSeq(){
 }
 
 void pS_drawBg(){
-  pS_drawMatrix();
+  for(int i=0;i<4;i++){pS_drawMatrix(i);}
   pS_drawInfo();
 }
 
-void pS_draw1Matrix(int k){
+void pS_drawMatrix(int k){
+  if(k==pS_selected){u8x8.setInverseFont(1);}
   for(int i=0;i<4;i++){
     for(int j=0;j<4;j++){
-      if(k==pS_selected){u8x8.setInverseFont(1);}
-      u8x8.drawString((i*2)+((k%2)*8),(j*1)+((k/2)*4)+8,String(dectohex(pS_probs[k][(i%4)+(j*4)])+" ").c_str());
-      u8x8.setInverseFont(0);
+      u8x8.drawString((i*2)+((k%2)*8),(j*1)+((k/2)*4)+8,String(dectohex(pS_probs[k][(i%4)+(j*4)])).c_str());
     }
   }
-}
-
-void pS_drawMatrix(){
-  for(int i=0;i<4;i++){
-    for(int j=0;j<4;j++){
-      for(int k=0;k<4;k++){
-        if(k==pS_selected){u8x8.setInverseFont(1);}
-        u8x8.drawString((i*2)+((k%2)*8),(j*1)+((k/2)*4)+8,String(dectohex(pS_probs[k][(i%4)+(j*4)])+" ").c_str());
-        u8x8.setInverseFont(0);
-      }
-    }
-  }
+  u8x8.setInverseFont(0);
 }
 
 void pS_drawInfo(){
