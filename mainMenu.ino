@@ -17,8 +17,9 @@ void mainMenu(){
     u8g2.print("Probability Sequencer");
     u8g2.sendBuffer();
   }
-  if(enc_pressed == 1){
-    mode = mM_selected + 1;
+  if(enc_released == 1){
+    oled_clear();
     oled_draw_bg = 1;
+    mode = mM_selected + 1;
   }
 }

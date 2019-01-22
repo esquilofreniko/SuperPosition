@@ -1,4 +1,4 @@
-int mode = 0;
+int mode = 2;
 int oldmode = mode;
 int count = 0;
 bool key_pressed = 0;

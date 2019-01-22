@@ -4,7 +4,8 @@
 #define numKeys 16
 Adafruit_Trellis matrix0 = Adafruit_Trellis();
 Adafruit_TrellisSet trellis =  Adafruit_TrellisSet(&matrix0);
-int keyrotation = 0;
+int last_key_pressed = -1;
+int last_key_released = -1;
 bool key [16];
 //OLED
 #include <Arduino.h>
@@ -18,6 +19,7 @@ const int enc1 = 2;
 const int enc2 = 1;
 const int encb = 0;
 int encPos = 0;
+int enc_released = 0;
 bool enc_pressed = 0;
 bool enc_held = 0;
 int enc_held_count = 0;
@@ -27,6 +29,8 @@ int enc_status = 0;
 //Buttons
 const int b1 = 7;
 const int b2 = 12;
+int b1_released = 0;
+int b2_released = 0;
 bool b1_pressed = 0;
 bool b2_pressed = 0;
 bool b1_held = 0;
@@ -68,43 +72,42 @@ void oled_clear(){
 void buttons_read(){
   if((digitalRead(b1)+1)%2 != b1_pressed){
     b1_pressed = (digitalRead(b1)+1)%2;
-    Serial.print("b1_pressed: ");
-    Serial.println(b1_pressed);
+    if(b1_pressed == 1){b1_released = -1;}
   }
   if((digitalRead(b2)+1)%2 != b2_pressed){
     b2_pressed = (digitalRead(b2)+1)%2;
-    Serial.print("b2_pressed: ");
-    Serial.println(b2_pressed);
+    if(b2_pressed == 1){b2_released = -1;}
   }
+  if(b1_released==1){b1_released = 0;}
+  if(b2_released==1){b2_released = 0;}
+  if(b1_pressed == 0 && b1_released == -1){b1_released = 1;}
+  if(b2_pressed == 0 && b2_released == -1){b2_released = 1;}
   if(b1_pressed == 1){b1_held_count++;}
   else{b1_held = 0; b1_held_count = 0;}
   if(b2_pressed == 1){b2_held_count++;}
   else{b2_held = 0; b2_held_count = 0;}
-  if(b1_held_count > 1000){b1_held = 1;}
-  if(b2_held_count > 1000){b2_held = 1;}
-  if(b2_held == 1){mode = 0;}
+  if(b1_held_count > 1000){b1_held = 1;b1_released=0;}
+  if(b2_held_count > 1000){b2_held = 1;b1_released=0;}
 }
 
 void encoder_read(){
   enc_status = 0;
   if((digitalRead(encb)+1)%2 != enc_pressed){
     enc_pressed = (digitalRead(encb)+1)%2;
-    Serial.print("enc_pressed: ");
-    Serial.println(enc_pressed);
+    if(enc_pressed == 1){enc_released = -1;}
   }
+  if(enc_released==1){enc_released = 0;}
+  if(enc_pressed == 0 && enc_released == -1){enc_released = 1;}
   if(enc_pressed == 1){enc_held_count++;}
   else{enc_held = 0; enc_held_count = 0;}
-  if(enc_held_count > 1000){enc_held = 1;}
+  if(enc_held_count > 1000){enc_held = 1;enc_released = 0;}
+  if(enc_held == 1){mode = 0;}
   
   if(count%250==0){
     if(enc_post == 1){
-      if(encPos > 0){
-        enc_status = 1;
-      }
-      if(encPos < 0){
-        enc_status = -1;
-      }
-       enc_post = 0;
+      if(encPos > 0){enc_status = 1;}
+      if(encPos < 0){enc_status = -1;}
+      enc_post = 0;
     }
   }
   if (encPos != myEnc.read()) {
@@ -123,11 +126,13 @@ void keypad_read(){
         if (trellis.justPressed(i)){
           key[i] = 1;
           key_pressed = 1;
+          last_key_pressed = i;
           trellis.setLED(i);
         } 
         if (trellis.justReleased(i)){
           key[i] = 0;
           key_pressed = 1;
+          last_key_released = i;
           trellis.clrLED(i);
         }
       }
