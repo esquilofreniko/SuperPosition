@@ -21,6 +21,6 @@ void loop(){
   oldmode = mode;
   key_pressed = 0;
   count++;
-  count %= 50000;
+  count %= 500;
   delayMicroseconds(10);
 }

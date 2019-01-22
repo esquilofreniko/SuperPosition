@@ -40,7 +40,7 @@ bool b1_held = 0;
 bool b2_held = 0;
 int b1_held_count = 0;
 int b2_held_count = 0;
-int held_time = 10000;
+int held_time = 20000;
 
 
 void hardware_init(){
