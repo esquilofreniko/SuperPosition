@@ -10,8 +10,11 @@ bool key [16];
 //OLED
 #include <Arduino.h>
 #include <U8g2lib.h>
+#include <U8x8lib.h>
 #include <SPI.h>
 U8G2_SSD1327_MIDAS_128X128_F_4W_SW_SPI u8g2(U8G2_R0, /* clock=*/ 13, /* data=*/ 11, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8);
+U8X8_SSD1327_MIDAS_128X128_4W_SW_SPI u8x8(/* clock=*/ 13, /* data=*/ 11, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8);
+
 //Encoder
 #define ENCODER_DO_NOT_USE_INTERRUPTS
 #include <Encoder.h>
@@ -46,6 +49,9 @@ void hardware_init(){
     key[i] = 0;
   }
   //OLED
+  u8x8.begin();
+  u8x8.setPowerSave(0);
+  u8x8.setFont(u8x8_font_5x7_f);
   u8g2.begin();
   u8g2.setFont(u8g2_font_5x7_tr);
   //ENCODER
