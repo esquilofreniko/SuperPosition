@@ -1,6 +1,8 @@
-int mode = 1;
+int mode = 0;
 int oldmode = mode;
-int oled_draw_bg = 1;
+int count = 0;
+bool key_pressed = 0;
+bool oled_draw_bg = 1;
 
 void setup(){
   Serial.begin(9600); 
@@ -8,9 +10,15 @@ void setup(){
 }
 
 void loop(){
-  delay(30); 
-  if(oldmode != mode){oled_draw_bg = 1;};
-  if(mode == 1){mode1(oled_draw_bg);};
+  hardware_read();
+  if(oldmode != mode){oled_clear();}
+  if(mode == 0){mainMenu();}
+  if(mode == 1){probSeq();}
+  if(mode == 2){keyTester();}
   oled_draw_bg = 0;
   oldmode = mode;
+  key_pressed = 0;
+  count++;
+  count %= 1000;
+  delay(1);
 }

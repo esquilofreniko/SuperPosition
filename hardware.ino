@@ -4,14 +4,36 @@
 #define numKeys 16
 Adafruit_Trellis matrix0 = Adafruit_Trellis();
 Adafruit_TrellisSet trellis =  Adafruit_TrellisSet(&matrix0);
-
+int keyrotation = 0;
+bool key [16];
 //OLED
 #include <Arduino.h>
 #include <U8g2lib.h>
 #include <SPI.h>
 U8G2_SSD1327_MIDAS_128X128_F_4W_SW_SPI u8g2(U8G2_R0, /* clock=*/ 13, /* data=*/ 11, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8);
+//Encoder
+#define ENCODER_DO_NOT_USE_INTERRUPTS
+#include <Encoder.h>
+const int enc1 = 2;
+const int enc2 = 1;
+const int encb = 0;
+int encPos = 0;
+bool enc_pressed = 0;
+bool enc_held = 0;
+int enc_held_count = 0;
+Encoder myEnc(enc1, enc2);
+int enc_post = 0;
+int enc_status = 0;
+//Buttons
+const int b1 = 7;
+const int b2 = 12;
+bool b1_pressed = 0;
+bool b2_pressed = 0;
+bool b1_held = 0;
+bool b2_held = 0;
+int b1_held_count = 0;
+int b2_held_count = 0;
 
-int key [16];
 
 void hardware_init(){
   //Keypad
@@ -22,20 +44,94 @@ void hardware_init(){
   //OLED
   u8g2.begin();
   u8g2.setFont(u8g2_font_5x7_tr);
+  //ENCODER
+  pinMode(encb,INPUT_PULLUP);
+  pinMode(enc1, INPUT_PULLUP);
+  pinMode(enc2, INPUT_PULLUP);
+  //Buttons
+  pinMode(b1,INPUT_PULLUP);
+  pinMode(b2,INPUT_PULLUP);
 }
 
-void keypad_readKeys(){
-  if (trellis.readSwitches()) {
-    for (uint8_t i=0; i<numKeys; i++) {
-      if (trellis.justPressed(i)){
-        key[i] = 1;
-        trellis.setLED(i);
-      } 
-      if (trellis.justReleased(i)){
-        key[i] = 0;
-        trellis.clrLED(i);
+void hardware_read(){
+  buttons_read();
+  encoder_read();
+  keypad_read();
+}
+
+void oled_clear(){
+  u8g2.clear();
+  u8g2.clearBuffer();
+  oled_draw_bg = 1;
+}
+
+void buttons_read(){
+  if((digitalRead(b1)+1)%2 != b1_pressed){
+    b1_pressed = (digitalRead(b1)+1)%2;
+    Serial.print("b1_pressed: ");
+    Serial.println(b1_pressed);
+  }
+  if((digitalRead(b2)+1)%2 != b2_pressed){
+    b2_pressed = (digitalRead(b2)+1)%2;
+    Serial.print("b2_pressed: ");
+    Serial.println(b2_pressed);
+  }
+  if(b1_pressed == 1){b1_held_count++;}
+  else{b1_held = 0; b1_held_count = 0;}
+  if(b2_pressed == 1){b2_held_count++;}
+  else{b2_held = 0; b2_held_count = 0;}
+  if(b1_held_count > 1000){b1_held = 1;}
+  if(b2_held_count > 1000){b2_held = 1;}
+  if(b2_held == 1){mode = 0;}
+}
+
+void encoder_read(){
+  enc_status = 0;
+  if((digitalRead(encb)+1)%2 != enc_pressed){
+    enc_pressed = (digitalRead(encb)+1)%2;
+    Serial.print("enc_pressed: ");
+    Serial.println(enc_pressed);
+  }
+  if(enc_pressed == 1){enc_held_count++;}
+  else{enc_held = 0; enc_held_count = 0;}
+  if(enc_held_count > 1000){enc_held = 1;}
+  
+  if(count%250==0){
+    if(enc_post == 1){
+      if(encPos > 0){
+        enc_status = 1;
       }
+      if(encPos < 0){
+        enc_status = -1;
+      }
+       enc_post = 0;
     }
-    trellis.writeDisplay();
+  }
+  if (encPos != myEnc.read()) {
+    if(myEnc.read() != 0){
+      encPos = myEnc.read();
+      enc_post = 1;
+      myEnc.write(0);
+    }
+  }
+}
+
+void keypad_read(){
+  if(count%25==0){
+    if (trellis.readSwitches()) {
+      for (uint8_t i=0; i<numKeys; i++) {
+        if (trellis.justPressed(i)){
+          key[i] = 1;
+          key_pressed = 1;
+          trellis.setLED(i);
+        } 
+        if (trellis.justReleased(i)){
+          key[i] = 0;
+          key_pressed = 1;
+          trellis.clrLED(i);
+        }
+      }
+      trellis.writeDisplay();
+    }
   }
 }
