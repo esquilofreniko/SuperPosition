@@ -5,11 +5,13 @@ bool key_pressed = 0;
 bool oled_draw_bg = 1;
 
 void setup(){
-  Serial.begin(9600); 
+  Serial.begin(9600);
+  midi_init(); 
   hardware_init();
 }
 
 void loop(){
+  midi_read();
   hardware_read();
   if(oldmode != mode){oled_clear();}
   if(mode == 0){mainMenu();}
