@@ -1,4 +1,4 @@
-void keyTester(){
+void hardwareTest(){
   //Draw Background
   if(oled_draw_bg ==1 ){
     u8g2.clearBuffer();

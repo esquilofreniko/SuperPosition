@@ -13,8 +13,8 @@ void loop(){
   hardware_read();
   if(oldmode != mode){oled_clear();}
   if(mode == 0){mainMenu();}
-  if(mode == 1){probSeq();}
-  if(mode == 2){keyTester();}
+  if(mode == 1){hardwareTest();}
+  if(mode == 2){probSeq();}
   oled_draw_bg = 0;
   oldmode = mode;
   key_pressed = 0;
