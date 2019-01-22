@@ -87,7 +87,7 @@ void buttons_read(){
   if(b2_pressed == 1){b2_held_count++;}
   else{b2_held = 0; b2_held_count = 0;}
   if(b1_held_count > 1000){b1_held = 1;b1_released=0;}
-  if(b2_held_count > 1000){b2_held = 1;b1_released=0;}
+  if(b2_held_count > 1000){b2_held = 1;b2_released=0;}
 }
 
 void encoder_read(){
@@ -102,7 +102,6 @@ void encoder_read(){
   else{enc_held = 0; enc_held_count = 0;}
   if(enc_held_count > 1000){enc_held = 1;enc_released = 0;}
   if(enc_held == 1){mode = 0;}
-  
   if(count%250==0){
     if(enc_post == 1){
       if(encPos > 0){enc_status = 1;}
