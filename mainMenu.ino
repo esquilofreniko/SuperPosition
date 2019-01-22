@@ -1,5 +1,4 @@
 int mM_selected = 0;
-//int mM_selected_old = -1;
 
 void mainMenu(){
   if(enc_status != 0){
@@ -18,8 +17,8 @@ void mainMenu(){
     u8g2.sendBuffer();
   }
   if(enc_released == 1){
+    mode = mM_selected + 1;
     oled_clear();
     oled_draw_bg = 1;
-    mode = mM_selected + 1;
   }
 }
