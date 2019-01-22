@@ -119,7 +119,7 @@ void encoder_read(){
 }
 
 void keypad_read(){
-  if(count%25==0){
+  if(count%30==0){
     if (trellis.readSwitches()) {
       for (uint8_t i=0; i<numKeys; i++) {
         if (trellis.justPressed(i)){

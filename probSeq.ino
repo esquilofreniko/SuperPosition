@@ -2,6 +2,7 @@ int pS_selected= 0;
 int pS_probs[4][16];
 int pS_prob = 5;
 int pS_set = 0;
+int pS_pos = 0;
 
 void probSeq(){
   if(key_pressed == 1){
@@ -42,7 +43,7 @@ void probSeq(){
   }
 
   if(pS_set == 0){
-    u8g2.drawFrame(0,8,35,10);
+    u8g2.drawFrame(0,8,30,10);
     if(enc_status != 0){
       pS_prob += enc_status;
       if(pS_prob>10){pS_prob = 10;}
@@ -65,18 +66,18 @@ void probSeq(){
     //Info Text
     for (int i=0;i<16;i++){
       u8g2.setCursor((i%4)*(128/8)+1,int(i/4)*(108/8)+10+20);
-      u8g2.print(pS_probs[0][i]);
+      u8g2.print(dectohex(pS_probs[0][i]));
       u8g2.setCursor((i%4)*(128/8)+1+(128/2),int(i/4)*(108/8)+10+20);
-      u8g2.print(pS_probs[1][i]);
+      u8g2.print(dectohex(pS_probs[1][i]));
       u8g2.setCursor((i%4)*(128/8)+1,int(i/4)*(108/8)+10+20+(108/2));
-      u8g2.print(pS_probs[2][i]);
+      u8g2.print(dectohex(pS_probs[2][i]));
       u8g2.setCursor((i%4)*(128/8)+1+(128/2),int(i/4)*(108/8)+10+20+(108/2));
-      u8g2.print(pS_probs[3][i]);
+      u8g2.print(dectohex(pS_probs[3][i]));
     }
     u8g2.setCursor(0,8);
-    u8g2.print("Probability Sequencer" );
+    u8g2.print("Pos:" + dectohex(pS_pos));
     u8g2.setCursor(0,16);
-    u8g2.print("Prob:" + String(pS_prob));
+    u8g2.print("Prob:" + dectohex(pS_prob));
     u8g2.sendBuffer();
   }
 }
