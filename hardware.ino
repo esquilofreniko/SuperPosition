@@ -113,7 +113,6 @@ void encoder_read(){
   if(enc_post == 1){
     if(encPos > 3){enc_status = 1;}
     if(encPos < -3){enc_status = -1;}
-    Serial.println(enc_status);
     enc_post = 0;
   }
 }
