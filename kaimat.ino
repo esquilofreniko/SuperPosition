@@ -1,7 +1,6 @@
 int mode = 2;
 int oldmode = mode;
 int count = 0;
-bool key_pressed = 0;
 bool oled_draw_bg = 1;
 
 void setup(){
@@ -19,8 +18,7 @@ void loop(){
   if(mode == 2){probSeq();}
   oled_draw_bg = 0;
   oldmode = mode;
-  key_pressed = 0;
   count++;
-  count %= 500;
+  count %= 5000;
   delayMicroseconds(10);
 }

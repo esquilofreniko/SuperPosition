@@ -4,9 +4,9 @@
 #define numKeys 16
 Adafruit_Trellis matrix0 = Adafruit_Trellis();
 Adafruit_TrellisSet trellis =  Adafruit_TrellisSet(&matrix0);
-int last_key_pressed = -1;
-int last_key_released = -1;
 bool key [16];
+bool key_pressed = 0;
+bool key_released = 0;
 //OLED
 #include <Arduino.h>
 #include <U8g2lib.h>
@@ -125,19 +125,19 @@ void encoder_read(){
 }
 
 void keypad_read(){
-  if(count%500==0){
+  key_pressed = 0;
+  key_released = 0;
+  if(count%5000==0){
     if (trellis.readSwitches()) {
       for (uint8_t i=0; i<numKeys; i++) {
         if (trellis.justPressed(i)){
           key[i] = 1;
           key_pressed = 1;
-          last_key_pressed = i;
           trellis.setLED(i);
         } 
         if (trellis.justReleased(i)){
           key[i] = 0;
-          key_pressed = 1;
-          last_key_released = i;
+          key_released = 1;
           trellis.clrLED(i);
         }
       }
