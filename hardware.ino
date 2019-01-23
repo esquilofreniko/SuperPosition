@@ -9,10 +9,8 @@ bool key_pressed = 0;
 bool key_released = 0;
 //OLED
 #include <Arduino.h>
-#include <U8g2lib.h>
 #include <U8x8lib.h>
 #include <SPI.h>
-U8G2_SSD1327_MIDAS_128X128_F_4W_SW_SPI u8g2(U8G2_R0, /* clock=*/ 13, /* data=*/ 11, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8);
 U8X8_SSD1327_MIDAS_128X128_4W_SW_SPI u8x8(/* clock=*/ 13, /* data=*/ 11, /* cs=*/ 10, /* dc=*/ 9, /* reset=*/ 8);
 
 //Encoder
@@ -38,6 +36,11 @@ bool b1_pressed = 0;
 bool b2_pressed = 0;
 bool b1_held = 0;
 bool b2_held = 0;
+bool b1_held_old;
+bool b2_held_old;
+bool b1_held_t;
+bool b2_held_t;
+
 int b1_held_count = 0;
 int b2_held_count = 0;
 int held_time = 20000;
@@ -53,8 +56,6 @@ void hardware_init(){
   u8x8.begin();
   u8x8.setPowerSave(0);
   u8x8.setFont(u8x8_font_5x7_f);
-  u8g2.begin();
-  u8g2.setFont(u8g2_font_5x7_tr);
   //ENCODER
   pinMode(encb,INPUT_PULLUP);
   pinMode(enc1, INPUT_PULLUP);
@@ -71,12 +72,13 @@ void hardware_read(){
 }
 
 void oled_clear(){
-  u8g2.clear();
-  u8g2.clearBuffer();
+  u8x8.clear();
   oled_draw_bg = 1;
 }
 
 void buttons_read(){
+  b1_held_t = 0;
+  b2_held_t = 0;
   if((digitalRead(b1)+1)%2 != b1_pressed){
     b1_pressed = (digitalRead(b1)+1)%2;
     if(b1_pressed == 1){b1_released = -1;}
@@ -95,6 +97,10 @@ void buttons_read(){
   else{b2_held = 0; b2_held_count = 0;}
   if(b1_held_count > held_time){b1_held = 1;b1_released=0;}
   if(b2_held_count > held_time){b2_held = 1;b2_released=0;}
+  if(b1_held_old != b1_held && b1_held == 1){b1_held_t = 1;};
+  if(b2_held_old != b2_held && b2_held == 1){b2_held_t = 1;};
+  b1_held_old = b1_held;
+  b2_held_old = b2_held;
 }
 
 void encoder_read(){

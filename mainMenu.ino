@@ -1,4 +1,6 @@
 int mM_selected = 0;
+const int mM_size = 2;
+String mM_menu[mM_size] = {" MIDI Setup ", " Prob Seq "};
 
 void mainMenu(){
   if(enc_status != 0){
@@ -8,17 +10,16 @@ void mainMenu(){
     oled_draw_bg = 1;
   };
   if(oled_draw_bg == 1){
-    u8g2.clearBuffer();
-    u8g2.drawFrame(0*(128/8),mM_selected*(128/8),128,15);
-    u8g2.setCursor(0*(128/8)+5,0*(128/8)+10);
-    u8g2.print("Hardware Test");
-    u8g2.setCursor(0*(128/8)+5,1*(128/8)+10);
-    u8g2.print("Probability Sequencer");
-    u8g2.sendBuffer();
+    for(int i=0;i<mM_size;i++){
+      if(i==mM_selected){
+        u8x8.setInverseFont(1);
+      }
+      u8x8.drawString(0,i,mM_menu[i].c_str());
+      u8x8.setInverseFont(0);
+    }
   }
   if(enc_released == 1){
     mode = mM_selected + 1;
     oled_clear();
-    oled_draw_bg = 1;
   }
 }

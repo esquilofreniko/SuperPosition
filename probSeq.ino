@@ -6,10 +6,10 @@ int pS_prob = 5;
 int pS_set = 0;
 int pS_param = 0;
 int pS_pos = 0;
-int pS_morph = 5;
+int pS_morph = 0;
 
 void probSeq(){
-  pS_midi_test();
+  pS_midi();
   if(key_pressed == 1){
     for(int i=0;i<16;i++){
       if(key[i]==1){
@@ -120,33 +120,35 @@ void pS_setPatt(int _i, int _pos){
 }
 
 void pS_drawInfo(){
-  u8x8.drawString(0,0,String("Pos:" + dectohex(pS_pos)).c_str());
   if(pS_set == 0){
     if(pS_param == 0){u8x8.setInverseFont(1);}
-    u8x8.drawString(0,2,String("Mrf:" + dectohex(pS_morph)).c_str());
+    u8x8.drawString(0,1,String("Mrf:" + dectohex(pS_morph)).c_str());
     u8x8.setInverseFont(0);
     u8x8.setInverseFont(1);
   }
-  u8x8.drawString(0,1,"Pat");
+  u8x8.drawString(0,0,"Pat");
   u8x8.setInverseFont(0);
   if(pS_set == 1){
     if(pS_param == 0){u8x8.setInverseFont(1);}
-    u8x8.drawString(0,2,String("Prb:" + dectohex(pS_prob)).c_str());
+    u8x8.drawString(0,1,String("Prb:" + dectohex(pS_prob)).c_str());
     u8x8.setInverseFont(0);
     u8x8.setInverseFont(1);
   }
-  u8x8.drawString(4,1,String("Prb").c_str());
+  u8x8.drawString(4,0,String("Prb").c_str());
   u8x8.setInverseFont(0);
 }
 
-void pS_midi_test(){
+void pS_midi(){
   if(midiclock == 1){
     midiclock = 0;
     trellis.clrLED(pS_pos);
+    u8x8.drawString(pS_pos%4*2+1,pS_pos/4+8," ");
     pS_pos += 1;
     pS_pos %= 16;
     trellis.setLED(pS_pos);
-    u8x8.drawString(0,0,String("Pos:" + dectohex(pS_pos)).c_str());
+    u8x8.setInverseFont(1);
+    u8x8.drawString(pS_pos%4*2+1,pS_pos/4+8,".");
+    u8x8.setInverseFont(0);
     if(pS_morph>random(10)){
       for(int i=0;i<4;i++){
         if(pS_probs[i][pS_pos] > random(10)){
