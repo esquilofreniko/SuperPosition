@@ -27,6 +27,17 @@ int enc1_held_count = 0;
 int enc1_post = 0;
 int enc1_status = 0;
 Encoder enc1(enc1pinA, enc1pinB);
+const int enc2button = 14;
+const int enc2pinA = 15;
+const int enc2pinB = 16;
+int enc2Pos = 0;
+int enc2_released = 0;
+bool enc2_pressed = 0;
+bool enc2_held = 0;
+int enc2_held_count = 0;
+int enc2_post = 0;
+int enc2_status = 0;
+Encoder enc2(enc2pinA, enc2pinB);
 //Buttons
 const int b1 = 7;
 const int b2 = 12;
@@ -60,6 +71,9 @@ void hardware_init(){
   pinMode(enc1button,INPUT_PULLUP);
   pinMode(enc1pinA, INPUT_PULLUP);
   pinMode(enc1pinB, INPUT_PULLUP);
+  pinMode(enc2button,INPUT_PULLUP);
+  pinMode(enc2pinA, INPUT_PULLUP);
+  pinMode(enc2pinB, INPUT_PULLUP);
   //Buttons
   pinMode(b1,INPUT_PULLUP);
   pinMode(b2,INPUT_PULLUP);
@@ -128,6 +142,30 @@ void encoder_read(){
     if(enc1Pos > 3){enc1_status = 1;}
     if(enc1Pos < -3){enc1_status = -1;}
     enc1_post = 0;
+  }
+
+  enc2_status = 0;
+  if((digitalRead(enc2button)+1)%2 != enc2_pressed){
+    enc2_pressed = (digitalRead(enc2button)+1)%2;
+    if(enc2_pressed == 1){enc2_released = -1;}
+  }
+  if(enc2_released==1){enc2_released = 0;}
+  if(enc2_pressed == 0 && enc2_released == -1){enc2_released = 1;}
+  if(enc2_pressed == 1){enc2_held_count++;}
+  else{enc2_held = 0; enc2_held_count = 0;}
+  if(enc2_held_count > held_time){enc2_held = 1;enc2_released = 0;}
+  
+  if (enc2Pos != enc2.read()) {
+    enc2Pos = enc2.read();
+    if(enc2Pos > 3 || enc2Pos < -3){
+      enc2.write(0);
+      enc2_post = 1;
+    }
+  }
+  if(enc2_post == 1){
+    if(enc2Pos > 3){enc2_status = 1;}
+    if(enc2Pos < -3){enc2_status = -1;}
+    enc2_post = 0;
   }
 }
 
