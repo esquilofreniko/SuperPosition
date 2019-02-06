@@ -78,7 +78,7 @@ void probSeq(){
         if(pS_prob>10){pS_prob = 10;}
         if(pS_prob<0){pS_prob = 0;}
         pS_drawInfo();
-        pS_drawMatrix(pS_selected);
+        pS_drawMatrixLED(pS_selected);
       }
     }
   }
@@ -96,7 +96,21 @@ void pS_drawMatrix(int k){
     for(int j=0;j<4;j++){
       if(pS_set==0){
         u8x8.drawString((i*2)+((k%2)*8),(j*1)+((k/2)*4)+8,String(dectohex(pS_patt[k][(i%4)+(j*4)])).c_str());
-        if(k == pS_selected){
+      }
+      if(pS_set==1){
+        u8x8.drawString((i*2)+((k%2)*8),(j*1)+((k/2)*4)+8,String(dectohex(pS_probs[k][(i%4)+(j*4)])).c_str());
+      }
+    }
+  }
+  u8x8.setInverseFont(0);
+  pS_drawMatrixLED(k);
+}
+
+void pS_drawMatrixLED(int k){
+  for(int i=0;i<4;i++){
+    for(int j=0;j<4;j++){
+      if(k == pS_selected){
+        if(pS_set==0){
           if(pS_patt[k][(i%4)+(j*4)] == 0){
             trellis.clrLED((i%4)+(j*4));
           }
@@ -104,10 +118,7 @@ void pS_drawMatrix(int k){
             trellis.setLED((i%4)+(j*4));
           }
         }
-      }
-      if(pS_set==1){
-        u8x8.drawString((i*2)+((k%2)*8),(j*1)+((k/2)*4)+8,String(dectohex(pS_probs[k][(i%4)+(j*4)])).c_str());
-        if(k == pS_selected){
+        if(pS_set==1){
           if(pS_probs[k][(i%4)+(j*4)] != pS_prob){
             trellis.clrLED((i%4)+(j*4));
           }
@@ -118,7 +129,6 @@ void pS_drawMatrix(int k){
       }
     }
   }
-  u8x8.setInverseFont(0);
   trellis.writeDisplay();
 }
 
