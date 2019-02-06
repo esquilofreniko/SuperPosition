@@ -16,17 +16,17 @@ U8X8_SSD1327_MIDAS_128X128_4W_SW_SPI u8x8(/* clock=*/ 13, /* data=*/ 11, /* cs=*
 //Encoder
 #define ENCODER_DO_NOT_USE_INTERRUPTS
 #include <Encoder.h>
-const int enc1 = 2;
-const int enc2 = 1;
-const int encb = 0;
-int encPos = 0;
-int enc_released = 0;
-bool enc_pressed = 0;
-bool enc_held = 0;
-int enc_held_count = 0;
-Encoder myEnc(enc1, enc2);
-int enc_post = 0;
-int enc_status = 0;
+const int enc1button = 0;
+const int enc1pinA = 1;
+const int enc1pinB = 2;
+int enc1Pos = 0;
+int enc1_released = 0;
+bool enc1_pressed = 0;
+bool enc1_held = 0;
+int enc1_held_count = 0;
+int enc1_post = 0;
+int enc1_status = 0;
+Encoder enc1(enc1pinA, enc1pinB);
 //Buttons
 const int b1 = 7;
 const int b2 = 12;
@@ -57,9 +57,9 @@ void hardware_init(){
   u8x8.setPowerSave(0);
   u8x8.setFont(u8x8_font_5x7_f);
   //ENCODER
-  pinMode(encb,INPUT_PULLUP);
-  pinMode(enc1, INPUT_PULLUP);
-  pinMode(enc2, INPUT_PULLUP);
+  pinMode(enc1button,INPUT_PULLUP);
+  pinMode(enc1pinA, INPUT_PULLUP);
+  pinMode(enc1pinB, INPUT_PULLUP);
   //Buttons
   pinMode(b1,INPUT_PULLUP);
   pinMode(b2,INPUT_PULLUP);
@@ -104,29 +104,30 @@ void buttons_read(){
 }
 
 void encoder_read(){
-  enc_status = 0;
-  if((digitalRead(encb)+1)%2 != enc_pressed){
-    enc_pressed = (digitalRead(encb)+1)%2;
-    if(enc_pressed == 1){enc_released = -1;}
+  enc1_status = 0;
+  if((digitalRead(enc1button)+1)%2 != enc1_pressed){
+    enc1_pressed = (digitalRead(enc1button)+1)%2;
+    if(enc1_pressed == 1){enc1_released = -1;}
   }
-  if(enc_released==1){enc_released = 0;}
-  if(enc_pressed == 0 && enc_released == -1){enc_released = 1;}
-  if(enc_pressed == 1){enc_held_count++;}
-  else{enc_held = 0; enc_held_count = 0;}
-  if(enc_held_count > held_time){enc_held = 1;enc_released = 0;}
-  if(enc_held == 1){mode = 0;}
+  if(enc1_released==1){enc1_released = 0;}
+  if(enc1_pressed == 0 && enc1_released == -1){enc1_released = 1;}
+  if(enc1_pressed == 1){enc1_held_count++;}
+  else{enc1_held = 0; enc1_held_count = 0;}
+  if(enc1_held_count > held_time){enc1_held = 1;enc1_released = 0;}
   
-  if (encPos != myEnc.read()) {
-    encPos = myEnc.read();
-    if(encPos > 3 || encPos < -3){
-      myEnc.write(0);
-      enc_post = 1;
+  if(enc1_held == 1){mode = 0;}
+  
+  if (enc1Pos != enc1.read()) {
+    enc1Pos = enc1.read();
+    if(enc1Pos > 3 || enc1Pos < -3){
+      enc1.write(0);
+      enc1_post = 1;
     }
   }
-  if(enc_post == 1){
-    if(encPos > 3){enc_status = 1;}
-    if(encPos < -3){enc_status = -1;}
-    enc_post = 0;
+  if(enc1_post == 1){
+    if(enc1Pos > 3){enc1_status = 1;}
+    if(enc1Pos < -3){enc1_status = -1;}
+    enc1_post = 0;
   }
 }
 

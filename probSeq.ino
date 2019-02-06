@@ -57,16 +57,16 @@ void probSeq(){
     }
     pS_drawMatrix(pS_selected);
   }
-  if(enc_released == 1){
+  if(enc1_released == 1){
     pS_set += 1;
     pS_set %= 2;
     pS_drawInfo();
     for(int i=0;i<4;i++){pS_drawMatrix(i);};
   }
-  if(enc_status != 0){
+  if(enc1_status != 0){
     if(pS_set == 0){
       if(pS_param == 0){
-        pS_morph += enc_status;
+        pS_morph += enc1_status;
         if(pS_morph>10){pS_morph=10;}
         if(pS_morph<0){pS_morph=0;}
         pS_drawInfo();
@@ -74,7 +74,7 @@ void probSeq(){
     }
     if(pS_set == 1){
       if(pS_param == 0){
-        pS_prob += enc_status;
+        pS_prob += enc1_status;
         if(pS_prob>10){pS_prob = 10;}
         if(pS_prob<0){pS_prob = 0;}
         pS_drawInfo();
