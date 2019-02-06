@@ -78,6 +78,7 @@ void probSeq(){
         if(pS_prob>10){pS_prob = 10;}
         if(pS_prob<0){pS_prob = 0;}
         pS_drawInfo();
+        pS_drawMatrix(pS_selected);
       }
     }
   }
@@ -95,28 +96,62 @@ void pS_drawMatrix(int k){
     for(int j=0;j<4;j++){
       if(pS_set==0){
         u8x8.drawString((i*2)+((k%2)*8),(j*1)+((k/2)*4)+8,String(dectohex(pS_patt[k][(i%4)+(j*4)])).c_str());
+        if(k == pS_selected){
+          if(pS_patt[k][(i%4)+(j*4)] == 0){
+            trellis.clrLED((i%4)+(j*4));
+          }
+          if(pS_patt[k][(i%4)+(j*4)] == 1){
+            trellis.setLED((i%4)+(j*4));
+          }
+        }
       }
       if(pS_set==1){
         u8x8.drawString((i*2)+((k%2)*8),(j*1)+((k/2)*4)+8,String(dectohex(pS_probs[k][(i%4)+(j*4)])).c_str());
-      }
-      if(pS_set==2){
-        u8x8.drawString((i*2)+((k%2)*8),(j*1)+((k/2)*4)+8,String(dectohex(pS_patt[k][(i%4)+(j*4)])).c_str());
+        if(k == pS_selected){
+          if(pS_probs[k][(i%4)+(j*4)] != pS_prob){
+            trellis.clrLED((i%4)+(j*4));
+          }
+          if(pS_probs[k][(i%4)+(j*4)] == pS_prob){
+            trellis.setLED((i%4)+(j*4));
+          }
+        }
       }
     }
   }
   u8x8.setInverseFont(0);
+  trellis.writeDisplay();
 }
 
 void pS_setProb(int _i, int _pos){
   if(_i==pS_selected){u8x8.setInverseFont(1);}
   u8x8.drawString(((_pos%4)*2)+((_i%2)*8),((_pos/4)*1)+((_i/2)*4)+8,String(dectohex(pS_probs[_i][_pos])).c_str());
   u8x8.setInverseFont(0);
+  if(_i == pS_selected){
+    if(pS_probs[_i][_pos] != pS_prob){
+      trellis.clrLED(_pos);
+    }
+    if(pS_probs[_i][_pos] == pS_prob){
+      trellis.setLED(_pos);
+    }
+    trellis.writeDisplay();
+  }
 }
 
 void pS_setPatt(int _i, int _pos){
   if(_i==pS_selected){u8x8.setInverseFont(1);}
   u8x8.drawString(((_pos%4)*2)+((_i%2)*8),((_pos/4)*1)+((_i/2)*4)+8,String(dectohex(pS_patt[_i][_pos])).c_str());
   u8x8.setInverseFont(0);
+  if(_i == pS_selected){
+    if(pS_patt[_i][_pos] == 0){
+      if(_pos != pS_pos){
+        trellis.clrLED(_pos);
+      }
+    }
+    if(pS_patt[_i][_pos] == 1){
+      trellis.setLED(_pos);
+    }
+    trellis.writeDisplay();
+  }
 }
 
 void pS_drawInfo(){
@@ -141,7 +176,16 @@ void pS_drawInfo(){
 void pS_midi(){
   if(midiclock == 1){
     midiclock = 0;
-    trellis.clrLED(pS_pos);
+    if(pS_set == 0){
+      if(pS_patt[pS_selected][pS_pos] == 0){
+        trellis.clrLED(pS_pos);
+      }
+    }
+    if(pS_set == 1){
+      if(pS_probs[pS_selected][pS_pos] != pS_prob){
+        trellis.clrLED(pS_pos);
+      }
+    }
     u8x8.drawString(pS_pos%4*2+1,pS_pos/4+8," ");
     pS_pos += 1;
     pS_pos %= 16;
@@ -168,5 +212,6 @@ void pS_midi(){
         usbMIDI.sendNoteOff(60,0,i+4);
       }
     }
+    trellis.writeDisplay();
   }
 }

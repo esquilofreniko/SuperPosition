@@ -139,15 +139,15 @@ void keypad_read(){
         if (trellis.justPressed(i)){
           key[i] = 1;
           key_pressed = 1;
-          trellis.setLED(i);
+//          trellis.setLED(i);
         } 
         if (trellis.justReleased(i)){
           key[i] = 0;
           key_released = 1;
-          trellis.clrLED(i);
+//          trellis.clrLED(i);
         }
       }
-      trellis.writeDisplay();
+//      trellis.writeDisplay();
     }
   }
 }
