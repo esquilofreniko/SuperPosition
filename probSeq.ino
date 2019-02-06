@@ -153,9 +153,7 @@ void pS_setPatt(int _i, int _pos){
   u8x8.setInverseFont(0);
   if(_i == pS_selected){
     if(pS_patt[_i][_pos] == 0){
-      if(_pos != pS_pos){
-        trellis.clrLED(_pos);
-      }
+      trellis.clrLED(_pos);
     }
     if(pS_patt[_i][_pos] == 1){
       trellis.setLED(_pos);
@@ -185,6 +183,7 @@ void pS_drawInfo(){
 
 void pS_midi(){
   if(midiclock == 1){
+    //Clear Old Position Display
     midiclock = 0;
     if(pS_set == 0){
       if(pS_patt[pS_selected][pS_pos] == 0){
@@ -197,12 +196,10 @@ void pS_midi(){
       }
     }
     u8x8.drawString(pS_pos%4*2+1,pS_pos/4+8," ");
+    //Update Position
     pS_pos += 1;
     pS_pos %= 16;
-    trellis.setLED(pS_pos);
-    u8x8.setInverseFont(1);
-    u8x8.drawString(pS_pos%4*2+1,pS_pos/4+8,".");
-    u8x8.setInverseFont(0);
+    //Probability Pattern Morphing
     if(pS_morph>random(10)){
       for(int i=0;i<4;i++){
         if(pS_probs[i][pS_pos] > random(10)){
@@ -214,6 +211,7 @@ void pS_midi(){
         }
       }
     }
+    //Output
     for(int i=0;i<4;i++){
       if(pS_patt[i][pS_pos] == 1){
         usbMIDI.sendNoteOn(60,60,i+4);
@@ -222,6 +220,11 @@ void pS_midi(){
         usbMIDI.sendNoteOff(60,0,i+4);
       }
     }
+    //Write New Position Display
+    trellis.setLED(pS_pos);
+    u8x8.setInverseFont(1);
+    u8x8.drawString(pS_pos%4*2+1,pS_pos/4+8,".");
+    u8x8.setInverseFont(0);
     trellis.writeDisplay();
   }
 }
