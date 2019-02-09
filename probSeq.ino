@@ -112,24 +112,30 @@ void pS_drawMatrixLED(int k){
       if(k == pS_selected){
         if(pS_set==0){
           if(pS_patt[k][(i%4)+(j*4)] == 0){
-            trellis.clrLED((i%4)+(j*4));
+            trellis.pixels.setPixelColor((i%4)+(j*4),0);
           }
           if(pS_patt[k][(i%4)+(j*4)] == 1){
-            trellis.setLED((i%4)+(j*4));
+            trellis.pixels.setPixelColor((i%4)+(j*4),trellis.pixels.Color(16,16,16));
           }
         }
         if(pS_set==1){
-          if(pS_probs[k][(i%4)+(j*4)] != pS_prob){
-            trellis.clrLED((i%4)+(j*4));
+          if(pS_probs[k][(i%4)+(j*4)] < pS_prob){
+            trellis.pixels.setPixelColor((i%4)+(j*4),trellis.pixels.Color(0,0,16));
+          }
+          if(pS_probs[k][(i%4)+(j*4)] > pS_prob){
+            trellis.pixels.setPixelColor((i%4)+(j*4),trellis.pixels.Color(16,0,0));
+          }
+          if(pS_probs[k][(i%4)+(j*4)] == 0){
+            trellis.pixels.setPixelColor((i%4)+(j*4),0);
           }
           if(pS_probs[k][(i%4)+(j*4)] == pS_prob){
-            trellis.setLED((i%4)+(j*4));
+            trellis.pixels.setPixelColor((i%4)+(j*4),trellis.pixels.Color(16,16,16));
           }
         }
       }
     }
   }
-  trellis.writeDisplay();
+  trellis.pixels.show();
 }
 
 void pS_setProb(int _i, int _pos){
@@ -138,12 +144,12 @@ void pS_setProb(int _i, int _pos){
   u8x8.setInverseFont(0);
   if(_i == pS_selected){
     if(pS_probs[_i][_pos] != pS_prob){
-      trellis.clrLED(_pos);
+      trellis.pixels.setPixelColor(_pos,0);
     }
     if(pS_probs[_i][_pos] == pS_prob){
-      trellis.setLED(_pos);
+      trellis.pixels.setPixelColor(_pos,trellis.pixels.Color(16,16,16));
     }
-    trellis.writeDisplay();
+    trellis.pixels.show();
   }
 }
 
@@ -153,12 +159,12 @@ void pS_setPatt(int _i, int _pos){
   u8x8.setInverseFont(0);
   if(_i == pS_selected){
     if(pS_patt[_i][_pos] == 0){
-      trellis.clrLED(_pos);
+      trellis.pixels.setPixelColor(_pos,0);
     }
     if(pS_patt[_i][_pos] == 1){
-      trellis.setLED(_pos);
+      trellis.pixels.setPixelColor(_pos,trellis.pixels.Color(16,16,16));
     }
-    trellis.writeDisplay();
+    trellis.pixels.show();
   }
 }
 
@@ -187,12 +193,24 @@ void pS_midi(){
     midiclock = 0;
     if(pS_set == 0){
       if(pS_patt[pS_selected][pS_pos] == 0){
-        trellis.clrLED(pS_pos);
+        trellis.pixels.setPixelColor(pS_pos,0);
+      }
+      if(pS_patt[pS_selected][pS_pos] == 1){
+        trellis.pixels.setPixelColor(pS_pos,trellis.pixels.Color(16,16,16));
       }
     }
     if(pS_set == 1){
-      if(pS_probs[pS_selected][pS_pos] != pS_prob){
-        trellis.clrLED(pS_pos);
+      if(pS_probs[pS_selected][pS_pos] < pS_prob){
+        trellis.pixels.setPixelColor(pS_pos,trellis.pixels.Color(0,0,16));
+      }
+      if(pS_probs[pS_selected][pS_pos] > pS_prob){
+        trellis.pixels.setPixelColor(pS_pos,trellis.pixels.Color(16,0,0));
+      }
+      if(pS_probs[pS_selected][pS_pos] == 0){
+        trellis.pixels.setPixelColor(pS_pos,0);
+      }
+      if(pS_probs[pS_selected][pS_pos] == pS_prob){
+        trellis.pixels.setPixelColor(pS_pos,trellis.pixels.Color(16,16,16));
       }
     }
     u8x8.drawString(pS_pos%4*2+1,pS_pos/4+8," ");
@@ -221,10 +239,15 @@ void pS_midi(){
       }
     }
     //Write New Position Display
-    trellis.setLED(pS_pos);
+    if(pS_patt[pS_selected][pS_pos] == 0){
+      trellis.pixels.setPixelColor(pS_pos,trellis.pixels.Color(16,0,16));
+    }
+    if(pS_patt[pS_selected][pS_pos] == 1){
+      trellis.pixels.setPixelColor(pS_pos,trellis.pixels.Color(0,16,0));
+    }
     u8x8.setInverseFont(1);
     u8x8.drawString(pS_pos%4*2+1,pS_pos/4+8,".");
     u8x8.setInverseFont(0);
-    trellis.writeDisplay();
+    trellis.pixels.show();
   }
 }
