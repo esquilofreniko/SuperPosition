@@ -392,7 +392,7 @@ DACldac
 Text GLabel 8750 1650 0    50   Input ~ 0
 DACclr
 $Bitmap
-Pos 1600 3850
+Pos 1600 3950
 Scale 1.000000
 Data
 89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 00 00 01 CB 00 00 01 85 08 02 00 00 00 1D 32 4F 
@@ -3410,61 +3410,61 @@ D8 06 1A 68 A0 81 B5 85 FF 0F 2F 9A 0B 95 51 6D 9D 1B 00 00 00 00 49 45 4E 44 AE
 EndData
 $EndBitmap
 Wire Notes Line
-	1600 3900 1600 3950
+	1600 4000 1600 4050
 Wire Notes Line
-	1600 3950 1900 3950
+	1600 4050 1900 4050
 Wire Notes Line
-	1900 3950 1900 3900
+	1900 4050 1900 4000
 Wire Notes Line
-	1900 3900 1600 3900
+	1900 4000 1600 4000
 Wire Wire Line
-	2100 3400 2350 3400
+	2100 3500 2350 3500
 Wire Wire Line
-	2100 3550 2350 3550
-Wire Wire Line
-	2100 3700 2350 3700
+	2100 3650 2350 3650
 Wire Wire Line
 	2100 3800 2350 3800
 Wire Wire Line
-	2100 3950 2350 3950
+	2100 3900 2350 3900
 Wire Wire Line
-	2100 4100 2350 4100
+	2100 4050 2350 4050
 Wire Wire Line
-	2100 4250 2350 4250
+	2100 4200 2350 4200
 Wire Wire Line
-	2100 4400 2350 4400
+	2100 4350 2350 4350
 Wire Wire Line
-	1400 3400 1100 3400
+	2100 4500 2350 4500
 Wire Wire Line
-	1400 3550 1100 3550
+	1400 3500 1100 3500
 Wire Wire Line
-	1400 3700 1100 3700
+	1400 3650 1100 3650
 Wire Wire Line
 	1400 3800 1100 3800
 Wire Wire Line
-	1400 3950 1100 3950
+	1400 3900 1100 3900
 Wire Wire Line
-	1400 4100 1100 4100
+	1400 4050 1100 4050
 Wire Wire Line
-	1400 4250 1100 4250
+	1400 4200 1100 4200
 Wire Wire Line
-	1400 4400 1100 4400
-Text GLabel 2350 3550 2    50   Input ~ 0
+	1400 4350 1100 4350
+Wire Wire Line
+	1400 4500 1100 4500
+Text GLabel 2350 3650 2    50   Input ~ 0
 DACdataout
-Text GLabel 2350 3400 2    50   Input ~ 0
+Text GLabel 2350 3500 2    50   Input ~ 0
 DACspiclk
-Text GLabel 1100 3550 0    50   Input ~ 0
+Text GLabel 1100 3650 0    50   Input ~ 0
 DACslaveSelect
-Text GLabel 1100 3400 0    50   Input ~ 0
+Text GLabel 1100 3500 0    50   Input ~ 0
 DACldac
-Text GLabel 2350 4400 2    50   Input ~ 0
+Text GLabel 2350 4500 2    50   Input ~ 0
 DACclr
-Text GLabel 1100 3700 0    50   Input ~ 0
+Text GLabel 1100 3800 0    50   Input ~ 0
 3.3v
-Text GLabel 2350 3700 2    50   Input ~ 0
+Text GLabel 2350 3800 2    50   Input ~ 0
 GND
 $Bitmap
-Pos 1500 5500
+Pos 1500 5750
 Scale 1.000000
 Data
 89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 00 00 02 67 00 00 02 68 08 02 00 00 00 AC 86 D1 
@@ -7408,36 +7408,36 @@ FA 1C 04 41 9B D0 A6 03 22 22 8C 4E A3 12 AA 64 40 79 6A 8C 87 A1 B0 17 22 AA D1
 85 E2 7F 00 54 80 A7 AA CA 89 40 12 00 00 00 00 49 45 4E 44 AE 42 60 82 
 EndData
 $EndBitmap
-Text GLabel 2600 5400 2    50   Input ~ 0
+Text GLabel 2600 5650 2    50   Input ~ 0
 trellisSCL
-Text GLabel 2600 5300 2    50   Input ~ 0
+Text GLabel 2600 5550 2    50   Input ~ 0
 trellisSDA
 Wire Wire Line
-	2500 5400 2600 5400
+	2500 5650 2600 5650
 Wire Wire Line
-	2500 5300 2600 5300
-Text GLabel 2600 5500 2    50   Input ~ 0
+	2500 5550 2600 5550
+Text GLabel 2600 5750 2    50   Input ~ 0
 GND
 Wire Wire Line
-	2500 5500 2600 5500
+	2500 5750 2600 5750
 Wire Wire Line
-	2500 5600 2600 5600
-Text GLabel 2600 5600 2    50   Input ~ 0
+	2500 5850 2600 5850
+Text GLabel 2600 5850 2    50   Input ~ 0
 3.3V
-Text Notes 1500 6650 2    50   ~ 0
+Text Notes 1700 6900 2    50   ~ 0
 WaveShare 128x128 OLED
-Text GLabel 950  7000 0    50   Input ~ 0
-OLEDclock
 Text GLabel 950  7300 0    50   Input ~ 0
+OLEDclock
+Text GLabel 950  7600 0    50   Input ~ 0
 OLEDreset
-Text GLabel 950  7200 0    50   Input ~ 0
+Text GLabel 950  7500 0    50   Input ~ 0
 OLEDdc
-Text GLabel 950  7100 0    50   Input ~ 0
+Text GLabel 950  7400 0    50   Input ~ 0
 OLEDcs
-Text GLabel 950  6900 0    50   Input ~ 0
+Text GLabel 950  7200 0    50   Input ~ 0
 OLEDdata
 $Bitmap
-Pos 1400 7000
+Pos 1400 7300
 Scale 1.000000
 Data
 89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 00 00 00 AE 00 00 00 7F 08 02 00 00 00 F9 0C 6E 
@@ -7604,46 +7604,50 @@ B1 0D E9 E7 1E 70 B4 DA D7 B9 88 4C 81 6D 3A 0D 19 92 79 E9 49 F6 F5 BC 66 6C 03
 60 82 
 EndData
 $EndBitmap
-Text GLabel 950  6700 0    50   Input ~ 0
+Text GLabel 950  7000 0    50   Input ~ 0
 3.3V
-Text GLabel 950  6800 0    50   Input ~ 0
+Text GLabel 950  7100 0    50   Input ~ 0
 GND
-Wire Wire Line
-	1150 6850 1100 6850
-Wire Wire Line
-	1100 6850 1100 6700
-Wire Wire Line
-	1100 6700 950  6700
-Wire Wire Line
-	1150 6900 1050 6900
-Wire Wire Line
-	1050 6900 1050 6800
-Wire Wire Line
-	1050 6800 950  6800
-Wire Wire Line
-	1150 6950 1000 6950
-Wire Wire Line
-	1000 6950 1000 6900
-Wire Wire Line
-	1000 6900 950  6900
-Wire Wire Line
-	1150 7000 950  7000
-Wire Wire Line
-	1150 7050 1000 7050
-Wire Wire Line
-	1000 7050 1000 7100
-Wire Wire Line
-	1000 7100 950  7100
-Wire Wire Line
-	1150 7100 1050 7100
-Wire Wire Line
-	1050 7200 950  7200
-Wire Wire Line
-	1050 7100 1050 7200
 Wire Wire Line
 	1150 7150 1100 7150
 Wire Wire Line
-	1100 7150 1100 7300
+	1100 7150 1100 7000
 Wire Wire Line
-	1100 7300 950  7300
+	1100 7000 950  7000
+Wire Wire Line
+	1150 7200 1050 7200
+Wire Wire Line
+	1050 7200 1050 7100
+Wire Wire Line
+	1050 7100 950  7100
+Wire Wire Line
+	1150 7250 1000 7250
+Wire Wire Line
+	1000 7250 1000 7200
+Wire Wire Line
+	1000 7200 950  7200
+Wire Wire Line
+	1150 7300 950  7300
+Wire Wire Line
+	1150 7350 1000 7350
+Wire Wire Line
+	1000 7350 1000 7400
+Wire Wire Line
+	1000 7400 950  7400
+Wire Wire Line
+	1150 7400 1050 7400
+Wire Wire Line
+	1050 7500 950  7500
+Wire Wire Line
+	1050 7400 1050 7500
+Wire Wire Line
+	1150 7450 1100 7450
+Wire Wire Line
+	1100 7450 1100 7600
+Wire Wire Line
+	1100 7600 950  7600
+Text Notes 1850 4700 2    50   ~ 0
+Adafruit NeoTrellis
+Text Notes 2050 3300 2    50   ~ 0
+TI DAC8568ICPW
 $EndSCHEMATC

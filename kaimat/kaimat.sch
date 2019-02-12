@@ -294,23 +294,23 @@ F 3 "~" H 1950 2750 50  0001 C CNN
 	1    1950 2750
 	1    0    0    -1  
 $EndComp
-Text GLabel 8750 850  0    50   Input ~ 0
+Text GLabel 8750 800  0    50   Input ~ 0
 GND
-Text GLabel 8750 950  0    50   Input ~ 0
+Text GLabel 8750 900  0    50   Input ~ 0
 enc1button
-Text GLabel 8750 1050 0    50   Input ~ 0
+Text GLabel 8750 1000 0    50   Input ~ 0
 enc1pinA
-Text GLabel 8750 1150 0    50   Input ~ 0
+Text GLabel 8750 1100 0    50   Input ~ 0
 enc1pinB
-Text GLabel 10750 5050 2    50   Input ~ 0
+Text GLabel 10750 5000 2    50   Input ~ 0
 b1
-Text GLabel 8750 2150 0    50   Input ~ 0
+Text GLabel 8750 2100 0    50   Input ~ 0
 b2
-Text GLabel 8750 4850 0    50   Input ~ 0
+Text GLabel 8750 4800 0    50   Input ~ 0
 enc2button
-Text GLabel 8750 4950 0    50   Input ~ 0
+Text GLabel 8750 4900 0    50   Input ~ 0
 enc2pinA
-Text GLabel 8750 5050 0    50   Input ~ 0
+Text GLabel 8750 5000 0    50   Input ~ 0
 enc2pinB
 Text GLabel 8850 5500 0    50   Input ~ 0
 enc1pinA
@@ -343,12 +343,12 @@ b2
 $Comp
 L teensy:Teensy3.6 U?
 U 1 1 5C65C83B
-P 7650 7800
-F 0 "U?" H 9750 15037 60  0000 C CNN
-F 1 "Teensy3.6" H 9750 14931 60  0000 C CNN
-F 2 "" H 9750 12650 60  0000 C CNN
-F 3 "" H 9750 12650 60  0000 C CNN
-	1    7650 7800
+P 7650 7750
+F 0 "U?" H 9750 14987 60  0000 C CNN
+F 1 "Teensy3.6" H 9750 14881 60  0000 C CNN
+F 2 "" H 9750 12600 60  0000 C CNN
+F 3 "" H 9750 12600 60  0000 C CNN
+	1    7650 7750
 	1    0    0    -1  
 $EndComp
 Text GLabel 2150 800  2    50   Input ~ 0
@@ -359,45 +359,45 @@ Text GLabel 2150 2100 2    50   Input ~ 0
 cvIn3
 Text GLabel 2150 2750 2    50   Input ~ 0
 cvIn4
-Text GLabel 10750 4450 2    50   Input ~ 0
+Text GLabel 10750 4400 2    50   Input ~ 0
 cvIn1
-Text GLabel 10750 4550 2    50   Input ~ 0
+Text GLabel 10750 4500 2    50   Input ~ 0
 cvIn2
-Text GLabel 10750 4650 2    50   Input ~ 0
+Text GLabel 10750 4600 2    50   Input ~ 0
 cvIn3
-Text GLabel 10750 4750 2    50   Input ~ 0
+Text GLabel 10750 4700 2    50   Input ~ 0
 cvIn4
-Text GLabel 10750 4850 2    50   Input ~ 0
+Text GLabel 10750 4800 2    50   Input ~ 0
 trellisSCL
-Text GLabel 10750 4950 2    50   Input ~ 0
+Text GLabel 10750 4900 2    50   Input ~ 0
 trellisSDA
-Text GLabel 8750 1750 0    50   Input ~ 0
+Text GLabel 8750 1700 0    50   Input ~ 0
 OLEDreset
-Text GLabel 8750 1850 0    50   Input ~ 0
+Text GLabel 8750 1800 0    50   Input ~ 0
 OLEDdc
-Text GLabel 8750 1950 0    50   Input ~ 0
+Text GLabel 8750 1900 0    50   Input ~ 0
 OLEDcs
-Text GLabel 8750 2050 0    50   Input ~ 0
+Text GLabel 8750 2000 0    50   Input ~ 0
 OLEDdata
-Text GLabel 8750 4750 0    50   Input ~ 0
+Text GLabel 8750 4700 0    50   Input ~ 0
 OLEDclock
-Text GLabel 8750 1250 0    50   Input ~ 0
+Text GLabel 8750 1200 0    50   Input ~ 0
 DACdataout
-Text GLabel 8750 1350 0    50   Input ~ 0
+Text GLabel 8750 1300 0    50   Input ~ 0
 DACspiclk
-Text GLabel 8750 1450 0    50   Input ~ 0
+Text GLabel 8750 1400 0    50   Input ~ 0
 DACslaveSelect
-Text GLabel 8750 1550 0    50   Input ~ 0
+Text GLabel 8750 1500 0    50   Input ~ 0
 DACldac
-Text GLabel 8750 1650 0    50   Input ~ 0
+Text GLabel 8750 1600 0    50   Input ~ 0
 DACclr
 $Bitmap
 Pos 1600 3950
 Scale 1.000000
 Data
 89 50 4E 47 0D 0A 1A 0A 00 00 00 0D 49 48 44 52 00 00 01 CB 00 00 01 85 08 02 00 00 00 1D 32 4F 
-0C 00 00 00 03 73 42 49 54 08 08 08 DB E1 4F E0 00 00 00 09 70 48 59 73 00 00 0E C3 00 00 0E C3 
-01 C7 6F A8 64 00 00 20 00 49 44 41 54 78 9C EC 5D 67 B8 1D 55 D5 7E D7 DA 7B E6 9C 7B 13 52 E9 
+0C 00 00 00 03 73 42 49 54 08 08 08 DB E1 4F E0 00 00 00 09 70 48 59 73 00 00 0E 74 00 00 0E 74 
+01 6B 24 B3 D6 00 00 20 00 49 44 41 54 78 9C EC 5D 67 B8 1D 55 D5 7E D7 DA 7B E6 9C 7B 13 52 E9 
 81 40 02 81 A0 F4 22 4A 47 29 16 44 69 09 06 10 91 A6 7C 80 20 55 14 2C A0 22 22 5D 4A 28 89 B4 
 50 42 15 14 15 05 05 91 4E E8 35 01 42 07 43 48 BB F7 9C 99 BD D7 FA 7E EC 99 39 73 6E 6E 1A 49 
 90 E4 9E F7 C9 03 E7 4E 2F 6B DE BD F6 AA A4 AA 68 A1 85 16 5A 68 61 31 80 FF D7 17 D0 42 0B 2D 
@@ -7650,4 +7650,65 @@ Text Notes 1850 4700 2    50   ~ 0
 Adafruit NeoTrellis
 Text Notes 2050 3300 2    50   ~ 0
 TI DAC8568ICPW
+$Comp
+L teensy:Teensy3.2 U?
+U 1 1 5C6D43F0
+P 6850 2100
+F 0 "U?" H 6850 3687 60  0000 C CNN
+F 1 "Teensy3.2" H 6850 3581 60  0000 C CNN
+F 2 "" H 6850 1300 60  0000 C CNN
+F 3 "" H 6850 1300 60  0000 C CNN
+	1    6850 2100
+	1    0    0    -1  
+$EndComp
+Text GLabel 5850 800  0    50   Input ~ 0
+GND
+Text GLabel 5850 900  0    50   Input ~ 0
+enc1button
+Text GLabel 5850 1000 0    50   Input ~ 0
+enc1pinA
+Text GLabel 5850 1100 0    50   Input ~ 0
+enc1pinB
+Text GLabel 5850 2100 0    50   Input ~ 0
+b2
+Text GLabel 5850 1700 0    50   Input ~ 0
+OLEDreset
+Text GLabel 5850 1800 0    50   Input ~ 0
+OLEDdc
+Text GLabel 5850 1900 0    50   Input ~ 0
+OLEDcs
+Text GLabel 5850 2000 0    50   Input ~ 0
+OLEDdata
+Text GLabel 5850 1200 0    50   Input ~ 0
+DACdataout
+Text GLabel 5850 1300 0    50   Input ~ 0
+DACspiclk
+Text GLabel 5850 1400 0    50   Input ~ 0
+DACslaveSelect
+Text GLabel 5850 1500 0    50   Input ~ 0
+DACldac
+Text GLabel 5850 1600 0    50   Input ~ 0
+DACclr
+Text GLabel 5850 2800 0    50   Input ~ 0
+enc2button
+Text GLabel 5850 2900 0    50   Input ~ 0
+enc2pinA
+Text GLabel 5850 3000 0    50   Input ~ 0
+enc2pinB
+Text GLabel 5850 2700 0    50   Input ~ 0
+OLEDclock
+Text GLabel 5850 3100 0    50   Input ~ 0
+b1
+Text GLabel 5850 3200 0    50   Input ~ 0
+trellisSDA
+Text GLabel 5850 3300 0    50   Input ~ 0
+trellisSCL
+Text GLabel 5850 3400 0    50   Input ~ 0
+cvIn4
+Text GLabel 7850 3200 2    50   Input ~ 0
+cvIn1
+Text GLabel 7850 3300 2    50   Input ~ 0
+cvIn2
+Text GLabel 7850 3400 2    50   Input ~ 0
+cvIn3
 $EndSCHEMATC
