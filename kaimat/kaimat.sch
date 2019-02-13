@@ -416,67 +416,6 @@ Text GLabel 10700 1550 2    50   Input ~ 0
 trellisSCL
 Text GLabel 10700 1450 2    50   Input ~ 0
 cvIn4
-Text GLabel 5450 6350 0    50   Input ~ 0
-GND
-Text GLabel 5450 6450 0    50   Input ~ 0
-enc1button
-Text GLabel 5450 6550 0    50   Input ~ 0
-enc1pinA
-Text GLabel 5450 6650 0    50   Input ~ 0
-enc1pinB
-Text GLabel 5450 7650 0    50   Input ~ 0
-b2
-Text GLabel 5450 7250 0    50   Input ~ 0
-OLEDreset
-Text GLabel 5450 7350 0    50   Input ~ 0
-OLEDdc
-Text GLabel 5450 7450 0    50   Input ~ 0
-OLEDcs
-Text GLabel 5450 7550 0    50   Input ~ 0
-OLEDdata
-Text GLabel 5450 6750 0    50   Input ~ 0
-DACdataout
-Text GLabel 5450 6850 0    50   Input ~ 0
-DACspiclk
-Text GLabel 5450 6950 0    50   Input ~ 0
-DACslaveSelect
-Text GLabel 5450 7050 0    50   Input ~ 0
-DACldac
-Text GLabel 5450 7150 0    50   Input ~ 0
-DACclr
-Text GLabel 6450 6650 2    50   Input ~ 0
-cvIn1
-Text GLabel 6450 6750 2    50   Input ~ 0
-cvIn2
-Text GLabel 6450 6850 2    50   Input ~ 0
-cvIn3
-Text GLabel 6450 7550 2    50   Input ~ 0
-enc2button
-Text GLabel 6450 7450 2    50   Input ~ 0
-enc2pinA
-Text GLabel 6450 7350 2    50   Input ~ 0
-enc2pinB
-Text GLabel 6450 7650 2    50   Input ~ 0
-OLEDclock
-Text GLabel 6450 7250 2    50   Input ~ 0
-b1
-Text GLabel 6450 7150 2    50   Input ~ 0
-trellisSDA
-Text GLabel 6450 7050 2    50   Input ~ 0
-trellisSCL
-Text GLabel 6450 6950 2    50   Input ~ 0
-cvIn4
-$Comp
-L KaimatKicadLib:Teensy3.2 MCU1
-U 1 1 5C680FB5
-P 5950 6200
-F 0 "MCU1" H 5950 6315 50  0000 C CNN
-F 1 "Teensy3.2" H 5950 6224 50  0000 C CNN
-F 2 "" H 5950 6350 50  0001 C CNN
-F 3 "" H 5950 6350 50  0001 C CNN
-	1    5950 6200
-	1    0    0    -1  
-$EndComp
 $Comp
 L KaimatKicadLib:Teensy3.6 MCU2
 U 1 1 5C6810D8

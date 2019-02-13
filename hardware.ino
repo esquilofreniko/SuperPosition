@@ -29,7 +29,7 @@ int enc2_post = 0;
 int enc2_status = 0;
 Encoder enc2(enc2pinA, enc2pinB);
 //Buttons
-const int b1 = 7;
+const int b1 = 17;
 const int b2 = 12;
 int b1_released = 0;
 int b2_released = 0;
@@ -124,8 +124,8 @@ void encoder_read(){
     }
   }
   if(enc1_post == 1){
-    if(enc1Pos > 3){enc1_status = 1;}
-    if(enc1Pos < -3){enc1_status = -1;}
+    if(enc1Pos > 3){enc1_status = -1;}
+    if(enc1Pos < -3){enc1_status = 1;}
     enc1_post = 0;
   }
 
@@ -148,8 +148,8 @@ void encoder_read(){
     }
   }
   if(enc2_post == 1){
-    if(enc2Pos > 3){enc2_status = 1;}
-    if(enc2Pos < -3){enc2_status = -1;}
+    if(enc2Pos > 3){enc2_status = -1;}
+    if(enc2Pos < -3){enc2_status = 1;}
     enc2_post = 0;
   }
 }
