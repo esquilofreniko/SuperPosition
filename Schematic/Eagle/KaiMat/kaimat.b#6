@@ -165,13 +165,6 @@
 <hole x="58.799" y="58.672" drill="1" locked="yes"/>
 <hole x="1.399" y="1.272" drill="1" locked="yes"/>
 <hole x="58.799" y="1.272" drill="1" locked="yes"/>
-<dimension x1="0.5" y1="83" x2="0.5" y2="63" x3="0.5" y3="73" textsize="1.778" layer="25"/>
-<dimension x1="0.5" y1="83" x2="27.5" y2="83" x3="14" y3="83" textsize="1.778" layer="25"/>
-<dimension x1="27.5" y1="83" x2="27.5" y2="63" x3="27.5" y3="73" textsize="1.778" layer="25"/>
-<dimension x1="0.5" y1="63" x2="27.5" y2="63" x3="14" y3="63" textsize="1.778" layer="25"/>
-<text x="2.064" y="66.66" size="1.778" layer="25">26.70mm x 19.26mm</text>
-<hole x="2.319" y="80.942" drill="2.8" locked="yes"/>
-<hole x="25.689" y="80.942" drill="2.8" locked="yes"/>
 </plain>
 <libraries>
 <library name="diode" urn="urn:adsk.eagle:library:210">
@@ -766,6 +759,88 @@ EC12E series with push-on switch</description>
 </package>
 </packages>
 </library>
+<library name="diy-modules">
+<description>&lt;b&gt;DIY Modules for Arduino, Raspberry Pi, CubieBoard etc.&lt;/b&gt;
+&lt;br&gt;&lt;br&gt;
+The library contains a list of symbols and footprints for popular, cheap and easy-to-use electronic modules.&lt;br&gt;
+The modules are intend to work with microprocessor-based platforms such as &lt;a href="http://arduino.cc"&gt;Arduino&lt;/a&gt;, &lt;a href="http://raspberrypi.org/"&gt;Raspberry Pi&lt;/a&gt;, &lt;a href="http://cubieboard.org/"&gt;CubieBoard&lt;/a&gt;, &lt;a href="http://beagleboard.org/"&gt;BeagleBone&lt;/a&gt; and many others. There are many manufacturers of the modules in the world. Almost all of them can be bought on &lt;a href="ebay.com"&gt;ebay.com&lt;/a&gt;.&lt;br&gt;
+&lt;br&gt;
+By using this library, you can design a PCB for devices created with usage of modules. Even if you do not need to create PCB design, you can also use the library to quickly document your work by drawing schematics of devices built by you.&lt;br&gt;
+&lt;br&gt;
+The latest version, examples, photos and much more can be found at: &lt;b&gt;&lt;a href="http://diymodules.org/eagle"&gt;diymodules.org/eagle&lt;/a&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;
+Comments, suggestions and bug reports please send to: &lt;b&gt;&lt;a href="mailto:eagle@diymodules.org"&gt;eagle@diymodules.org&lt;/b&gt;&lt;/a&gt;&lt;br&gt;&lt;br&gt;
+&lt;i&gt;Version: 1.8.0 (2017-Jul-02)&lt;/i&gt;&lt;br&gt;
+&lt;i&gt;Created by: Miroslaw Brudnowski&lt;/i&gt;&lt;br&gt;&lt;br&gt;
+&lt;i&gt;Released under the Creative Commons Attribution 4.0 International License: &lt;a href="http://creativecommons.org/licenses/by/4.0"&gt;http://creativecommons.org/licenses/by/4.0&lt;/a&gt;&lt;/i&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;center&gt;
+&lt;a href="http://diymodules.org/eagle"&gt;&lt;img src="http://www.diymodules.org/img/diymodules-lbr-image.php?v=1.8.0" alt="DIYmodules.org"&gt;&lt;/a&gt;
+&lt;/center&gt;</description>
+<packages>
+<package name="DISPLAY-OLED-128X64-SMALL">
+<wire x1="-12.676" y1="8.882" x2="14.083" y2="8.882" width="0.127" layer="21"/>
+<wire x1="14.083" y1="8.882" x2="14.083" y2="-10.55" width="0.127" layer="21"/>
+<wire x1="14.083" y1="-10.55" x2="-12.676" y2="-10.55" width="0.127" layer="21"/>
+<wire x1="-12.676" y1="-10.55" x2="-12.676" y2="8.882" width="0.127" layer="21"/>
+<hole x="-11.125" y="7.5405" drill="2"/>
+<text x="-8.08" y="4.295" size="1.27" layer="25" align="bottom-center">&gt;NAME</text>
+<text x="-8.08" y="0.99" size="1.27" layer="27" align="top-center">&gt;VALUE</text>
+<hole x="12.351" y="7.5405" drill="2"/>
+<dimension x1="10.35" y1="8.78" x2="10.35" y2="-10.52" x3="10.35" y3="-0.87" textsize="1.778" layer="21"/>
+<dimension x1="-12.653" y1="-5.714" x2="14.047" y2="-5.714" x3="0.697" y3="-5.714" textsize="1.778" layer="21"/>
+<wire x1="-12.065" y1="6.096" x2="13.462" y2="6.096" width="0.127" layer="21"/>
+<wire x1="13.462" y1="6.096" x2="13.462" y2="-7.62" width="0.127" layer="21"/>
+<wire x1="13.462" y1="-7.62" x2="-12.065" y2="-7.62" width="0.127" layer="21"/>
+<wire x1="-12.065" y1="-7.62" x2="-12.065" y2="6.096" width="0.127" layer="21"/>
+<pad name="1" x="-6.985" y="7.62" drill="1" shape="square"/>
+<pad name="2" x="-4.445" y="7.62" drill="1"/>
+<pad name="3" x="-1.905" y="7.62" drill="1"/>
+<pad name="4" x="0.635" y="7.62" drill="1"/>
+<pad name="5" x="3.175" y="7.62" drill="1"/>
+<pad name="6" x="5.715" y="7.62" drill="1"/>
+<pad name="7" x="8.255" y="7.62" drill="1"/>
+<wire x1="-8.255" y1="8.255" x2="-7.62" y2="8.89" width="0.127" layer="21"/>
+<wire x1="-6.35" y1="8.89" x2="-5.715" y2="8.255" width="0.127" layer="21"/>
+<wire x1="-5.715" y1="8.255" x2="-5.08" y2="8.89" width="0.127" layer="21"/>
+<wire x1="-3.81" y1="8.89" x2="-3.175" y2="8.255" width="0.127" layer="21"/>
+<wire x1="-3.175" y1="8.255" x2="-2.54" y2="8.89" width="0.127" layer="21"/>
+<wire x1="-1.27" y1="8.89" x2="-0.635" y2="8.255" width="0.127" layer="21"/>
+<wire x1="-0.635" y1="8.255" x2="0" y2="8.89" width="0.127" layer="21"/>
+<wire x1="1.27" y1="8.89" x2="1.905" y2="8.255" width="0.127" layer="21"/>
+<wire x1="1.905" y1="8.255" x2="2.54" y2="8.89" width="0.127" layer="21"/>
+<wire x1="3.81" y1="8.89" x2="4.445" y2="8.255" width="0.127" layer="21"/>
+<wire x1="4.445" y1="8.255" x2="5.08" y2="8.89" width="0.127" layer="21"/>
+<wire x1="6.35" y1="8.89" x2="6.985" y2="8.255" width="0.127" layer="21"/>
+<wire x1="6.985" y1="8.255" x2="7.62" y2="8.89" width="0.127" layer="21"/>
+<wire x1="8.89" y1="8.89" x2="9.525" y2="8.255" width="0.127" layer="21"/>
+<wire x1="9.525" y1="6.985" x2="8.89" y2="6.35" width="0.127" layer="21"/>
+<wire x1="8.89" y1="6.35" x2="7.62" y2="6.35" width="0.127" layer="21"/>
+<wire x1="7.62" y1="6.35" x2="6.985" y2="6.985" width="0.127" layer="21"/>
+<wire x1="6.985" y1="6.985" x2="6.35" y2="6.35" width="0.127" layer="21"/>
+<wire x1="6.35" y1="6.35" x2="5.08" y2="6.35" width="0.127" layer="21"/>
+<wire x1="5.08" y1="6.35" x2="4.445" y2="6.985" width="0.127" layer="21"/>
+<wire x1="4.445" y1="6.985" x2="3.81" y2="6.35" width="0.127" layer="21"/>
+<wire x1="3.81" y1="6.35" x2="2.54" y2="6.35" width="0.127" layer="21"/>
+<wire x1="2.54" y1="6.35" x2="1.905" y2="6.985" width="0.127" layer="21"/>
+<wire x1="1.905" y1="6.985" x2="1.27" y2="6.35" width="0.127" layer="21"/>
+<wire x1="1.27" y1="6.35" x2="0" y2="6.35" width="0.127" layer="21"/>
+<wire x1="0" y1="6.35" x2="-0.635" y2="6.985" width="0.127" layer="21"/>
+<wire x1="-0.635" y1="6.985" x2="-1.27" y2="6.35" width="0.127" layer="21"/>
+<wire x1="-1.27" y1="6.35" x2="-2.54" y2="6.35" width="0.127" layer="21"/>
+<wire x1="-2.54" y1="6.35" x2="-3.175" y2="6.985" width="0.127" layer="21"/>
+<wire x1="-3.175" y1="6.985" x2="-3.81" y2="6.35" width="0.127" layer="21"/>
+<wire x1="-3.81" y1="6.35" x2="-5.08" y2="6.35" width="0.127" layer="21"/>
+<wire x1="-5.08" y1="6.35" x2="-5.715" y2="6.985" width="0.127" layer="21"/>
+<wire x1="-5.715" y1="6.985" x2="-6.35" y2="6.35" width="0.127" layer="21"/>
+<wire x1="-6.35" y1="6.35" x2="-7.62" y2="6.35" width="0.127" layer="21"/>
+<wire x1="-7.62" y1="6.35" x2="-8.255" y2="6.985" width="0.127" layer="21"/>
+<wire x1="-8.255" y1="6.985" x2="-8.255" y2="8.255" width="0.127" layer="21"/>
+<wire x1="9.525" y1="8.255" x2="9.525" y2="6.985" width="0.127" layer="21"/>
+<hole x="12.351" y="-8.9695" drill="2"/>
+<hole x="-11.125" y="-8.9695" drill="2"/>
+</package>
+</packages>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -1043,6 +1118,10 @@ design rules under a new name.</description>
 <attribute name="OC_NEWARK" value="74M1068" x="35.052" y="98.036" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="55.824" y="72.78" size="1.27" layer="27" rot="R180"/>
 </element>
+<element name="U$3" library="diy-modules" package="DISPLAY-OLED-128X64-SMALL" value="OLED-128X64" x="13.14" y="75.04" smashed="yes">
+<attribute name="NAME" x="3.06" y="78.835" size="1.27" layer="25" align="bottom-center"/>
+<attribute name="VALUE" x="13.06" y="78.03" size="1.27" layer="27" align="top-center"/>
+</element>
 </elements>
 <signals>
 <signal name="GND">
@@ -1122,10 +1201,12 @@ design rules under a new name.</description>
 <wire x1="42.792" y1="83.192" x2="38.235" y2="83.192" width="0.1524" layer="16"/>
 <wire x1="47.268" y1="78.716" x2="42.792" y2="83.192" width="0.1524" layer="16"/>
 <wire x1="26.376" y1="5.461" x2="22.185" y2="1.27" width="0.1524" layer="16"/>
+<contactref element="U$3" pad="1"/>
 <wire x1="55.118" y1="97.0002" x2="55.118" y2="97.005" width="0" layer="19" extent="1-1"/>
 <wire x1="4.953" y1="97.005" x2="4.953" y2="97.0002" width="0" layer="19" extent="1-1"/>
 <wire x1="37.8714" y1="1.27" x2="35.298" y2="1.27" width="0" layer="19" extent="16-16"/>
 <wire x1="55.3468" y1="6.985" x2="55.372" y2="1.27" width="0" layer="19" extent="16-16"/>
+<wire x1="6.155" y1="82.66" x2="11.136" y2="1.27" width="0" layer="19" extent="16-16"/>
 <wire x1="45.085" y1="97.005" x2="55.118" y2="97.005" width="0" layer="19" extent="1-1"/>
 <wire x1="45.085" y1="97.0002" x2="45.085" y2="97.005" width="0" layer="19" extent="1-1"/>
 <wire x1="35.052" y1="97.005" x2="45.085" y2="97.005" width="0" layer="19" extent="1-1"/>
@@ -1264,14 +1345,8 @@ design rules under a new name.</description>
 <signal name="N$37">
 <via x="2.159" y="35.052" extent="1-16" drill="0.35"/>
 </signal>
-<signal name="N$3">
-<via x="8.92" y="81.7" extent="1-16" drill="1" locked="yes"/>
-<via x="6.38" y="81.7" extent="1-16" drill="1" shape="square" locked="yes"/>
-<via x="11.46" y="81.7" extent="1-16" drill="1" locked="yes"/>
-<via x="14" y="81.7" extent="1-16" drill="1" locked="yes"/>
-<via x="16.54" y="81.7" extent="1-16" drill="1" locked="yes"/>
-<via x="19.08" y="81.7" extent="1-16" drill="1" locked="yes"/>
-<via x="21.62" y="81.7" extent="1-16" drill="1" locked="yes"/>
+<signal name="VCC">
+<contactref element="U$3" pad="2"/>
 </signal>
 </signals>
 <mfgpreviewcolors>

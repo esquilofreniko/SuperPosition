@@ -165,13 +165,6 @@
 <hole x="58.799" y="58.672" drill="1" locked="yes"/>
 <hole x="1.399" y="1.272" drill="1" locked="yes"/>
 <hole x="58.799" y="1.272" drill="1" locked="yes"/>
-<dimension x1="0.5" y1="83" x2="0.5" y2="63" x3="0.5" y3="73" textsize="1.778" layer="25"/>
-<dimension x1="0.5" y1="83" x2="27.5" y2="83" x3="14" y3="83" textsize="1.778" layer="25"/>
-<dimension x1="27.5" y1="83" x2="27.5" y2="63" x3="27.5" y3="73" textsize="1.778" layer="25"/>
-<dimension x1="0.5" y1="63" x2="27.5" y2="63" x3="14" y3="63" textsize="1.778" layer="25"/>
-<text x="2.064" y="66.66" size="1.778" layer="25">26.70mm x 19.26mm</text>
-<hole x="2.399" y="81.272" drill="2.8" locked="yes"/>
-<hole x="25.659" y="81.272" drill="2.8"/>
 </plain>
 <libraries>
 <library name="diode" urn="urn:adsk.eagle:library:210">
@@ -1263,15 +1256,6 @@ design rules under a new name.</description>
 </signal>
 <signal name="N$37">
 <via x="2.159" y="35.052" extent="1-16" drill="0.35"/>
-</signal>
-<signal name="N$3">
-<via x="8.92" y="81.7" extent="1-16" drill="1" locked="yes"/>
-<via x="6.38" y="81.7" extent="1-16" drill="1" shape="square" locked="yes"/>
-<via x="11.46" y="81.7" extent="1-16" drill="1" locked="yes"/>
-<via x="14" y="81.7" extent="1-16" drill="1" locked="yes"/>
-<via x="16.54" y="81.7" extent="1-16" drill="1" locked="yes"/>
-<via x="19.08" y="81.7" extent="1-16" drill="1" locked="yes"/>
-<via x="21.62" y="81.7" extent="1-16" drill="1" locked="yes"/>
 </signal>
 </signals>
 <mfgpreviewcolors>

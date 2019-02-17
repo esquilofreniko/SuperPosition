@@ -1773,9 +1773,9 @@ EC12E series with push-on switch</description>
 <attribute name="NAME" x="106.68" y="74.93" size="1.778" layer="95"/>
 <attribute name="VALUE" x="112.395" y="72.39" size="1.778" layer="96"/>
 </instance>
-<instance part="JP1" gate="A" x="10.16" y="149.86" smashed="yes">
-<attribute name="NAME" x="3.81" y="158.115" size="1.778" layer="95"/>
-<attribute name="VALUE" x="3.81" y="139.7" size="1.778" layer="96"/>
+<instance part="JP1" gate="A" x="33.02" y="142.24" smashed="yes">
+<attribute name="NAME" x="26.67" y="150.495" size="1.778" layer="95"/>
+<attribute name="VALUE" x="26.67" y="132.08" size="1.778" layer="96"/>
 </instance>
 <instance part="ENC2" gate="G$1" x="106.68" y="20.32" smashed="yes" rot="R270">
 <attribute name="PART" x="106.68" y="24.13" size="1.27" layer="95"/>
