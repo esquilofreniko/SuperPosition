@@ -1,8 +1,8 @@
 void hardware_init(){
+  button_init();
+  encoder_init();
   keypad_init();
   oled_init();
-  encoder_init();
-  button_init();
 }
 
 void hardware_read(){

@@ -1,4 +1,3 @@
-//Encoder
 #define ENCODER_DO_NOT_USE_INTERRUPTS
 #include <Encoder.h>
 const byte enc1button = 0;

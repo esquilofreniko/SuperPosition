@@ -10,9 +10,9 @@ int pS_morph = 0;
 
 void probSeq(){
   pS_midi();
-  if(key_pressed == 1){
+  if(kp.pressed == 1){
     for(int i=0;i<16;i++){
-      if(key[i]==1){
+      if(kp.key[i]==1){
         if(pS_set == 0){
           pS_patt[pS_selected][i] = (pS_patt[pS_selected][i]+1)% 2;
           pS_setPatt(pS_selected,i);
@@ -119,30 +119,30 @@ void pS_drawMatrixLED(int k){
       if(k == pS_selected){
         if(pS_set==0){
           if(pS_patt[k][(i%4)+(j*4)] == 0){
-            kp_set((i%4)+(j*4),0);
+            kp.set((i%4)+(j*4),0);
           }
           if(pS_patt[k][(i%4)+(j*4)] == 1){
-            kp_set((i%4)+(j*4),1);
+            kp.set((i%4)+(j*4),1);
           }
         }
         if(pS_set==1){
           if(pS_probs[k][(i%4)+(j*4)] < pS_prob){
-            kp_set((i%4)+(j*4),4);
+            kp.set((i%4)+(j*4),4);
           }
           if(pS_probs[k][(i%4)+(j*4)] > pS_prob){
-            kp_set((i%4)+(j*4),2);
+            kp.set((i%4)+(j*4),2);
           }
           if(pS_probs[k][(i%4)+(j*4)] == 0){
-            kp_set((i%4)+(j*4),0);
+            kp.set((i%4)+(j*4),0);
           }
           if(pS_probs[k][(i%4)+(j*4)] == pS_prob){
-            kp_set((i%4)+(j*4),1);
+            kp.set((i%4)+(j*4),1);
           }
         }
       }
     }
   }
-  kp_show();
+  kp.show();
 }
 
 void pS_setPatt(int _i, int _pos){
@@ -151,12 +151,12 @@ void pS_setPatt(int _i, int _pos){
   oled_drawText((_pos%4)+(_i*4),(_pos/4)+4,invertedText,String(dectohex(pS_patt[_i][_pos])).c_str());
   if(_i == pS_selected){
     if(pS_patt[_i][_pos] == 0){
-      kp_set(_pos,0);
+      kp.set(_pos,0);
     }
     if(pS_patt[_i][_pos] == 1){
-      kp_set(_pos,1);
+      kp.set(_pos,1);
     }
-    kp_show();
+    kp.show();
   }
   invertedText=0;
 }
@@ -167,12 +167,12 @@ void pS_setProb(int _i, int _pos){
   oled_drawText((_pos%4)+(_i*4),(_pos/4)+4,invertedText,String(dectohex(pS_probs[_i][_pos])).c_str());
   if(_i == pS_selected){
     if(pS_probs[_i][_pos] != pS_prob){
-      kp_set(_pos,0);
+      kp.set(_pos,0);
     }
     if(pS_probs[_i][_pos] == pS_prob){
-      kp_set(_pos,1);
+      kp.set(_pos,1);
     }
-    kp_show();
+    kp.show();
   }
   invertedText=0;
 }
@@ -203,24 +203,24 @@ void pS_midi(){
     midiclock = 0;
     if(pS_set == 0){
       if(pS_patt[pS_selected][pS_pos] == 0){
-        kp_set(pS_pos,0);
+        kp.set(pS_pos,0);
       }
       if(pS_patt[pS_selected][pS_pos] == 1){
-        kp_set(pS_pos,1);
+        kp.set(pS_pos,1);
       }
     }
     if(pS_set == 1){
       if(pS_probs[pS_selected][pS_pos] < pS_prob){
-        kp_set(pS_pos,4);
+        kp.set(pS_pos,4);
       }
       if(pS_probs[pS_selected][pS_pos] > pS_prob){
-        kp_set(pS_pos,2);
+        kp.set(pS_pos,2);
       }
       if(pS_probs[pS_selected][pS_pos] == 0){
-        kp_set(pS_pos,0);
+        kp.set(pS_pos,0);
       }
       if(pS_probs[pS_selected][pS_pos] == pS_prob){
-        kp_set(pS_pos,1);
+        kp.set(pS_pos,1);
       }
     }
     //Update Position
@@ -249,11 +249,11 @@ void pS_midi(){
     }
     //Write New Position Display
     if(pS_patt[pS_selected][pS_pos] == 0){
-      kp_set(pS_pos,6);
+      kp.set(pS_pos,6);
     }
     if(pS_patt[pS_selected][pS_pos] == 1){
-      kp_set(pS_pos,3);
+      kp.set(pS_pos,3);
     }
-    kp_show();
+    kp.show();
   }
 }

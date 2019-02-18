@@ -1,4 +1,3 @@
-//u8x8
 #include <Arduino.h>
 #include <U8x8lib.h>
 #include <SPI.h>
