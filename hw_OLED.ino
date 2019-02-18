@@ -10,6 +10,7 @@
 #define OLED_MOSI   11
 #define OLED_CLK   13
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT,&SPI,OLED_DC,OLED_RESET,OLED_CS);
+bool invertedText = 0;
 
 void oled_init(){
 if(!display.begin(SSD1306_SWITCHCAPVCC)) {

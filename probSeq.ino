@@ -7,7 +7,6 @@ int pS_set = 0;
 int pS_param = 0;
 int pS_pos = 0;
 int pS_morph = 0;
-bool invertedText = 0;
 
 void probSeq(){
   pS_midi();
@@ -35,7 +34,7 @@ void probSeq(){
   if(b2_released == 1){
 
   }
-  if(b1_held == 1){
+  if(b1_held_t == 1){
     for(int i=0;i<16;i++){
       if(pS_set == 0){
         pS_patt[pS_selected][i] = 0;
@@ -46,7 +45,7 @@ void probSeq(){
     }
     pS_drawMatrix(pS_selected);
   }
-  if(b2_held == 1){
+  if(b2_held_t == 1){
     for(int i=0;i<16;i++){
       if(pS_set == 0){
         pS_patt[pS_selected][i] = 1;

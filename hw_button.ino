@@ -4,6 +4,8 @@ int b1_released = 0;
 int b2_released = 0;
 bool b1_pressed = 0;
 bool b2_pressed = 0;
+int b1_lastMillis;
+int b2_lastMillis;
 bool b1_held = 0;
 bool b2_held = 0;
 bool b1_held_old;
@@ -12,7 +14,7 @@ bool b1_held_t;
 bool b2_held_t;
 int b1_held_count = 0;
 int b2_held_count = 0;
-int held_time = 20000;
+int held_time = 500;
 
 void button_init(){
   pinMode(b1,INPUT_PULLUP);
@@ -24,19 +26,19 @@ void button_read(){
   b2_held_t = 0;
   if((digitalRead(b1)+1)%2 != b1_pressed){
     b1_pressed = (digitalRead(b1)+1)%2;
-    if(b1_pressed == 1){b1_released = -1;}
+    if(b1_pressed == 1){b1_released = -1;b1_lastMillis = millis();}
   }
   if((digitalRead(b2)+1)%2 != b2_pressed){
     b2_pressed = (digitalRead(b2)+1)%2;
-    if(b2_pressed == 1){b2_released = -1;}
+    if(b2_pressed == 1){b2_released = -1;b2_lastMillis = millis();}
   }
   if(b1_released==1){b1_released = 0;}
   if(b2_released==1){b2_released = 0;}
   if(b1_pressed == 0 && b1_released == -1){b1_released = 1;}
   if(b2_pressed == 0 && b2_released == -1){b2_released = 1;}
-  if(b1_pressed == 1){b1_held_count++;}
+  if(b1_pressed == 1){b1_held_count = millis() - b1_lastMillis;}
   else{b1_held = 0; b1_held_count = 0;}
-  if(b2_pressed == 1){b2_held_count++;}
+  if(b2_pressed == 1){b2_held_count = millis() - b2_lastMillis;}
   else{b2_held = 0; b2_held_count = 0;}
   if(b1_held_count > held_time){b1_held = 1;b1_released=0;}
   if(b2_held_count > held_time){b2_held = 1;b2_released=0;}

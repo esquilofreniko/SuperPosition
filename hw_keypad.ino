@@ -4,6 +4,8 @@ Adafruit_NeoTrellis trellis;
 bool key [16];
 bool key_pressed = 0;
 bool key_released = 0;
+int kp_count = 0;
+int kp_lastMillis = 0;
 
 void keypad_init(){
   if (!trellis.begin()) {while(1);}
@@ -27,8 +29,10 @@ TrellisCallback blink(keyEvent evt){
 void keypad_read(){
   key_pressed = 0;
   key_released = 0;
-  if(count%2000==0){
+  kp_count = millis() - kp_lastMillis;
+  if(kp_count > 50){
     trellis.read();
+    kp_lastMillis = millis();
   }
 }
 

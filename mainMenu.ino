@@ -1,6 +1,6 @@
 int mM_selected = 0;
 const int mM_size = 2;
-String mM_menu[mM_size] = {" MIDI Setup ", " Prob Seq "};
+String mM_menu[mM_size] = {"MIDI Setup", "Prob Seq"};
 
 void mainMenu(){
   if(enc1_status != 0){
