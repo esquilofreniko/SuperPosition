@@ -1772,18 +1772,18 @@ Comments, suggestions and bug reports please send to: &lt;b&gt;&lt;a href="mailt
 <part name="GND2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="P+2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="+3V1" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
-<part name="U2" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
-<part name="U1" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
-<part name="U3" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
-<part name="U4" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
-<part name="U5" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
-<part name="U6" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
-<part name="U7" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
-<part name="U8" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
-<part name="U9" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
-<part name="U10" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
-<part name="U11" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
-<part name="U12" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
+<part name="CV3" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
+<part name="CV4" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
+<part name="CV2" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
+<part name="CV1" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
+<part name="IN4" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
+<part name="IN3" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
+<part name="TR4" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
+<part name="TR3" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
+<part name="TR2" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
+<part name="TR1" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
+<part name="IN2" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
+<part name="IN1" library="MusicThingModular" deviceset="THONKICONN" device="NEW"/>
 <part name="ENC1" library="switch-alps" library_urn="urn:adsk.eagle:library:373" deviceset="EC12E_SW" device="" package3d_urn="urn:adsk.eagle:package:27083/1"/>
 <part name="GND4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
@@ -1812,8 +1812,8 @@ Comments, suggestions and bug reports please send to: &lt;b&gt;&lt;a href="mailt
 <attribute name="MPN" x="-50.8" y="-40.64" size="1.778" layer="96" display="off"/>
 </instance>
 <instance part="SV1" gate="G$1" x="-62.23" y="66.04" smashed="yes">
-<attribute name="VALUE" x="-81.28" y="76.2" size="1.778" layer="96"/>
-<attribute name="NAME" x="-62.23" y="79.502" size="1.778" layer="95"/>
+<attribute name="VALUE" x="-73.66" y="76.2" size="1.778" layer="96"/>
+<attribute name="NAME" x="-72.39" y="79.502" size="1.778" layer="95"/>
 </instance>
 <instance part="GND3" gate="1" x="-86.36" y="-30.48" smashed="yes">
 <attribute name="VALUE" x="-88.9" y="-33.02" size="1.778" layer="96"/>
@@ -1840,40 +1840,40 @@ Comments, suggestions and bug reports please send to: &lt;b&gt;&lt;a href="mailt
 <instance part="+3V1" gate="G$1" x="-15.24" y="-33.02" smashed="yes" rot="R270">
 <attribute name="VALUE" x="-15.24" y="-33.02" size="1.778" layer="96"/>
 </instance>
-<instance part="U2" gate="G$1" x="63.5" y="20.32" smashed="yes">
+<instance part="CV3" gate="G$1" x="63.5" y="20.32" smashed="yes">
 <attribute name="NAME" x="60.96" y="24.384" size="1.778" layer="95"/>
 </instance>
-<instance part="U1" gate="G$1" x="63.5" y="30.48" smashed="yes">
+<instance part="CV4" gate="G$1" x="63.5" y="30.48" smashed="yes">
 <attribute name="NAME" x="60.96" y="34.544" size="1.778" layer="95"/>
 </instance>
-<instance part="U3" gate="G$1" x="63.5" y="10.16" smashed="yes">
+<instance part="CV2" gate="G$1" x="63.5" y="10.16" smashed="yes">
 <attribute name="NAME" x="60.96" y="14.224" size="1.778" layer="95"/>
 </instance>
-<instance part="U4" gate="G$1" x="63.5" y="0" smashed="yes">
+<instance part="CV1" gate="G$1" x="63.5" y="0" smashed="yes">
 <attribute name="NAME" x="60.96" y="4.064" size="1.778" layer="95"/>
 </instance>
-<instance part="U5" gate="G$1" x="63.5" y="-10.16" smashed="yes">
+<instance part="IN4" gate="G$1" x="63.5" y="-10.16" smashed="yes">
 <attribute name="NAME" x="60.96" y="-6.096" size="1.778" layer="95"/>
 </instance>
-<instance part="U6" gate="G$1" x="63.5" y="-20.32" smashed="yes">
+<instance part="IN3" gate="G$1" x="63.5" y="-20.32" smashed="yes">
 <attribute name="NAME" x="60.96" y="-16.256" size="1.778" layer="95"/>
 </instance>
-<instance part="U7" gate="G$1" x="63.5" y="-30.48" smashed="yes">
+<instance part="TR4" gate="G$1" x="63.5" y="-30.48" smashed="yes">
 <attribute name="NAME" x="60.96" y="-26.416" size="1.778" layer="95"/>
 </instance>
-<instance part="U8" gate="G$1" x="63.5" y="-40.64" smashed="yes">
+<instance part="TR3" gate="G$1" x="63.5" y="-40.64" smashed="yes">
 <attribute name="NAME" x="60.96" y="-36.576" size="1.778" layer="95"/>
 </instance>
-<instance part="U9" gate="G$1" x="63.5" y="-50.8" smashed="yes">
+<instance part="TR2" gate="G$1" x="63.5" y="-50.8" smashed="yes">
 <attribute name="NAME" x="60.96" y="-46.736" size="1.778" layer="95"/>
 </instance>
-<instance part="U10" gate="G$1" x="63.5" y="-60.96" smashed="yes">
+<instance part="TR1" gate="G$1" x="63.5" y="-60.96" smashed="yes">
 <attribute name="NAME" x="60.96" y="-56.896" size="1.778" layer="95"/>
 </instance>
-<instance part="U11" gate="G$1" x="63.5" y="-71.12" smashed="yes">
+<instance part="IN2" gate="G$1" x="63.5" y="-71.12" smashed="yes">
 <attribute name="NAME" x="60.96" y="-67.056" size="1.778" layer="95"/>
 </instance>
-<instance part="U12" gate="G$1" x="63.5" y="-81.28" smashed="yes">
+<instance part="IN1" gate="G$1" x="63.5" y="-81.28" smashed="yes">
 <attribute name="NAME" x="60.96" y="-77.216" size="1.778" layer="95"/>
 </instance>
 <instance part="ENC1" gate="G$1" x="15.24" y="-58.42" smashed="yes" rot="R270">
@@ -1982,34 +1982,34 @@ Comments, suggestions and bug reports please send to: &lt;b&gt;&lt;a href="mailt
 <wire x1="5.08" y1="-58.42" x2="12.7" y2="-58.42" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U12" gate="G$1" pin="SLEEVE"/>
+<pinref part="IN1" gate="G$1" pin="SLEEVE"/>
 <pinref part="GND6" gate="1" pin="GND"/>
 <wire x1="58.42" y1="-83.82" x2="53.34" y2="-83.82" width="0.1524" layer="91"/>
-<pinref part="U11" gate="G$1" pin="SLEEVE"/>
+<pinref part="IN2" gate="G$1" pin="SLEEVE"/>
 <wire x1="53.34" y1="-83.82" x2="50.8" y2="-83.82" width="0.1524" layer="91"/>
 <wire x1="53.34" y1="-83.82" x2="53.34" y2="-73.66" width="0.1524" layer="91"/>
 <wire x1="53.34" y1="-73.66" x2="58.42" y2="-73.66" width="0.1524" layer="91"/>
 <junction x="53.34" y="-83.82"/>
-<pinref part="U10" gate="G$1" pin="SLEEVE"/>
+<pinref part="TR1" gate="G$1" pin="SLEEVE"/>
 <wire x1="53.34" y1="-73.66" x2="53.34" y2="-63.5" width="0.1524" layer="91"/>
 <wire x1="53.34" y1="-63.5" x2="58.42" y2="-63.5" width="0.1524" layer="91"/>
 <junction x="53.34" y="-73.66"/>
-<pinref part="U9" gate="G$1" pin="SLEEVE"/>
+<pinref part="TR2" gate="G$1" pin="SLEEVE"/>
 <wire x1="53.34" y1="-63.5" x2="53.34" y2="-53.34" width="0.1524" layer="91"/>
 <wire x1="53.34" y1="-53.34" x2="58.42" y2="-53.34" width="0.1524" layer="91"/>
 <junction x="53.34" y="-63.5"/>
-<pinref part="U8" gate="G$1" pin="SLEEVE"/>
+<pinref part="TR3" gate="G$1" pin="SLEEVE"/>
 <wire x1="53.34" y1="-53.34" x2="53.34" y2="-43.18" width="0.1524" layer="91"/>
 <wire x1="53.34" y1="-43.18" x2="58.42" y2="-43.18" width="0.1524" layer="91"/>
 <junction x="53.34" y="-53.34"/>
-<pinref part="U7" gate="G$1" pin="SLEEVE"/>
+<pinref part="TR4" gate="G$1" pin="SLEEVE"/>
 <wire x1="53.34" y1="-43.18" x2="53.34" y2="-33.02" width="0.1524" layer="91"/>
 <wire x1="53.34" y1="-33.02" x2="58.42" y2="-33.02" width="0.1524" layer="91"/>
 <junction x="53.34" y="-43.18"/>
-<pinref part="U1" gate="G$1" pin="SLEEVE"/>
+<pinref part="CV4" gate="G$1" pin="SLEEVE"/>
 <wire x1="53.34" y1="27.94" x2="53.34" y2="17.78" width="0.1524" layer="91"/>
 <junction x="53.34" y="-33.02"/>
-<pinref part="U6" gate="G$1" pin="SLEEVE"/>
+<pinref part="IN3" gate="G$1" pin="SLEEVE"/>
 <wire x1="53.34" y1="17.78" x2="53.34" y2="7.62" width="0.1524" layer="91"/>
 <wire x1="53.34" y1="7.62" x2="53.34" y2="-2.54" width="0.1524" layer="91"/>
 <wire x1="53.34" y1="-2.54" x2="53.34" y2="-12.7" width="0.1524" layer="91"/>
@@ -2017,16 +2017,16 @@ Comments, suggestions and bug reports please send to: &lt;b&gt;&lt;a href="mailt
 <wire x1="53.34" y1="-22.86" x2="53.34" y2="-33.02" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="-22.86" x2="53.34" y2="-22.86" width="0.1524" layer="91"/>
 <junction x="53.34" y="-22.86"/>
-<pinref part="U5" gate="G$1" pin="SLEEVE"/>
+<pinref part="IN4" gate="G$1" pin="SLEEVE"/>
 <wire x1="58.42" y1="-12.7" x2="53.34" y2="-12.7" width="0.1524" layer="91"/>
 <junction x="53.34" y="-12.7"/>
-<pinref part="U4" gate="G$1" pin="SLEEVE"/>
+<pinref part="CV1" gate="G$1" pin="SLEEVE"/>
 <wire x1="58.42" y1="-2.54" x2="53.34" y2="-2.54" width="0.1524" layer="91"/>
 <junction x="53.34" y="-2.54"/>
-<pinref part="U3" gate="G$1" pin="SLEEVE"/>
+<pinref part="CV2" gate="G$1" pin="SLEEVE"/>
 <wire x1="58.42" y1="7.62" x2="53.34" y2="7.62" width="0.1524" layer="91"/>
 <junction x="53.34" y="7.62"/>
-<pinref part="U2" gate="G$1" pin="SLEEVE"/>
+<pinref part="CV3" gate="G$1" pin="SLEEVE"/>
 <wire x1="58.42" y1="17.78" x2="53.34" y2="17.78" width="0.1524" layer="91"/>
 <junction x="53.34" y="17.78"/>
 <wire x1="58.42" y1="27.94" x2="53.34" y2="27.94" width="0.1524" layer="91"/>

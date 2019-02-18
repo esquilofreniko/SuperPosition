@@ -10,16 +10,16 @@ void mainMenu(){
     oled_draw_bg = 1;
   };
   if(oled_draw_bg == 1){
+    oled_clear();
     for(int i=0;i<mM_size;i++){
-      if(i==mM_selected){
-        u8x8.setInverseFont(1);
-      }
-      u8x8.drawString(0,i,mM_menu[i].c_str());
-      u8x8.setInverseFont(0);
+      if(i==mM_selected){oled_drawText(0,i,1,mM_menu[i].c_str());}
+      else{oled_drawText(0,i,0,mM_menu[i].c_str());}
     }
+    oled_show();
   }
   if(enc1_released == 1){
     mode = mM_selected + 1;
     oled_clear();
+    oled_show();
   }
 }
