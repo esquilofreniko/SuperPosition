@@ -15,11 +15,11 @@ void mainMenu(){
       if(i==mM_selected){oled_drawText(0,i,1,mM_menu[i].c_str());}
       else{oled_drawText(0,i,0,mM_menu[i].c_str());}
     }
-    oled_show();
+//    oled_show();
   }
   if(enc1_released == 1){
     mode = mM_selected + 1;
     oled_clear();
-    oled_show();
+//    oled_show();
   }
 }

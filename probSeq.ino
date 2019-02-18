@@ -31,9 +31,7 @@ void probSeq(){
     pS_drawInfo();
     for(int i=0;i<4;i++){pS_drawMatrix(i);};
   }
-  if(b2_released == 1){
-
-  }
+  if(b2_released == 1){}
   if(b1_held_t == 1){
     for(int i=0;i<16;i++){
       if(pS_set == 0){
@@ -56,12 +54,8 @@ void probSeq(){
     }
     pS_drawMatrix(pS_selected);
   }
-  if(enc1_released == 1){
-    
-    }
-  if(enc2_released == 1){
-    
-    }
+  if(enc1_released == 1){}
+  if(enc2_released == 1){}
   if(enc1_status != 0){
     if(pS_set == 0){
       if(pS_param == 0){
@@ -96,13 +90,14 @@ void pS_drawBg(){
   oled_clear();
   pS_drawInfo();
   for(int i=0;i<4;i++){pS_drawMatrix(i);}
-  oled_show();
+//  oled_show();
 }
 
 void pS_drawMatrix(int k){
-  oled_draw_bg = 1;
+//  oled_draw_bg = 1;
   if(k==pS_selected){
-    oled_drawBox(k*32-2,31,33,33);
+    invertedText=1;
+//    oled_drawBox(k*32-2,31,33,33);
   }
   for(int i=0;i<4;i++){
     for(int j=0;j<4;j++){
@@ -114,6 +109,7 @@ void pS_drawMatrix(int k){
       }
     }
   }
+  invertedText=0;
   pS_drawMatrixLED(k);
 }
 
@@ -149,23 +145,10 @@ void pS_drawMatrixLED(int k){
   kp_show();
 }
 
-void pS_setProb(int _i, int _pos){
-  oled_draw_bg = 1;
-  oled_drawText(((_pos%4)*2)+((_i%2)*8),((_pos/4)*1)+((_i/2)*4)+8,invertedText,String(dectohex(pS_probs[_i][_pos])).c_str());
-  if(_i == pS_selected){
-    if(pS_probs[_i][_pos] != pS_prob){
-      kp_set(_pos,0);
-    }
-    if(pS_probs[_i][_pos] == pS_prob){
-      kp_set(_pos,1);
-    }
-    kp_show();
-  }
-}
-
 void pS_setPatt(int _i, int _pos){
-  oled_draw_bg = 1;
-  oled_drawText(((_pos%4)*2)+((_i%2)*8),((_pos/4)*1)+((_i/2)*4)+8,invertedText,String(dectohex(pS_patt[_i][_pos])).c_str());
+//  oled_draw_bg = 1;
+  if(_i == pS_selected){invertedText=1;}
+  oled_drawText((_pos%4)+(_i*4),(_pos/4)+4,invertedText,String(dectohex(pS_patt[_i][_pos])).c_str());
   if(_i == pS_selected){
     if(pS_patt[_i][_pos] == 0){
       kp_set(_pos,0);
@@ -175,10 +158,27 @@ void pS_setPatt(int _i, int _pos){
     }
     kp_show();
   }
+  invertedText=0;
+}
+
+void pS_setProb(int _i, int _pos){
+//  oled_draw_bg = 1;
+  if(_i == pS_selected){invertedText=1;}
+  oled_drawText((_pos%4)+(_i*4),(_pos/4)+4,invertedText,String(dectohex(pS_probs[_i][_pos])).c_str());
+  if(_i == pS_selected){
+    if(pS_probs[_i][_pos] != pS_prob){
+      kp_set(_pos,0);
+    }
+    if(pS_probs[_i][_pos] == pS_prob){
+      kp_set(_pos,1);
+    }
+    kp_show();
+  }
+  invertedText=0;
 }
 
 void pS_drawInfo(){
-  oled_draw_bg = 1;
+//  oled_draw_bg = 1;
   if(pS_set == 0){
     if(pS_param == 0){invertedText=1;}
     oled_drawText(0,1,invertedText,String("Mrph:" + dectohex(pS_morph)).c_str());
