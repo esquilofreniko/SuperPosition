@@ -1,49 +1,55 @@
-const int b1 = 17;
-const int b2 = 12;
-int b1_released = 0;
-int b2_released = 0;
-bool b1_pressed = 0;
-bool b2_pressed = 0;
-int b1_lastMillis;
-int b2_lastMillis;
-bool b1_held = 0;
-bool b2_held = 0;
-bool b1_held_old;
-bool b2_held_old;
-bool b1_held_t;
-bool b2_held_t;
-int b1_held_count = 0;
-int b2_held_count = 0;
-int held_time = 500;
+const byte b1pin = 17;
+const byte b2pin = 12;
+
+class Button {
+    const byte pin;
+    bool state;
+    unsigned int buttonDownMs;
+
+  public:
+  bool clicked;
+  bool held;
+  bool held_t;
+  
+  Button(byte _pin):
+    pin(_pin)
+  {}
+  
+  void init() {
+    pinMode(pin, INPUT_PULLUP);
+    state = 1;
+  }
+
+  void read() {
+    clicked = 0;
+    bool prevHeld = held;
+    held = 0;
+    held_t = 0;
+    int prevState = state;
+    state = digitalRead(pin);
+    if (prevState == 1 && state == 0){buttonDownMs = millis();}
+    else if (prevState == 0 && state == 1) {
+      if (millis() - buttonDownMs < 50) {}
+      else if (millis() - buttonDownMs < 1000) {clicked = 1;}
+    }
+    if(state == 0){
+      if(millis()-buttonDownMs >= 1000){held = 1;}
+    }
+    if(prevHeld == 0 && held == 1){
+      held_t = 1;
+    }
+  }
+};
+
+Button b1(b1pin);
+Button b2(b2pin);
 
 void button_init(){
-  pinMode(b1,INPUT_PULLUP);
-  pinMode(b2,INPUT_PULLUP);
+  b1.init();
+  b2.init();
 }
 
 void button_read(){
-  b1_held_t = 0;
-  b2_held_t = 0;
-  if((digitalRead(b1)+1)%2 != b1_pressed){
-    b1_pressed = (digitalRead(b1)+1)%2;
-    if(b1_pressed == 1){b1_released = -1;b1_lastMillis = millis();}
-  }
-  if((digitalRead(b2)+1)%2 != b2_pressed){
-    b2_pressed = (digitalRead(b2)+1)%2;
-    if(b2_pressed == 1){b2_released = -1;b2_lastMillis = millis();}
-  }
-  if(b1_released==1){b1_released = 0;}
-  if(b2_released==1){b2_released = 0;}
-  if(b1_pressed == 0 && b1_released == -1){b1_released = 1;}
-  if(b2_pressed == 0 && b2_released == -1){b2_released = 1;}
-  if(b1_pressed == 1){b1_held_count = millis() - b1_lastMillis;}
-  else{b1_held = 0; b1_held_count = 0;}
-  if(b2_pressed == 1){b2_held_count = millis() - b2_lastMillis;}
-  else{b2_held = 0; b2_held_count = 0;}
-  if(b1_held_count > held_time){b1_held = 1;b1_released=0;}
-  if(b2_held_count > held_time){b2_held = 1;b2_released=0;}
-  if(b1_held_old != b1_held && b1_held == 1){b1_held_t = 1;};
-  if(b2_held_old != b2_held && b2_held == 1){b2_held_t = 1;};
-  b1_held_old = b1_held;
-  b2_held_old = b2_held;
+  b1.read();
+  b2.read();
 }

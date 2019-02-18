@@ -3,8 +3,8 @@ const int mM_size = 2;
 String mM_menu[mM_size] = {"MIDI Setup", "Prob Seq"};
 
 void mainMenu(){
-  if(enc1_status != 0){
-    mM_selected += enc1_status;
+  if(enc1.rotation != 0){
+    mM_selected += enc1.rotation;
     if(mM_selected < 0){mM_selected = 0;}
     if(mM_selected > 1){mM_selected = 1;}
     oled_draw_bg = 1;
@@ -17,7 +17,7 @@ void mainMenu(){
     }
 //    oled_show();
   }
-  if(enc1_released == 1){
+  if(enc1.clicked == 1){
     mode = mM_selected + 1;
     oled_clear();
 //    oled_show();

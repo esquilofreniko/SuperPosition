@@ -30,7 +30,7 @@ void keypad_read(){
   key_pressed = 0;
   key_released = 0;
   kp_count = millis() - kp_lastMillis;
-  if(kp_count > 50){
+  if(kp_count >= 50){
     trellis.read();
     kp_lastMillis = millis();
   }

@@ -25,14 +25,14 @@ void probSeq(){
       }
     }
   }
-  if(b1_released== 1){
+  if(b1.clicked== 1){
     pS_set += 1;
     pS_set %= 2;
     pS_drawInfo();
     for(int i=0;i<4;i++){pS_drawMatrix(i);};
   }
-  if(b2_released == 1){}
-  if(b1_held_t == 1){
+  if(b2.clicked == 1){}
+  if(b1.held_t == 1){
     for(int i=0;i<16;i++){
       if(pS_set == 0){
         pS_patt[pS_selected][i] = 0;
@@ -43,7 +43,7 @@ void probSeq(){
     }
     pS_drawMatrix(pS_selected);
   }
-  if(b2_held_t == 1){
+  if(b2.held_t == 1){
     for(int i=0;i<16;i++){
       if(pS_set == 0){
         pS_patt[pS_selected][i] = 1;
@@ -54,12 +54,12 @@ void probSeq(){
     }
     pS_drawMatrix(pS_selected);
   }
-  if(enc1_released == 1){}
-  if(enc2_released == 1){}
-  if(enc1_status != 0){
+  if(enc1.clicked == 1){}
+  if(enc2.clicked == 1){}
+  if(enc1.rotation != 0){
     if(pS_set == 0){
       if(pS_param == 0){
-        pS_morph += enc1_status;
+        pS_morph += enc1.rotation;
         if(pS_morph>10){pS_morph=10;}
         if(pS_morph<0){pS_morph=0;}
         pS_drawInfo();
@@ -67,7 +67,7 @@ void probSeq(){
     }
     if(pS_set == 1){
       if(pS_param == 0){
-        pS_prob += enc1_status;
+        pS_prob += enc1.rotation;
         if(pS_prob>10){pS_prob = 10;}
         if(pS_prob<0){pS_prob = 0;}
         pS_drawInfo();
@@ -75,8 +75,8 @@ void probSeq(){
       }
     }
   }
-  if(enc2_status != 0){
-    pS_selected+= enc2_status;
+  if(enc2.rotation != 0){
+    pS_selected+= enc2.rotation;
     if(pS_selected>3){pS_selected = 0;}
     if(pS_selected<0){pS_selected = 3;}
     pS_drawMatrix(pS_selected);
