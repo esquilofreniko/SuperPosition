@@ -39,11 +39,11 @@ void encoder_read(){
   enc1_status = 0;
   if((digitalRead(enc1button)+1)%2 != enc1_pressed){
     enc1_pressed = (digitalRead(enc1button)+1)%2;
-    if(enc1_pressed == 1){enc1_released = -1;}
+    if(enc1_pressed == 1){enc1_released = -1;enc1_lastMillis = millis();}
   }
   if(enc1_released==1){enc1_released = 0;}
   if(enc1_pressed == 0 && enc1_released == -1){enc1_released = 1;}
-  if(enc1_pressed == 1){enc1_held_count++;}
+  if(enc1_pressed == 1){enc1_held_count = millis() - enc1_lastMillis;}
   else{enc1_held = 0; enc1_held_count = 0;}
   if(enc1_held_count > held_time){enc1_held = 1;enc1_released = 0;}
   
@@ -65,11 +65,11 @@ void encoder_read(){
   enc2_status = 0;
   if((digitalRead(enc2button)+1)%2 != enc2_pressed){
     enc2_pressed = (digitalRead(enc2button)+1)%2;
-    if(enc2_pressed == 1){enc2_released = -1;}
+    if(enc2_pressed == 1){enc2_released = -1;enc2_lastMillis = millis();}
   }
   if(enc2_released==1){enc2_released = 0;}
   if(enc2_pressed == 0 && enc2_released == -1){enc2_released = 1;}
-  if(enc2_pressed == 1){enc2_held_count++;}
+  if(enc2_pressed == 1){enc2_held_count = millis() - enc2_lastMillis;;}
   else{enc2_held = 0; enc2_held_count = 0;}
   if(enc2_held_count > held_time){enc2_held = 1;enc2_released = 0;}
   
