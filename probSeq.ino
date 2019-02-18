@@ -90,26 +90,21 @@ void pS_drawBg(){
   oled_clear();
   pS_drawInfo();
   for(int i=0;i<4;i++){pS_drawMatrix(i);}
-//  oled_show();
 }
 
 void pS_drawMatrix(int k){
-//  oled_draw_bg = 1;
-  if(k==pS_selected){
-    invertedText=1;
-//    oled_drawBox(k*32-2,31,33,33);
-  }
+  if(k==pS_selected){oled.invertedText=1;}
   for(int i=0;i<4;i++){
     for(int j=0;j<4;j++){
       if(pS_set==0){
-        oled_drawText((i*1)+(k*4),(j*1)+4,invertedText,String(dectohex(pS_patt[k][(i%4)+(j*4)])).c_str());
+        oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,String(dectohex(pS_patt[k][(i%4)+(j*4)])).c_str());
       }
       if(pS_set==1){
-        oled_drawText((i*1)+(k*4),(j*1)+4,invertedText,String(dectohex(pS_probs[k][(i%4)+(j*4)])).c_str());
+        oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,String(dectohex(pS_probs[k][(i%4)+(j*4)])).c_str());
       }
     }
   }
-  invertedText=0;
+  oled.invertedText=0;
   pS_drawMatrixLED(k);
 }
 
@@ -146,9 +141,8 @@ void pS_drawMatrixLED(int k){
 }
 
 void pS_setPatt(int _i, int _pos){
-//  oled_draw_bg = 1;
-  if(_i == pS_selected){invertedText=1;}
-  oled_drawText((_pos%4)+(_i*4),(_pos/4)+4,invertedText,String(dectohex(pS_patt[_i][_pos])).c_str());
+  if(_i == pS_selected){oled.invertedText=1;}
+  oled.drawText((_pos%4)+(_i*4),(_pos/4)+4,oled.invertedText,String(dectohex(pS_patt[_i][_pos])).c_str());
   if(_i == pS_selected){
     if(pS_patt[_i][_pos] == 0){
       kp.set(_pos,0);
@@ -158,13 +152,12 @@ void pS_setPatt(int _i, int _pos){
     }
     kp.show();
   }
-  invertedText=0;
+  oled.invertedText=0;
 }
 
 void pS_setProb(int _i, int _pos){
-//  oled_draw_bg = 1;
-  if(_i == pS_selected){invertedText=1;}
-  oled_drawText((_pos%4)+(_i*4),(_pos/4)+4,invertedText,String(dectohex(pS_probs[_i][_pos])).c_str());
+  if(_i == pS_selected){oled.invertedText=1;}
+  oled.drawText((_pos%4)+(_i*4),(_pos/4)+4,oled.invertedText,String(dectohex(pS_probs[_i][_pos])).c_str());
   if(_i == pS_selected){
     if(pS_probs[_i][_pos] != pS_prob){
       kp.set(_pos,0);
@@ -174,27 +167,26 @@ void pS_setProb(int _i, int _pos){
     }
     kp.show();
   }
-  invertedText=0;
+  oled.invertedText=0;
 }
 
 void pS_drawInfo(){
-//  oled_draw_bg = 1;
   if(pS_set == 0){
-    if(pS_param == 0){invertedText=1;}
-    oled_drawText(0,1,invertedText,String("Mrph:" + dectohex(pS_morph)).c_str());
-    invertedText=0;
-    invertedText=1;
+    if(pS_param == 0){oled.invertedText=1;}
+    oled.drawText(0,1,oled.invertedText,String("Mrph:" + dectohex(pS_morph)).c_str());
+    oled.invertedText=0;
+    oled.invertedText=1;
   }
-  oled_drawText(0,0,invertedText,"Patt");
-  invertedText = 0;
+  oled.drawText(0,0,oled.invertedText,"Patt");
+  oled.invertedText = 0;
   if(pS_set == 1){
-    if(pS_param == 0){invertedText=1;}
-    oled_drawText(0,1,invertedText,String("Prob:" + dectohex(pS_prob)).c_str());
-    invertedText=0;
-    invertedText=1;
+    if(pS_param == 0){oled.invertedText=1;}
+    oled.drawText(0,1,oled.invertedText,String("Prob:" + dectohex(pS_prob)).c_str());
+    oled.invertedText=0;
+    oled.invertedText=1;
   }
-  oled_drawText(4,0,invertedText,String("Prob").c_str());
-  invertedText=0;
+  oled.drawText(4,0,oled.invertedText,String("Prob").c_str());
+  oled.invertedText=0;
 }
 
 void pS_midi(){

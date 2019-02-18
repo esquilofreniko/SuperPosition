@@ -10,16 +10,14 @@ void mainMenu(){
     oled_draw_bg = 1;
   };
   if(oled_draw_bg == 1){
-    oled_clear();
+    oled.clear();
     for(int i=0;i<mM_size;i++){
-      if(i==mM_selected){oled_drawText(0,i,1,mM_menu[i].c_str());}
-      else{oled_drawText(0,i,0,mM_menu[i].c_str());}
+      if(i==mM_selected){oled.drawText(0,i,1,mM_menu[i].c_str());}
+      else{oled.drawText(0,i,0,mM_menu[i].c_str());}
     }
-//    oled_show();
   }
   if(enc1.clicked == 1){
     mode = mM_selected + 1;
-    oled_clear();
-//    oled_show();
+    oled.clear();
   }
 }

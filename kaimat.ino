@@ -1,14 +1,11 @@
 #include "Adafruit_NeoTrellis.h"
-//MIDI
-int midiIn_chan = 5;
-int midiOut_chan[4] = {1,2,3,4};
 //Globals
 int mode = 2;
 int oldmode = mode;
 bool oled_draw_bg = 1;
 
 void setup(){
-  midi_init(); 
+  midi_init();
   hardware_init();
 }
 
