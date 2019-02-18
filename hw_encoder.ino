@@ -1,11 +1,5 @@
 #define ENCODER_DO_NOT_USE_INTERRUPTS
 #include <Encoder.h>
-const byte enc1button = 0;
-const byte enc1pinA = 1;
-const byte enc1pinB = 2;
-const byte enc2button = 14;
-const byte enc2pinA = 15;
-const byte enc2pinB = 16;
 
 class RotaryEncoder {
   const byte pinButton;
@@ -66,14 +60,14 @@ class RotaryEncoder {
   }
 };
 
-RotaryEncoder enc1(enc1button,Encoder(enc1pinA,enc1pinB));
-RotaryEncoder enc2(enc2button,Encoder(enc2pinA,enc2pinB));
+RotaryEncoder enc1(ENC1BUTTON,Encoder(ENC1PINA,ENC1PINB));
+RotaryEncoder enc2(ENC2BUTTON,Encoder(ENC2PINA,ENC2PINB));
 
 void encoder_init(){
-  pinMode(enc1pinA, INPUT_PULLUP);
-  pinMode(enc1pinB, INPUT_PULLUP);
-  pinMode(enc2pinA, INPUT_PULLUP);
-  pinMode(enc2pinB, INPUT_PULLUP);
+  pinMode(ENC1PINA, INPUT_PULLUP);
+  pinMode(ENC1PINB, INPUT_PULLUP);
+  pinMode(ENC2PINA, INPUT_PULLUP);
+  pinMode(ENC2PINB, INPUT_PULLUP);
   enc1.init();
   enc2.init();
 }

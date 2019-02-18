@@ -1,18 +1,13 @@
-#include <U8x8lib.h>
 #include <SPI.h>
-#define OLED_RESET  8
-#define OLED_DC     9
-#define OLED_CS     10
-#define OLED_MOSI   11
-#define OLED_CLK   13
-U8X8_SSD1306_128X64_NONAME_4W_HW_SPI u8x8(/* cs=*/ OLED_CS, /* dc=*/ OLED_DC, /* reset=*/ OLED_RESET);
+#include <U8x8lib.h>
+U8X8_SSD1306_128X64_NONAME_4W_HW_SPI u8x8(OLED_CS,OLED_DC,OLED_RESET);
 
-class Display {
+class Display_u8x8 {
   public:
   bool invertedText = 0;
   U8X8_SSD1306_128X64_NONAME_4W_HW_SPI u8x8;
   
-  Display(U8X8_SSD1306_128X64_NONAME_4W_HW_SPI _u8x8):
+  Display_u8x8(U8X8_SSD1306_128X64_NONAME_4W_HW_SPI _u8x8):
   u8x8(_u8x8)
   {}
   
@@ -34,7 +29,7 @@ class Display {
   }
 };
 
-Display oled(u8x8);
+Display_u8x8 oled(u8x8);
 
 void oled_init(){
   oled.init();

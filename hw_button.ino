@@ -1,6 +1,3 @@
-const byte b1pin = 17;
-const byte b2pin = 12;
-
 class Button {
     const byte pin;
     bool state;
@@ -41,8 +38,8 @@ class Button {
   }
 };
 
-Button b1(b1pin);
-Button b2(b2pin);
+Button b1(B1PIN);
+Button b2(B2PIN);
 
 void button_init(){
   b1.init();
