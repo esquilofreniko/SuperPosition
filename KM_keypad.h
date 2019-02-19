@@ -1,5 +1,4 @@
 #include <Wire.h>
-Adafruit_NeoTrellis trellis;
 
 class KeyMatrix {
   int count = 0;
@@ -64,23 +63,3 @@ class KeyMatrix {
     }
   }
 };
-
-KeyMatrix kp(trellis);
-
-TrellisCallback blink(keyEvent evt){
-  if (evt.bit.EDGE == SEESAW_KEYPAD_EDGE_RISING) {
-    kp.key[evt.bit.NUM] = 1;
-    kp.pressed = 1;
-  } else if (evt.bit.EDGE == SEESAW_KEYPAD_EDGE_FALLING) {
-    kp.key[evt.bit.NUM] = 0;
-    kp.released = 1;
-  }
-}
-
-void keypad_init(){
-  kp.init();
-}
-
-void keypad_read(){
-  kp.read();
-}

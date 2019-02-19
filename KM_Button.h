@@ -37,16 +37,3 @@ class Button {
     }
   }
 };
-
-Button b1(B1PIN);
-Button b2(B2PIN);
-
-void button_init(){
-  b1.init();
-  b2.init();
-}
-
-void button_read(){
-  b1.read();
-  b2.read();
-}

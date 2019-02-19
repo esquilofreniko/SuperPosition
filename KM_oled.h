@@ -1,6 +1,5 @@
 #include <SPI.h>
 #include <U8x8lib.h>
-U8X8_SSD1306_128X64_NONAME_4W_HW_SPI u8x8(OLED_CS,OLED_DC,OLED_RESET);
 
 class Display_u8x8 {
   public:
@@ -28,13 +27,3 @@ class Display_u8x8 {
     u8x8.print(text);
   }
 };
-
-Display_u8x8 oled(u8x8);
-
-void oled_init(){
-  oled.init();
-}
-
-void oled_clear(){
-  oled.clear();
-}

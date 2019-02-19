@@ -59,21 +59,3 @@ class RotaryEncoder {
     }
   }
 };
-
-RotaryEncoder enc1(ENC1BUTTON,Encoder(ENC1PINA,ENC1PINB));
-RotaryEncoder enc2(ENC2BUTTON,Encoder(ENC2PINA,ENC2PINB));
-
-void encoder_init(){
-  pinMode(ENC1PINA, INPUT_PULLUP);
-  pinMode(ENC1PINB, INPUT_PULLUP);
-  pinMode(ENC2PINA, INPUT_PULLUP);
-  pinMode(ENC2PINB, INPUT_PULLUP);
-  enc1.init();
-  enc2.init();
-}
-
-void encoder_read(){
-  enc1.read();
-  enc2.read();
-  if(enc1.held == 1){mode = 0;}
-}
