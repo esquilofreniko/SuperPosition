@@ -1392,29 +1392,29 @@ design rules under a new name.</description>
 <attribute name="NAME" x="1.579228125" y="-112.353884375" size="0.889" layer="25" ratio="10" align="top-left"/>
 <attribute name="VALUE" x="7.055590625" y="-114.502128125" size="1.143" layer="27" ratio="10" align="bottom-right"/>
 </element>
-<element name="IC1" library="TL074CN" package="DIP794W53P254L1930H508Q14N" value="TL074CN" x="46" y="37.5" smashed="yes" rot="R90">
-<attribute name="DESCRIPTION" value="Quad Low-Noise JFET-Input General-Purpose Operational Amplifier" x="46" y="37.5" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="HEIGHT" value="5.08mm" x="46" y="37.5" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="46" y="37.5" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="TL074CN" x="46" y="37.5" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="MOUSER_PART_NUMBER" value="595-TL074CN" x="46" y="37.5" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="MOUSER_PRICE-STOCK" value="https://www.mouser.com/Search/Refine.aspx?Keyword=595-TL074CN" x="46" y="37.5" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="NAME" x="44.5" y="37.5" size="1.27" layer="25" rot="R90" align="center"/>
-<attribute name="RS_PART_NUMBER" value="0302621P" x="46" y="37.5" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="RS_PRICE-STOCK" value="http://uk.rs-online.com/web/p/products/0302621P" x="46" y="37.5" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="VALUE" x="48" y="37.5" size="1.27" layer="27" rot="R90" align="center"/>
+<element name="IC1" library="TL074CN" package="DIP794W53P254L1930H508Q14N" value="TL074CN" x="45.5" y="37.5" smashed="yes" rot="R90">
+<attribute name="DESCRIPTION" value="Quad Low-Noise JFET-Input General-Purpose Operational Amplifier" x="45.5" y="37.5" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="HEIGHT" value="5.08mm" x="45.5" y="37.5" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="45.5" y="37.5" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="TL074CN" x="45.5" y="37.5" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MOUSER_PART_NUMBER" value="595-TL074CN" x="45.5" y="37.5" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MOUSER_PRICE-STOCK" value="https://www.mouser.com/Search/Refine.aspx?Keyword=595-TL074CN" x="45.5" y="37.5" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="NAME" x="44" y="37.5" size="1.27" layer="25" rot="R90" align="center"/>
+<attribute name="RS_PART_NUMBER" value="0302621P" x="45.5" y="37.5" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="RS_PRICE-STOCK" value="http://uk.rs-online.com/web/p/products/0302621P" x="45.5" y="37.5" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="VALUE" x="47.5" y="37.5" size="1.27" layer="27" rot="R90" align="center"/>
 </element>
-<element name="IC2" library="TL074CN" package="DIP794W53P254L1930H508Q14N" value="TL074CN" x="46" y="48.5" smashed="yes" rot="R90">
-<attribute name="DESCRIPTION" value="Quad Low-Noise JFET-Input General-Purpose Operational Amplifier" x="46" y="48.5" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="HEIGHT" value="5.08mm" x="46" y="48.5" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="46" y="48.5" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="TL074CN" x="46" y="48.5" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="MOUSER_PART_NUMBER" value="595-TL074CN" x="46" y="48.5" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="MOUSER_PRICE-STOCK" value="https://www.mouser.com/Search/Refine.aspx?Keyword=595-TL074CN" x="46" y="48.5" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="NAME" x="44.5" y="48.5" size="1.27" layer="25" rot="R90" align="center"/>
-<attribute name="RS_PART_NUMBER" value="0302621P" x="46" y="48.5" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="RS_PRICE-STOCK" value="http://uk.rs-online.com/web/p/products/0302621P" x="46" y="48.5" size="1.778" layer="27" rot="R90" display="off"/>
-<attribute name="VALUE" x="48" y="48.5" size="1.27" layer="27" rot="R90" align="center"/>
+<element name="IC2" library="TL074CN" package="DIP794W53P254L1930H508Q14N" value="TL074CN" x="45.5" y="50" smashed="yes" rot="R90">
+<attribute name="DESCRIPTION" value="Quad Low-Noise JFET-Input General-Purpose Operational Amplifier" x="45.5" y="50" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="HEIGHT" value="5.08mm" x="45.5" y="50" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="45.5" y="50" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="TL074CN" x="45.5" y="50" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MOUSER_PART_NUMBER" value="595-TL074CN" x="45.5" y="50" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="MOUSER_PRICE-STOCK" value="https://www.mouser.com/Search/Refine.aspx?Keyword=595-TL074CN" x="45.5" y="50" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="NAME" x="44" y="50" size="1.27" layer="25" rot="R90" align="center"/>
+<attribute name="RS_PART_NUMBER" value="0302621P" x="45.5" y="50" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="RS_PRICE-STOCK" value="http://uk.rs-online.com/web/p/products/0302621P" x="45.5" y="50" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="VALUE" x="47.5" y="50" size="1.27" layer="27" rot="R90" align="center"/>
 </element>
 </elements>
 <signals>
@@ -1433,7 +1433,8 @@ design rules under a new name.</description>
 <wire x1="48.411" y1="12.065" x2="48.411" y2="6.985" width="0.1524" layer="16"/>
 <wire x1="48.411" y1="6.35" x2="48.411" y2="6.985" width="0.1524" layer="16"/>
 <wire x1="48.411" y1="6.985" x2="50.951" y2="6.985" width="0.1524" layer="16"/>
-<wire x1="50.951" y1="11.14204375" x2="50.951" y2="9.525" width="0.1524" layer="16"/>
+<wire x1="55.451" y1="10.14204375" x2="51.56804375" y2="10.14204375" width="0.1524" layer="16"/>
+<wire x1="51.56804375" y1="10.14204375" x2="50.951" y2="9.525" width="0.1524" layer="16"/>
 <wire x1="50.951" y1="9.525" x2="50.951" y2="6.985" width="0.1524" layer="16"/>
 <wire x1="55.3468" y1="6.985" x2="50.951" y2="6.985" width="0.1524" layer="16"/>
 <wire x1="55.372" y1="1.27" x2="34.5" y2="1.27" width="0.1524" layer="16"/>
@@ -1557,7 +1558,7 @@ design rules under a new name.</description>
 <wire x1="4.953" y1="97.0002" x2="5.0387" y2="96.9145" width="0" layer="19" extent="16-16"/>
 <wire x1="4.953" y1="97.005" x2="4.953" y2="97.0002" width="0" layer="19" extent="1-1"/>
 <wire x1="4.953" y1="94.0002" x2="4.953" y2="96.8608" width="0" layer="19" extent="16-16"/>
-<wire x1="46" y1="41.47" x2="55.48" y2="43.99549375" width="0" layer="19" extent="16-16"/>
+<wire x1="45.5" y1="41.47" x2="55.48" y2="43.99549375" width="0" layer="19" extent="16-16"/>
 <wire x1="35.052" y1="97.005" x2="44.9945" y2="96.9145" width="0" layer="19" extent="16-16"/>
 <wire x1="35.052" y1="97.0002" x2="35.052" y2="97.005" width="0" layer="19" extent="1-1"/>
 <wire x1="14.986" y1="97.005" x2="5.0387" y2="96.9145" width="0" layer="19" extent="16-16"/>
@@ -1590,7 +1591,7 @@ design rules under a new name.</description>
 <wire x1="42.972" y1="4.445" x2="41.4974" y2="2.9704" width="0.1524" layer="16"/>
 <wire x1="41.4974" y1="2.9704" x2="36.584" y2="2.9704" width="0.1524" layer="16"/>
 <contactref element="IC1" pad="4"/>
-<wire x1="36.584" y1="2.9704" x2="46" y2="33.53" width="0" layer="19" extent="1-1"/>
+<wire x1="36.584" y1="2.9704" x2="45.5" y2="33.53" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="+5V">
 <contactref element="U$2" pad="OUT"/>
@@ -1606,19 +1607,23 @@ design rules under a new name.</description>
 <contactref element="U$1" pad="3V3_LO"/>
 <contactref element="U$3" pad="2"/>
 <contactref element="U$4" pad="VIN"/>
-<wire x1="22.175" y1="4" x2="22" y2="4" width="0.1524" layer="16"/>
 <wire x1="22" y1="4" x2="6" y2="4" width="0.1524" layer="16"/>
 <wire x1="6" y1="4" x2="6" y2="24.028" width="0.1524" layer="16"/>
 <wire x1="6" y1="24.028" x2="2.54" y2="27.488" width="0.1524" layer="16"/>
 <wire x1="26.116" y1="7.941" x2="26.057" y2="8" width="0.1524" layer="16"/>
 <wire x1="26.057" y1="8" x2="22" y2="8" width="0.1524" layer="16"/>
 <wire x1="22" y1="8" x2="22" y2="4" width="0.1524" layer="16"/>
+<wire x1="2.54" y1="27.488" x2="4.02" y2="28.968" width="0.1524" layer="16"/>
+<wire x1="4.02" y1="28.968" x2="4.02" y2="31.23" width="0.1524" layer="16"/>
+<wire x1="4.02" y1="31.23" x2="1.27" y2="31.23" width="0.1524" layer="16"/>
+<wire x1="1.27" y1="31.23" x2="1.0922" y2="31.4078" width="0.1524" layer="16"/>
+<wire x1="1.0922" y1="31.4078" x2="1.0922" y2="36.5" width="0.1524" layer="16"/>
 <wire x1="4.5277" y1="45.99680625" x2="4.5" y2="46.02450625" width="0.1524" layer="16"/>
-<wire x1="4.5" y1="46.02450625" x2="4.5" y2="76" width="0.1524" layer="16"/>
-<wire x1="2.54" y1="27.488" x2="4.5277" y2="29.4757" width="0.1524" layer="16"/>
-<wire x1="4.5277" y1="29.4757" x2="4.5277" y2="45.99680625" width="0.1524" layer="16"/>
-<wire x1="4.5" y1="76" x2="8.695" y2="80.195" width="0.1524" layer="16"/>
+<wire x1="1.0922" y1="36.5" x2="4.5277" y2="39.9355" width="0.1524" layer="16"/>
+<wire x1="4.5277" y1="39.9355" x2="4.5277" y2="45.99680625" width="0.1524" layer="16"/>
 <wire x1="8.695" y1="80.195" x2="8.695" y2="82.16" width="0.1524" layer="16"/>
+<wire x1="4.5" y1="46.02450625" x2="4.5" y2="76" width="0.1524" layer="16"/>
+<wire x1="4.5" y1="76" x2="8.695" y2="80.195" width="0.1524" layer="16"/>
 </signal>
 <signal name="ENC1SW">
 <contactref element="ENC1" pad="D"/>
@@ -1667,17 +1672,17 @@ design rules under a new name.</description>
 <signal name="OLEDCLK">
 <contactref element="U$1" pad="13/SCK"/>
 <contactref element="U$3" pad="3"/>
-<wire x1="26.116" y1="35.881" x2="11.235" y2="82.16" width="0" layer="19" extent="1-1"/>
+<wire x1="11.235" y1="82.16" x2="26.116" y2="35.881" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="OLEDDATA">
 <contactref element="U$1" pad="11/MOSI"/>
 <contactref element="U$3" pad="4"/>
-<wire x1="10.876" y1="33.341" x2="13.775" y2="82.16" width="0" layer="19" extent="1-1"/>
+<wire x1="13.775" y1="82.16" x2="10.876" y2="33.341" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="OLEDCS">
 <contactref element="U$1" pad="10/CS"/>
 <contactref element="U$3" pad="7"/>
-<wire x1="10.876" y1="30.801" x2="21.395" y2="82.16" width="0" layer="19" extent="1-1"/>
+<wire x1="21.395" y1="82.16" x2="10.876" y2="30.801" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="OLEDDC">
 <contactref element="U$1" pad="9/CS"/>
@@ -1745,12 +1750,13 @@ design rules under a new name.</description>
 <signal name="TRLSCL">
 <contactref element="U$1" pad="19/A5/SCL"/>
 <contactref element="U$4" pad="SCL"/>
-<wire x1="26.116" y1="20.641" x2="2.54" y2="32.568" width="0" layer="19" extent="1-1"/>
+<wire x1="2.608" y1="32.5" x2="2.54" y2="32.568" width="0.1524" layer="16"/>
+<wire x1="2.608" y1="32.5" x2="26.116" y2="20.641" width="0" layer="19" extent="16-16"/>
 </signal>
 <signal name="TRLSDA">
 <contactref element="U$1" pad="18/A4/SDA"/>
 <contactref element="U$4" pad="SDA"/>
-<wire x1="26.116" y1="23.181" x2="2.54" y2="35.108" width="0" layer="19" extent="1-1"/>
+<wire x1="2.54" y1="35.108" x2="26.116" y2="23.181" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$4">
 <contactref element="R6" pad="2"/>
@@ -1823,12 +1829,12 @@ design rules under a new name.</description>
 <signal name="DACOUTCV1">
 <contactref element="U$5" pad="4"/>
 <contactref element="IC1" pad="3"/>
-<wire x1="30.125" y1="28.325" x2="43.46" y2="33.53" width="0" layer="19" extent="16-16"/>
+<wire x1="30.125" y1="28.325" x2="42.96" y2="33.53" width="0" layer="19" extent="16-16"/>
 </signal>
 <signal name="DACOUTCV3">
 <contactref element="U$5" pad="5"/>
 <contactref element="IC1" pad="10"/>
-<wire x1="30.125" y1="27.675" x2="48.54" y2="41.47" width="0" layer="19" extent="16-16"/>
+<wire x1="30.125" y1="27.675" x2="48.04" y2="41.47" width="0" layer="19" extent="16-16"/>
 </signal>
 <signal name="DACOUTTR1">
 <contactref element="U$5" pad="6"/>
@@ -1839,12 +1845,12 @@ design rules under a new name.</description>
 <signal name="DACOUTCV2">
 <contactref element="U$5" pad="13"/>
 <contactref element="IC1" pad="5"/>
-<wire x1="35.875" y1="28.325" x2="48.54" y2="33.53" width="0" layer="19" extent="16-16"/>
+<wire x1="35.875" y1="28.325" x2="48.04" y2="33.53" width="0" layer="19" extent="16-16"/>
 </signal>
 <signal name="DACOUTCV4">
 <contactref element="U$5" pad="12"/>
 <contactref element="IC1" pad="12"/>
-<wire x1="35.875" y1="27.675" x2="43.46" y2="41.47" width="0" layer="19" extent="16-16"/>
+<wire x1="35.875" y1="27.675" x2="42.96" y2="41.47" width="0" layer="19" extent="16-16"/>
 </signal>
 <signal name="DACOUTTR2">
 <contactref element="U$5" pad="11"/>
@@ -1866,14 +1872,14 @@ design rules under a new name.</description>
 <contactref element="R17" pad="2"/>
 <contactref element="R18" pad="1"/>
 <contactref element="IC1" pad="7"/>
-<wire x1="0.19" y1="-82" x2="53.62" y2="33.53" width="0" layer="19" extent="1-1"/>
+<wire x1="0.19" y1="-82" x2="53.12" y2="33.53" width="0" layer="19" extent="1-1"/>
 <wire x1="7.81" y1="-78.5" x2="0.19" y2="-82" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$17">
 <contactref element="R16" pad="2"/>
 <contactref element="R17" pad="1"/>
 <contactref element="IC1" pad="6"/>
-<wire x1="0.19" y1="-78.5" x2="51.08" y2="33.53" width="0" layer="19" extent="1-1"/>
+<wire x1="0.19" y1="-78.5" x2="50.58" y2="33.53" width="0" layer="19" extent="1-1"/>
 <wire x1="7.81" y1="-75" x2="0.19" y2="-78.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$19">
@@ -1885,7 +1891,7 @@ design rules under a new name.</description>
 <contactref element="R20" pad="1"/>
 <contactref element="R19" pad="2"/>
 <contactref element="IC1" pad="9"/>
-<wire x1="0.19" y1="-89" x2="51.08" y2="41.47" width="0" layer="19" extent="1-1"/>
+<wire x1="0.19" y1="-89" x2="50.58" y2="41.47" width="0" layer="19" extent="1-1"/>
 <wire x1="7.81" y1="-85.5" x2="0.19" y2="-89" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$20">
@@ -1897,7 +1903,7 @@ design rules under a new name.</description>
 <contactref element="R19" pad="1"/>
 <contactref element="R21" pad="1"/>
 <contactref element="IC1" pad="8"/>
-<wire x1="0.19" y1="-92.5" x2="53.62" y2="41.47" width="0" layer="19" extent="1-1"/>
+<wire x1="0.19" y1="-92.5" x2="53.12" y2="41.47" width="0" layer="19" extent="1-1"/>
 <wire x1="0.19" y1="-85.5" x2="0.19" y2="-92.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$7">
@@ -1909,21 +1915,21 @@ design rules under a new name.</description>
 <contactref element="R22" pad="2"/>
 <contactref element="R23" pad="1"/>
 <contactref element="IC1" pad="2"/>
-<wire x1="0.19" y1="-99.5" x2="40.92" y2="33.53" width="0" layer="19" extent="1-1"/>
+<wire x1="0.19" y1="-99.5" x2="40.42" y2="33.53" width="0" layer="19" extent="1-1"/>
 <wire x1="7.81" y1="-96" x2="0.19" y2="-99.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$24">
 <contactref element="R23" pad="2"/>
 <contactref element="R24" pad="1"/>
 <contactref element="IC1" pad="1"/>
-<wire x1="0.19" y1="-103" x2="38.38" y2="33.53" width="0" layer="19" extent="1-1"/>
+<wire x1="0.19" y1="-103" x2="37.88" y2="33.53" width="0" layer="19" extent="1-1"/>
 <wire x1="7.81" y1="-99.5" x2="0.19" y2="-103" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$26">
 <contactref element="R25" pad="1"/>
 <contactref element="R26" pad="2"/>
 <contactref element="IC1" pad="13"/>
-<wire x1="40.92" y1="41.47" x2="0.19" y2="-106.5" width="0" layer="19" extent="1-1"/>
+<wire x1="40.42" y1="41.47" x2="0.19" y2="-106.5" width="0" layer="19" extent="1-1"/>
 <wire x1="7.81" y1="-110" x2="0.19" y2="-106.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$27">
@@ -1931,7 +1937,7 @@ design rules under a new name.</description>
 <contactref element="R27" pad="1"/>
 <contactref element="IC1" pad="14"/>
 <wire x1="0.19" y1="-110" x2="0.19" y2="-113.5" width="0" layer="19" extent="1-1"/>
-<wire x1="38.38" y1="41.47" x2="0.19" y2="-110" width="0" layer="19" extent="1-1"/>
+<wire x1="37.88" y1="41.47" x2="0.19" y2="-110" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$25">
 <contactref element="R24" pad="2"/>
