@@ -7,9 +7,9 @@ void mainMenu(){
     mM_selected += enc1.rotation;
     if(mM_selected < 0){mM_selected = 0;}
     if(mM_selected > 1){mM_selected = 1;}
-    oled_draw_bg = 1;
+    oled.redraw = 1;
   };
-  if(oled_draw_bg == 1){
+  if(oled.redraw == 1){
     oled.clear();
     for(int i=0;i<mM_size;i++){
       if(i==mM_selected){oled.drawText(0,i,1,mM_menu[i].c_str());}

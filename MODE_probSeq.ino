@@ -30,6 +30,7 @@ void probSeq(){
     pS_set %= 2;
     pS_drawInfo();
     for(int i=0;i<4;i++){pS_drawMatrix(i);};
+    pS_drawMatrixLED(pS_selected);
   }
   if(b2.clicked == 1){}
   if(b1.held_t == 1){
@@ -42,6 +43,7 @@ void probSeq(){
       }
     }
     pS_drawMatrix(pS_selected);
+    pS_drawMatrixLED(pS_selected);
   }
   if(b2.held_t == 1){
     for(int i=0;i<16;i++){
@@ -53,6 +55,7 @@ void probSeq(){
       }
     }
     pS_drawMatrix(pS_selected);
+    pS_drawMatrixLED(pS_selected);
   }
   if(enc1.clicked == 1){}
   if(enc2.clicked == 1){}
@@ -80,14 +83,15 @@ void probSeq(){
     if(pS_selected>3){pS_selected = 0;}
     if(pS_selected<0){pS_selected = 3;}
     pS_drawMatrix(pS_selected);
+    pS_drawMatrixLED(pS_selected);
     pS_drawMatrix(pS_selected_old);
     pS_selected_old = pS_selected;
   }
-  if(oled_draw_bg == 1){pS_drawBg();}
+  if(oled.redraw == 1){pS_drawBg();}
 }
 
 void pS_drawBg(){
-  oled_clear();
+  // oled.clear();
   pS_drawInfo();
   for(int i=0;i<4;i++){pS_drawMatrix(i);}
 }
@@ -105,7 +109,7 @@ void pS_drawMatrix(int k){
     }
   }
   oled.invertedText=0;
-  pS_drawMatrixLED(k);
+  // pS_drawMatrixLED(k);
 }
 
 void pS_drawMatrixLED(int k){

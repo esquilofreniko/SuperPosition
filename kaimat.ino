@@ -1,8 +1,6 @@
-#include "Adafruit_NeoTrellis.h"
-//Globals
+#include "KM_hardware.h"
 int mode = 2;
 int oldmode = mode;
-bool oled_draw_bg = 1;
 
 void setup(){
   midi_init();
@@ -12,9 +10,13 @@ void setup(){
 void loop(){
   midi_read();
   hardware_read();
-  if(oldmode != mode){oled_clear();oldmode=mode;}
+  if(oldmode != mode){oled.clear();oldmode=mode;}
   if(mode == 0){mainMenu();}
   if(mode == 1){midiSetup();}
   if(mode == 2){probSeq();}
-  oled_draw_bg = 0;
+  if(millis() - oled.lastRedrawMS > 50){
+    oled.show();
+    oled.clear();
+    oled.lastRedrawMS = millis();
+  }
 }
