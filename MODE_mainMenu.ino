@@ -1,23 +1,19 @@
-int mM_selected = 0;
-const int mM_size = 2;
-String mM_menu[mM_size] = {"MIDI Setup", "Prob Seq"};
-
-void mainMenu(){
+void MainMenu::run(){
   if(enc1.rotation != 0){
-    mM_selected += enc1.rotation;
-    if(mM_selected < 0){mM_selected = 0;}
-    if(mM_selected > 1){mM_selected = 1;}
+    selected += enc1.rotation;
+    if(selected < 0){selected = 0;}
+    if(selected > 1){selected = 1;}
     oled.redraw = 1;
   };
   if(oled.redraw == 1){
     oled.clear();
-    for(int i=0;i<mM_size;i++){
-      if(i==mM_selected){oled.drawText(0,i,1,mM_menu[i].c_str());}
-      else{oled.drawText(0,i,0,mM_menu[i].c_str());}
+    for(int i=0;i<size;i++){
+      if(i==selected){oled.drawText(0,i,1,menu[i].c_str());}
+      else{oled.drawText(0,i,0,menu[i].c_str());}
     }
   }
   if(enc1.clicked == 1){
-    mode = mM_selected + 1;
+    mode = selected + 1;
     oled.clear();
   }
 }
