@@ -125,8 +125,10 @@ void ProbSeq::controls(){
   }
   if(enc2.rotation != 0){
     selected+= enc2.rotation;
-    if(selected>3){selected = 0;}
-    if(selected<0){selected = 3;}
+    if(selected>3){selected = 0;division++;}
+    if(selected<0){selected = 3;division--;}
+    if(division>3){division = 0;}
+    if(division<0){division = 3;}
     drawMatrixLED(selected);
   }
 }
@@ -230,7 +232,8 @@ void ProbSeq::drawMatrixLED(int _k){
 
 void ProbSeq::drawDivision(){
   for(int i=0;i<4;i++){
-    oled.drawText((i*4)+1,3,0,dectohex(i));
+    if(floor(pos/16)==i){oled.drawText((i*4)+1,3,1,dectohex(i)+" ");}
+    else{oled.drawText((i*4)+1,3,0,dectohex(i)+" ");}
   }
-  oled.drawBox((division*32)/2,24,32,8,0);
+  oled.drawBox(division*32,24,32,8,0);
 }
