@@ -131,6 +131,10 @@ void ProbSeq::controls(){
   if(b2.held == 1){}
   if(enc1.clicked == 1){}
   if(enc2.clicked == 1){}
+  if(enc2.held_t==1){
+    view = (view + 1)%2;
+    drawMatrixLED(selected);
+  }
   if(enc1.rotation != 0){
     if(set == 0){
       if(param == 0){
@@ -199,18 +203,22 @@ void ProbSeq::drawBg(){
 void ProbSeq::drawInfo(){
   if(set == 0){
     if(param == 0){oled.invertedText=1;}
-    oled.drawText(0,1,oled.invertedText,String("Mrph:" + dectohex(morph)).c_str());
+    oled.drawText(0,1,oled.invertedText,"Mrph:" + dectohex(morph));
     oled.invertedText=1;
   }
   oled.drawText(0,0,oled.invertedText,"Patt");
   oled.invertedText = 0;
   if(set == 1){
     if(param == 0){oled.invertedText=1;}
-    oled.drawText(0,1,oled.invertedText,String("Prob:" + dectohex(prob)).c_str());
+    oled.drawText(0,1,oled.invertedText,"Prob:" + dectohex(prob));
     oled.invertedText=1;
   }
-  oled.drawText(4,0,oled.invertedText,String("Prob").c_str());
+  oled.drawText(4,0,oled.invertedText,"Prob");
   oled.invertedText=0;
+  if(set == 2){
+    if(param == 0){oled.invertedText=1;}
+    oled.invertedText=1;
+  }
 }
 
 void ProbSeq::drawMatrix(int k){
