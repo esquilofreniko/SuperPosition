@@ -169,16 +169,24 @@ void ProbSeq::setPatt(int _selected, int _pos){
   }
   if(view == 1){
     patt[_pos/4][(_pos%4)+(_selected*4)] = (patt[_pos/4][(_pos%4)+(_selected*4)]+1)%2;
+    if(patt[_pos/4][(_pos%4)+(_selected*4)] == 0){kp.set(_pos,0);}
+    if(patt[_pos/4][(_pos%4)+(_selected*4)] == 1){kp.set(_pos,1);}
   }
   kp.show();
 }
 
 void ProbSeq::setProb(int _selected, int _pos){
-  if(probs[_selected][_pos] != prob){probs[_selected][_pos] = prob;}
-  else{probs[_selected][_pos] = 0;}
-  if(probs[_selected][_pos] != prob){kp.set(_pos,0);}
-  if(probs[_selected][_pos] == prob){
-    kp.set(_pos,1);
+  if(view == 0){
+    if(probs[_selected][_pos] != prob){probs[_selected][_pos] = prob;}
+    else{probs[_selected][_pos] = 0;}
+    if(probs[_selected][_pos] != prob){kp.set(_pos,0);}
+    if(probs[_selected][_pos] == prob){kp.set(_pos,1);}
+  }
+  if(view == 1){
+    if(probs[_pos/4][(_pos%4)+(_selected*4)] != prob){probs[_pos/4][(_pos%4)+(_selected*4)] = prob;}
+    else{probs[_pos/4][(_pos%4)+(_selected*4)] = 0;}
+    if(probs[_pos/4][(_pos%4)+(_selected*4)] != prob){kp.set(_pos,0);}
+    if(probs[_pos/4][(_pos%4)+(_selected*4)] == prob){kp.set(_pos,1);}
   }
   kp.show();
 }
