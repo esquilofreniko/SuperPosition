@@ -9,6 +9,8 @@ void DAC8568::init(){
 };
 
 void DAC8568::set(int channel, float voltage){
+  // voltage = 0 // 0V 
+  // voltage = 4.435 // 8V
   if(voltage<0){voltage = 0;}
   if(voltage>65535){voltage = 65535;}
   dac8568.write(WRITE_UPDATE_N, channel, voltage);
@@ -118,6 +120,7 @@ void KeyMatrix::read(){
     lastMillis = millis();
   }
 }
+
 void KeyMatrix::show(){
   trellis.pixels.show();
 }
