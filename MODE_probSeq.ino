@@ -167,7 +167,9 @@ void ProbSeq::setPatt(int _selected, int _pos){
     if(patt[_selected][_pos] == 0){kp.set(_pos,0);}
     if(patt[_selected][_pos] == 1){kp.set(_pos,1);}
   }
-  if(view == 1){}
+  if(view == 1){
+    patt[_pos/4][(_pos%4)+(_selected*4)] = (patt[_pos/4][(_pos%4)+(_selected*4)]+1)%2;
+  }
   kp.show();
 }
 

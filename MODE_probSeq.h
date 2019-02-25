@@ -10,7 +10,7 @@ class ProbSeq {
     int morph = 0;
     int length = 16;
     int division = 0;
-    bool view = 0;
+    bool view = 1;
 
     void run();
     void clock();
