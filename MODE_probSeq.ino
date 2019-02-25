@@ -128,7 +128,6 @@ void ProbSeq::controls(){
     if(selected>3){selected = 0;}
     if(selected<0){selected = 3;}
     drawMatrixLED(selected);
-    selected_old = selected;
   }
 }
 

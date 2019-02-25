@@ -1,7 +1,6 @@
 class ProbSeq {
     public:
     int selected = 0;
-    int selected_old = 0;
     int probs[4][64];
     bool patt[4][64];
     int prob = 5;
