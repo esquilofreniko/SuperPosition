@@ -86,39 +86,6 @@ void RotaryEncoder::read() {
   }
 }
 
-//OLED Display
-Display::Display(Adafruit_SSD1306 _display):
-  display(_display)
-{}  
-
-void Display::init(){
-  if(!display.begin(SSD1306_SWITCHCAPVCC)) {for(;;);}
-  display.setTextSize(1);
-  display.setTextColor(WHITE);
-  display.clearDisplay();
-}
-
-void Display::clear(){
-  display.clearDisplay();
-  redraw = 1;
-}
-
-void Display::show(){
-  display.display();
-  redraw = 0;
-}
-
-void Display::drawText(int x, int y, bool inverted, String text){
-  if(inverted == 0){display.setTextColor(WHITE);}
-  if(inverted == 1){display.setTextColor(BLACK,WHITE);}
-  display.setCursor(x*8,y*8);
-  display.println(text);
-}
-
-void Display::drawBox(int x, int y, int boxwidth, int boxheight){
-  display.drawRect(x,y,boxwidth,boxheight,WHITE);
-}
-
 //KeyMatrix
 TrellisCallback blink(keyEvent evt){
   if (evt.bit.EDGE == SEESAW_KEYPAD_EDGE_RISING) {
@@ -146,8 +113,7 @@ void KeyMatrix::init(){
 void KeyMatrix::read(){
   pressed = 0;
   released = 0;
-  count = millis() - lastMillis;
-  if(count >= 50){
+  if(millis() - lastMillis >= 50){
     trellis.read();
     lastMillis = millis();
   }
@@ -181,6 +147,39 @@ void KeyMatrix::set(int pos, int color){
   else if(color == 7){
     trellis.pixels.setPixelColor(pos,trellis.pixels.Color(0,10,10));
   }
+}
+
+//OLED Display
+Display::Display(Adafruit_SSD1306 _display):
+  display(_display)
+{}  
+
+void Display::init(){
+  if(!display.begin(SSD1306_SWITCHCAPVCC)) {for(;;);}
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.clearDisplay();
+}
+
+void Display::clear(){
+  display.clearDisplay();
+  redraw = 1;
+}
+
+void Display::show(){
+  display.display();
+  redraw = 0;
+}
+
+void Display::drawText(int x, int y, bool inverted, String text){
+  if(inverted == 0){display.setTextColor(WHITE);}
+  if(inverted == 1){display.setTextColor(BLACK,WHITE);}
+  display.setCursor(x*8,y*8);
+  display.println(text);
+}
+
+void Display::drawBox(int x, int y, int boxwidth, int boxheight){
+  display.drawRect(x,y,boxwidth,boxheight,WHITE);
 }
 
 //Global Functions

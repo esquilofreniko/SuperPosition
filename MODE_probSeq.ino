@@ -157,10 +157,10 @@ void ProbSeq::drawMatrix(int _k){
       oled.invertedText = 0;
       if((i%4)+(j*4) == pos){oled.invertedText = 1;}
       if(set==0){
-        oled.drawText((i*1)+(_k*4),(j*1)+4,oled.invertedText,String(dectohex(patt[_k][(i%4)+(j*4)])).c_str());
+        oled.drawText((i*1)+(_k*4),(j*1)+4,oled.invertedText,dectohex(patt[_k][(i%4)+(j*4)]));
       }
       if(set==1){
-        oled.drawText((i*1)+(_k*4),(j*1)+4,oled.invertedText,String(dectohex(probs[_k][(i%4)+(j*4)])).c_str());
+        oled.drawText((i*1)+(_k*4),(j*1)+4,oled.invertedText,dectohex(probs[_k][(i%4)+(j*4)]));
       }
     }
   }

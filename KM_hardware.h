@@ -27,7 +27,7 @@ class Button {
   private:
   const byte pin;
   bool state;
-  unsigned int buttonDownMs;
+  unsigned long buttonDownMs;
 
   public:
   bool clicked;
@@ -53,7 +53,7 @@ class RotaryEncoder {
   Encoder enc;
   const byte pinButton;
   bool state;
-  unsigned int buttonDownMs;
+  unsigned long buttonDownMs;
 
   public:
   bool clicked;
@@ -87,9 +87,9 @@ class Display {
   Adafruit_SSD1306 display;
 
   public:
-  bool invertedText = 0;
-  bool lastRedrawMS = 0;
   bool redraw = 0;
+  bool invertedText = 0;
+  unsigned long lastRedrawMS = 0;
 
   Display(Adafruit_SSD1306 _display);
   void init();
@@ -115,8 +115,7 @@ Display oled(display);
 
 class KeyMatrix {
   private:
-  int count = 0;
-  int lastMillis = 0;
+  unsigned long lastMillis = 0;
   Adafruit_NeoTrellis trellis;
 
   public:
