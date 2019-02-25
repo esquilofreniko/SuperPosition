@@ -15,9 +15,11 @@ void loop(){
   if(mode == 1){midiSetup();}
   if(mode == 2){probSeq.run();}
   if(oldmode != mode){oled.clear();oldmode=mode;}
-  if(millis() - oled.lastRedrawMS > 50){
+  if(oled.redraw == 1){oled.redraw = 0;}
+  if(millis() - oled.lastRedrawMS > 25){
     oled.show();
     oled.clear();
+    oled.redraw = 1;
     oled.lastRedrawMS = millis();
   }
 }

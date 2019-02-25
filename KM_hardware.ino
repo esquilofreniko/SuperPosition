@@ -163,12 +163,10 @@ void Display::init(){
 
 void Display::clear(){
   display.clearDisplay();
-  redraw = 1;
 }
 
 void Display::show(){
   display.display();
-  redraw = 0;
 }
 
 void Display::drawText(int x, int y, bool inverted, String text){

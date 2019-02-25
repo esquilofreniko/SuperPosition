@@ -28,7 +28,7 @@ void ProbSeq::updatePosition(){
     }
     //Update Position
     pos += 1;
-    pos %= 16;
+    pos %= length;
 }
 
 void ProbSeq::writeNewPosition(){
@@ -84,8 +84,6 @@ void ProbSeq::controls(){
   if(b1.clicked== 1){
     set += 1;
     set %= 2;
-    drawInfo();
-    for(int i=0;i<4;i++){drawMatrix(i);};
     drawMatrixLED(selected);
   }
   if(b2.clicked == 1){}
@@ -98,7 +96,6 @@ void ProbSeq::controls(){
         probs[selected][i] = 0;
       }
     }
-    drawMatrix(selected);
     drawMatrixLED(selected);
   }
   if(b2.held_t == 1){
@@ -110,7 +107,6 @@ void ProbSeq::controls(){
         probs[selected][i] = prob;
       }
     }
-    drawMatrix(selected);
     drawMatrixLED(selected);
   }
   if(enc1.clicked == 1){}
@@ -121,7 +117,6 @@ void ProbSeq::controls(){
         morph += enc1.rotation;
         if(morph>10){morph=10;}
         if(morph<0){morph=0;}
-        drawInfo();
       }
     }
     if(set == 1){
@@ -129,7 +124,6 @@ void ProbSeq::controls(){
         prob += enc1.rotation;
         if(prob>10){prob = 10;}
         if(prob<0){prob = 0;}
-        drawInfo();
         drawMatrixLED(selected);
       }
     }
@@ -138,10 +132,32 @@ void ProbSeq::controls(){
     selected+= enc2.rotation;
     if(selected>3){selected = 0;}
     if(selected<0){selected = 3;}
-    drawMatrix(selected);
     drawMatrixLED(selected);
-    drawMatrix(selected_old);
     selected_old = selected;
+  }
+}
+
+void ProbSeq::setPatt(int _i, int _pos){
+  if(_i == selected){
+    if(patt[_i][_pos] == 0){
+      kp.set(_pos,0);
+    }
+    if(patt[_i][_pos] == 1){
+      kp.set(_pos,1);
+    }
+    kp.show();
+  }
+}
+
+void ProbSeq::setProb(int _i, int _pos){
+  if(_i == selected){
+    if(probs[_i][_pos] != prob){
+      kp.set(_pos,0);
+    }
+    if(probs[_i][_pos] == prob){
+      kp.set(_pos,1);
+    }
+    kp.show();
   }
 }
 
@@ -149,6 +165,23 @@ void ProbSeq::drawBg(){
   oled.clear();
   drawInfo();
   for(int i=0;i<4;i++){drawMatrix(i);}
+}
+
+void ProbSeq::drawInfo(){
+  if(set == 0){
+    if(param == 0){oled.invertedText=1;}
+    oled.drawText(0,1,oled.invertedText,String("Mrph:" + dectohex(morph)).c_str());
+    oled.invertedText=1;
+  }
+  oled.drawText(0,0,oled.invertedText,"Patt");
+  oled.invertedText = 0;
+  if(set == 1){
+    if(param == 0){oled.invertedText=1;}
+    oled.drawText(0,1,oled.invertedText,String("Prob:" + dectohex(prob)).c_str());
+    oled.invertedText=1;
+  }
+  oled.drawText(4,0,oled.invertedText,String("Prob").c_str());
+  oled.invertedText=0;
 }
 
 void ProbSeq::drawMatrix(int _k){
@@ -199,51 +232,4 @@ void ProbSeq::drawMatrixLED(int _k){
     }
   }
   kp.show();
-}
-
-void ProbSeq::setPatt(int _i, int _pos){
-  if(_i == selected){oled.invertedText=1;}
-  oled.drawText((_pos%4)+(_i*4),(_pos/4)+4,oled.invertedText,String(dectohex(patt[_i][_pos])).c_str());
-  if(_i == selected){
-    if(patt[_i][_pos] == 0){
-      kp.set(_pos,0);
-    }
-    if(patt[_i][_pos] == 1){
-      kp.set(_pos,1);
-    }
-    kp.show();
-  }
-  oled.invertedText=0;
-}
-
-void ProbSeq::setProb(int _i, int _pos){
-  if(_i == selected){oled.invertedText=1;}
-  oled.drawText((_pos%4)+(_i*4),(_pos/4)+4,oled.invertedText,String(dectohex(probs[_i][_pos])).c_str());
-  if(_i == selected){
-    if(probs[_i][_pos] != prob){
-      kp.set(_pos,0);
-    }
-    if(probs[_i][_pos] == prob){
-      kp.set(_pos,1);
-    }
-    kp.show();
-  }
-  oled.invertedText=0;
-}
-
-void ProbSeq::drawInfo(){
-  if(set == 0){
-    if(param == 0){oled.invertedText=1;}
-    oled.drawText(0,1,oled.invertedText,String("Mrph:" + dectohex(morph)).c_str());
-    oled.invertedText=1;
-  }
-  oled.drawText(0,0,oled.invertedText,"Patt");
-  oled.invertedText = 0;
-  if(set == 1){
-    if(param == 0){oled.invertedText=1;}
-    oled.drawText(0,1,oled.invertedText,String("Prob:" + dectohex(prob)).c_str());
-    oled.invertedText=1;
-  }
-  oled.drawText(4,0,oled.invertedText,String("Prob").c_str());
-  oled.invertedText=0;
 }
