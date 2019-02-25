@@ -17,7 +17,7 @@ void ProbSeq::clock(){
 void ProbSeq::updatePosition(){
     //Clear Old Position
     if(view == 0){
-      if(pos < (selected+1)*4 && pos >= selected*4){
+      if(pos < ((selected+1)*4)+(division*16) && pos >= (selected*4)+(division*16)){
         for(int i=0;i<4;i++){
           if(set == 0){
             if(patt[i][pos] == 0){kp.set((pos%4)+(i*4),0);}
@@ -52,10 +52,10 @@ void ProbSeq::updatePosition(){
 void ProbSeq::writeNewPosition(){
   //Write New Position
   if(view == 0){
-    if(pos < (selected+1)*4 && pos >= selected*4){
+    if(pos < ((selected+1)*4)+(division*16) && pos >= (selected*4)+(division*16)){
       for(int i=0;i<4;i++){
-        if(patt[i][pos] == 0){kp.set((pos%4) + (i*4),6);}
-        if(patt[i][pos] == 1){kp.set((pos%4) + (i*4),3);}
+        if(patt[i][pos] == 0){kp.set((pos%4)+(i*4),6);}
+        if(patt[i][pos] == 1){kp.set((pos%4)+(i*4),3);}
       }
     }
   }
@@ -114,13 +114,13 @@ void ProbSeq::controls(){
   if(b1.held == 1){
     for(int i=0;i<4;i++){
       if(kp.key[i*4]==1){
-        for(int j=0;j<16;j++){
+        for(int j=0;j<length;j++){
           if(set==0){patt[i][j] = 1;}
           if(set==1){probs[i][j] = prob;}
         }
       }
       if(kp.key[(i*4)+3]==1){
-        for(int j=0;j<16;j++){
+        for(int j=0;j<length;j++){
           if(set==0){patt[i][j] = 0;}
           if(set==1){probs[i][j] = 0;}
         }
@@ -132,7 +132,7 @@ void ProbSeq::controls(){
   if(enc1.clicked == 1){}
   if(enc2.clicked == 1){}
   if(enc2.held_t==1){
-    view = (view + 1)%2;
+    view = (view+1)%2;
     drawMatrixLED(selected);
   }
   if(enc1.rotation != 0){
@@ -164,9 +164,9 @@ void ProbSeq::controls(){
 
 void ProbSeq::setPatt(int _selected, int _pos){
   if(view == 0){
-    patt[_pos/4][(_pos%4)+(_selected*4)] = (patt[_pos/4][(_pos%4)+(_selected*4)]+1)%2;
-    if(patt[_pos/4][(_pos%4)+(_selected*4)] == 0){kp.set(_pos,0);}
-    if(patt[_pos/4][(_pos%4)+(_selected*4)] == 1){kp.set(_pos,1);}
+    patt[_pos/4][((_pos%4)+(_selected*4))+(division*16)] = (patt[_pos/4][((_pos%4)+(_selected*4))+(division*16)]+1)%2;
+    if(patt[_pos/4][((_pos%4)+(_selected*4))+(division*16)] == 0){kp.set(_pos,0);}
+    if(patt[_pos/4][((_pos%4)+(_selected*4))+(division*16)] == 1){kp.set(_pos,1);}
   }
   if(view == 1){
     patt[_selected][_pos] = (patt[_selected][_pos]+1)%2;
@@ -225,12 +225,12 @@ void ProbSeq::drawMatrix(int k){
   if(view == 0){
     for(int i=0;i<16;i++){
       oled.invertedText = 0;
-      if(pos%16 == i){oled.invertedText = 1;}
+      if(pos == i+(division*16)){oled.invertedText = 1;}
       if(set==0){
-        oled.drawText(i,k+4,oled.invertedText,dectohex(patt[k][i]));
+        oled.drawText(i,k+4,oled.invertedText,dectohexPoint(patt[k][i+(division*16)]));
       }
       if(set==1){
-        oled.drawText(i,k+4,oled.invertedText,dectohex(probs[k][i]));
+        oled.drawText(i,k+4,oled.invertedText,dectohexPoint(probs[k][i+(division*16)]));
       }
     }
   }
@@ -238,12 +238,12 @@ void ProbSeq::drawMatrix(int k){
     for(int i=0;i<4;i++){
       for(int j=0;j<4;j++){
         oled.invertedText = 0;
-        if((i%4)+(j*4) == pos){oled.invertedText = 1;}
+        if(((i%4)+(j*4))+(division*16) == pos){oled.invertedText = 1;}
         if(set==0){
-          oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,dectohex(patt[k][(i%4)+(j*4)]));
+          oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,dectohexPoint(patt[k][(i%4)+(j*4)+(division*16)]));
         }
         if(set==1){
-          oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,dectohex(probs[k][(i%4)+(j*4)]));
+          oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,dectohexPoint(probs[k][(i%4)+(j*4)+(division*16)]));
         }
       }
     }
@@ -266,24 +266,24 @@ void ProbSeq::drawMatrixLED(int k){
     for(int i=0;i<4;i++){
       for(int j=0;j<4;j++){
         if(set == 0){
-          if(patt[j][i+(k*4)] == 0){
+          if(patt[j][i+(k*4)+(division*16)] == 0){
             kp.set((i%4)+(j*4),0);
           }
-          if(patt[j][i+(k*4)] == 1){
+          if(patt[j][i+(k*4)+(division*16)] == 1){
             kp.set((i%4)+(j*4),1);
           }
         }
         if(set == 1){
-          if(probs[j][i+(k*4)] < prob){
+          if(probs[j][i+(k*4)+(division*16)] < prob){
             kp.set((i%4)+(j*4),4);
           }
-          if(probs[j][i+(k*4)] > prob){
+          if(probs[j][i+(k*4)+(division*16)] > prob){
             kp.set((i%4)+(j*4),2);
           }
-          if(probs[j][i+(k*4)] == 0){
+          if(probs[j][i+(k*4)+(division*16)] == 0){
             kp.set((i%4)+(j*4),0);
           }
-          if(probs[j][i+(k*4)] == prob){
+          if(probs[j][i+(k*4)+(division*16)] == prob){
             kp.set((i%4)+(j*4),1);
           }
         }
@@ -295,24 +295,24 @@ void ProbSeq::drawMatrixLED(int k){
       for(int j=0;j<4;j++){
         if((i%4)+(j*4) != pos){
           if(set==0){
-            if(patt[k][(i%4)+(j*4)] == 0){
+            if(patt[k][(i%4)+(j*4)+(division*16)] == 0){
               kp.set((i%4)+(j*4),0);
             }
-            if(patt[k][(i%4)+(j*4)] == 1){
+            if(patt[k][(i%4)+(j*4)+(division*16)] == 1){
               kp.set((i%4)+(j*4),1);
             }
           }
           if(set==1){
-            if(probs[k][(i%4)+(j*4)] < prob){
+            if(probs[k][(i%4)+(j*4)+(division*16)] < prob){
               kp.set((i%4)+(j*4),4);
             }
-            if(probs[k][(i%4)+(j*4)] > prob){
+            if(probs[k][(i%4)+(j*4)+(division*16)] > prob){
               kp.set((i%4)+(j*4),2);
             }
-            if(probs[k][(i%4)+(j*4)] == 0){
+            if(probs[k][(i%4)+(j*4)+(division*16)] == 0){
               kp.set((i%4)+(j*4),0);
             }
-            if(probs[k][(i%4)+(j*4)] == prob){
+            if(probs[k][(i%4)+(j*4)+(division*16)] == prob){
               kp.set((i%4)+(j*4),1);
             }
           }
@@ -326,8 +326,8 @@ void ProbSeq::drawMatrixLED(int k){
 
 void ProbSeq::drawDivision(){
   for(int i=0;i<4;i++){
-    if(floor(pos/16)==i){oled.drawText((i*4)+1,3,1,dectohex(i)+" ");}
-    else{oled.drawText((i*4)+1,3,0,dectohex(i)+" ");}
+    if(floor(pos/16)==i){oled.drawText((i*2),3,0,dectohex(i)+".");}
+    else{oled.drawText((i*2),3,0,dectohex(i)+" ");}
   }
-  oled.drawBox(division*32,24,32,8,0);
+  oled.drawBox(division*16,24,16,8,0);
 }

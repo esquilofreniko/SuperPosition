@@ -8,7 +8,7 @@ class ProbSeq {
     int param = 0;
     int pos = 0;
     int morph = 0;
-    int length = 16;
+    int length = 64;
     int division = 0;
     bool view = 0;
 
