@@ -10,6 +10,7 @@ void ProbSeq::clock(){
     updatePosition();
     pattMorph(pos);
     output();
+    followPos();
     writeNewPosition();
   }
 }
@@ -34,14 +35,14 @@ void ProbSeq::updatePosition(){
     }
     if(view == 1){
       if(set == 0){
-        if(patt[selected][pos] == 0){kp.set(pos,0);}
-        if(patt[selected][pos] == 1){kp.set(pos,1);}
+        if(patt[selected][pos] == 0){kp.set(pos%16,0);}
+        if(patt[selected][pos] == 1){kp.set(pos%16,1);}
       }
       if(set == 1){
-        if(probs[selected][pos] < prob){kp.set(pos,4);}
-        if(probs[selected][pos] > prob){kp.set(pos,2);}
-        if(probs[selected][pos] == 0){kp.set(pos,0);}
-        if(probs[selected][pos] == prob){kp.set(pos,1);}
+        if(probs[selected][pos] < prob){kp.set(pos%16,4);}
+        if(probs[selected][pos] > prob){kp.set(pos%16,2);}
+        if(probs[selected][pos] == 0){kp.set(pos%16,0);}
+        if(probs[selected][pos] == prob){kp.set(pos%16,1);}
       }
     }
     //Update Position
@@ -60,8 +61,10 @@ void ProbSeq::writeNewPosition(){
     }
   }
   if(view == 1){
-    if(patt[selected][pos] == 0){kp.set(pos,6);}
-    if(patt[selected][pos] == 1){kp.set(pos,3);}
+    if(pos/16 == division){
+      if(patt[selected][pos] == 0){kp.set(pos%16,6);}
+      if(patt[selected][pos] == 1){kp.set(pos%16,3);}
+    }
   }
   kp.show();
 }
@@ -130,7 +133,7 @@ void ProbSeq::controls(){
   }
   if(b2.held == 1){}
   if(enc1.clicked == 1){}
-  if(enc2.clicked == 1){}
+  if(enc2.clicked == 1){follow = (follow+1)%2;}
   if(enc2.held_t==1){
     view = (view+1)%2;
     drawMatrixLED(selected);
@@ -330,4 +333,11 @@ void ProbSeq::drawDivision(){
     else{oled.drawText((i*2),3,0,dectohex(i)+" ");}
   }
   oled.drawBox(division*16,24,16,8,0);
+}
+
+void ProbSeq::followPos(){
+  if(follow == 1){
+    if(view == 0){selected = (pos%16)/4;}
+    division = (pos%64)/16;
+  }
 }
