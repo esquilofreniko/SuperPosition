@@ -36,14 +36,9 @@ void Button::read() {
   if (prevState == 1 && state == 0){buttonDownMs = millis();}
   else if (prevState == 0 && state == 1) {
     if (millis() - buttonDownMs < 50) {}
-    else if (millis() - buttonDownMs < 1000) {clicked = 1;}
+    else if (millis() - buttonDownMs < 250) {clicked = 1;}
   }
-  if(state == 0){
-    if(millis()-buttonDownMs >= 1000){held = 1;}
-  }
-  if(prevHeld == 0 && held == 1){
-    held_t = 1;
-  }
+  if(state == 0){if(millis()-buttonDownMs >= 250){held = 1;held_t = 1;}}
 };
 
 //Encoders
@@ -175,7 +170,7 @@ void Display::show(){
 void Display::drawText(int x, int y, bool inverted, String text){
   if(inverted == 0){display.setTextColor(WHITE);}
   if(inverted == 1){display.setTextColor(BLACK,WHITE);}
-  display.setCursor(x*8,y*8);
+  display.setCursor((x*8)+1,y*8);
   display.println(text);
 }
 

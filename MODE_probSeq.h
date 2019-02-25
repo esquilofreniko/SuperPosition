@@ -10,7 +10,7 @@ class ProbSeq {
     int morph = 0;
     int length = 16;
     int division = 0;
-    bool view = 1;
+    bool view = 0;
 
     void run();
     void clock();
@@ -26,4 +26,5 @@ class ProbSeq {
     void setProb(int _selected, int _pos);
     void drawInfo();
     void drawDivision();
+    void drawControls();
 };

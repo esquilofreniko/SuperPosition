@@ -17,18 +17,6 @@ void ProbSeq::clock(){
 void ProbSeq::updatePosition(){
     //Clear Old Position
     if(view == 0){
-      if(set == 0){
-        if(patt[selected][pos] == 0){kp.set(pos,0);}
-        if(patt[selected][pos] == 1){kp.set(pos,1);}
-      }
-      if(set == 1){
-        if(probs[selected][pos] < prob){kp.set(pos,4);}
-        if(probs[selected][pos] > prob){kp.set(pos,2);}
-        if(probs[selected][pos] == 0){kp.set(pos,0);}
-        if(probs[selected][pos] == prob){kp.set(pos,1);}
-      }
-    }
-    if(view == 1){
       if(pos < (selected+1)*4 && pos >= selected*4){
         for(int i=0;i<4;i++){
           if(set == 0){
@@ -44,6 +32,18 @@ void ProbSeq::updatePosition(){
         }
       }
     }
+    if(view == 1){
+      if(set == 0){
+        if(patt[selected][pos] == 0){kp.set(pos,0);}
+        if(patt[selected][pos] == 1){kp.set(pos,1);}
+      }
+      if(set == 1){
+        if(probs[selected][pos] < prob){kp.set(pos,4);}
+        if(probs[selected][pos] > prob){kp.set(pos,2);}
+        if(probs[selected][pos] == 0){kp.set(pos,0);}
+        if(probs[selected][pos] == prob){kp.set(pos,1);}
+      }
+    }
     //Update Position
     pos += 1;
     pos %= length;
@@ -52,10 +52,6 @@ void ProbSeq::updatePosition(){
 void ProbSeq::writeNewPosition(){
   //Write New Position
   if(view == 0){
-    if(patt[selected][pos] == 0){kp.set(pos,6);}
-    if(patt[selected][pos] == 1){kp.set(pos,3);}
-  }
-  if(view == 1){
     if(pos < (selected+1)*4 && pos >= selected*4){
       for(int i=0;i<4;i++){
         if(patt[i][pos] == 0){kp.set((pos%4) + (i*4),6);}
@@ -63,7 +59,10 @@ void ProbSeq::writeNewPosition(){
       }
     }
   }
-
+  if(view == 1){
+    if(patt[selected][pos] == 0){kp.set(pos,6);}
+    if(patt[selected][pos] == 1){kp.set(pos,3);}
+  }
   kp.show();
 }
 
@@ -91,13 +90,15 @@ void ProbSeq::output(){
 
 void ProbSeq::controls(){
   if(kp.pressed == 1){
-    for(int i=0;i<16;i++){
-      if(kp.key[i]==1){
-        if(set == 0){
-          setPatt(selected,i);
-        }
-        if(set == 1){
-          setProb(selected,i);
+    if(b1.held == 0 && b2.held == 0){
+      for(int i=0;i<16;i++){
+        if(kp.key[i]==1){
+          if(set == 0){
+            setPatt(selected,i);
+          }
+          if(set == 1){
+            setProb(selected,i);
+          }
         }
       }
     }
@@ -110,28 +111,24 @@ void ProbSeq::controls(){
   if(b2.clicked == 1){
 
   }
-  if(b1.held_t == 1){
-    for(int i=0;i<16;i++){
-      if(set == 0){
-        patt[selected][i] = 0;
+  if(b1.held == 1){
+    for(int i=0;i<4;i++){
+      if(kp.key[i*4]==1){
+        for(int j=0;j<16;j++){
+          if(set==0){patt[i][j] = 1;}
+          if(set==1){probs[i][j] = prob;}
+        }
       }
-      if(set == 1){
-        probs[selected][i] = 0;
-      }
+      if(kp.key[(i*4)+3]==1){
+        for(int j=0;j<16;j++){
+          if(set==0){patt[i][j] = 0;}
+          if(set==1){probs[i][j] = 0;}
+        }
+      }  
     }
     drawMatrixLED(selected);
   }
-  if(b2.held_t == 1){
-    for(int i=0;i<16;i++){
-      if(set == 0){
-        patt[selected][i] = 1;
-      }
-      if(set == 1){
-        probs[selected][i] = prob;
-      }
-    }
-    drawMatrixLED(selected);
-  }
+  if(b2.held == 1){}
   if(enc1.clicked == 1){}
   if(enc2.clicked == 1){}
   if(enc1.rotation != 0){
@@ -163,30 +160,30 @@ void ProbSeq::controls(){
 
 void ProbSeq::setPatt(int _selected, int _pos){
   if(view == 0){
-    patt[_selected][_pos] = (patt[_selected][_pos]+1)%2;
-    if(patt[_selected][_pos] == 0){kp.set(_pos,0);}
-    if(patt[_selected][_pos] == 1){kp.set(_pos,1);}
-  }
-  if(view == 1){
     patt[_pos/4][(_pos%4)+(_selected*4)] = (patt[_pos/4][(_pos%4)+(_selected*4)]+1)%2;
     if(patt[_pos/4][(_pos%4)+(_selected*4)] == 0){kp.set(_pos,0);}
     if(patt[_pos/4][(_pos%4)+(_selected*4)] == 1){kp.set(_pos,1);}
+  }
+  if(view == 1){
+    patt[_selected][_pos] = (patt[_selected][_pos]+1)%2;
+    if(patt[_selected][_pos] == 0){kp.set(_pos,0);}
+    if(patt[_selected][_pos] == 1){kp.set(_pos,1);}
   }
   kp.show();
 }
 
 void ProbSeq::setProb(int _selected, int _pos){
   if(view == 0){
-    if(probs[_selected][_pos] != prob){probs[_selected][_pos] = prob;}
-    else{probs[_selected][_pos] = 0;}
-    if(probs[_selected][_pos] != prob){kp.set(_pos,0);}
-    if(probs[_selected][_pos] == prob){kp.set(_pos,1);}
-  }
-  if(view == 1){
     if(probs[_pos/4][(_pos%4)+(_selected*4)] != prob){probs[_pos/4][(_pos%4)+(_selected*4)] = prob;}
     else{probs[_pos/4][(_pos%4)+(_selected*4)] = 0;}
     if(probs[_pos/4][(_pos%4)+(_selected*4)] != prob){kp.set(_pos,0);}
     if(probs[_pos/4][(_pos%4)+(_selected*4)] == prob){kp.set(_pos,1);}
+  }
+  if(view == 1){
+    if(probs[_selected][_pos] != prob){probs[_selected][_pos] = prob;}
+    else{probs[_selected][_pos] = 0;}
+    if(probs[_selected][_pos] != prob){kp.set(_pos,0);}
+    if(probs[_selected][_pos] == prob){kp.set(_pos,1);}
   }
   kp.show();
 }
@@ -194,8 +191,9 @@ void ProbSeq::setProb(int _selected, int _pos){
 void ProbSeq::drawBg(){
   oled.clear();
   drawInfo();
-  for(int i=0;i<4;i++){drawMatrix(i);}
   drawDivision();
+  if(b1.held || b2.held){drawControls();}
+  else{for(int i=0;i<4;i++){drawMatrix(i);}}
 }
 
 void ProbSeq::drawInfo(){
@@ -217,6 +215,18 @@ void ProbSeq::drawInfo(){
 
 void ProbSeq::drawMatrix(int k){
   if(view == 0){
+    for(int i=0;i<16;i++){
+      oled.invertedText = 0;
+      if(pos%16 == i){oled.invertedText = 1;}
+      if(set==0){
+        oled.drawText(i,k+4,oled.invertedText,dectohex(patt[k][i]));
+      }
+      if(set==1){
+        oled.drawText(i,k+4,oled.invertedText,dectohex(probs[k][i]));
+      }
+    }
+  }
+  if(view == 1){
     for(int i=0;i<4;i++){
       for(int j=0;j<4;j++){
         oled.invertedText = 0;
@@ -230,23 +240,49 @@ void ProbSeq::drawMatrix(int k){
       }
     }
   }
-  if(view == 1){
-    for(int i=0;i<16;i++){
-      oled.invertedText = 0;
-      if(pos%16 == i){oled.invertedText = 1;}
-      if(set==0){
-        oled.drawText(i,k+4,oled.invertedText,dectohex(patt[k][i]));
-      }
-      if(set==1){
-        oled.drawText(i,k+4,oled.invertedText,dectohex(probs[k][i]));
-      }
+  if(k==selected){oled.drawBox(k*32,31,32,33,0);}
+}
+
+void ProbSeq::drawControls(){
+  if(b1.held == 1){
+    for(int i=0;i<4;i++){
+      oled.drawText(0,i+4,0,"Fill-" + String(i+1));  
+      oled.drawText(12,i+4,0,"Clr-"+String(i+1));
     }
   }
-  if(k==selected){oled.drawBox(k*32-2,31,33,33,0);}
+  if(b2.held == 1){}
 }
 
 void ProbSeq::drawMatrixLED(int k){
   if(view == 0){
+    for(int i=0;i<4;i++){
+      for(int j=0;j<4;j++){
+        if(set == 0){
+          if(patt[j][i+(k*4)] == 0){
+            kp.set((i%4)+(j*4),0);
+          }
+          if(patt[j][i+(k*4)] == 1){
+            kp.set((i%4)+(j*4),1);
+          }
+        }
+        if(set == 1){
+          if(probs[j][i+(k*4)] < prob){
+            kp.set((i%4)+(j*4),4);
+          }
+          if(probs[j][i+(k*4)] > prob){
+            kp.set((i%4)+(j*4),2);
+          }
+          if(probs[j][i+(k*4)] == 0){
+            kp.set((i%4)+(j*4),0);
+          }
+          if(probs[j][i+(k*4)] == prob){
+            kp.set((i%4)+(j*4),1);
+          }
+        }
+      }
+    }
+  }
+  if(view == 1){
     for(int i=0;i<4;i++){
       for(int j=0;j<4;j++){
         if((i%4)+(j*4) != pos){
@@ -271,34 +307,6 @@ void ProbSeq::drawMatrixLED(int k){
             if(probs[k][(i%4)+(j*4)] == prob){
               kp.set((i%4)+(j*4),1);
             }
-          }
-        }
-      }
-    }
-  }
-  if(view == 1){
-    for(int i=0;i<4;i++){
-      for(int j=0;j<4;j++){
-        if(set == 0){
-          if(patt[j][i+(k*4)] == 0){
-            kp.set((i%4)+(j*4),0);
-          }
-          if(patt[j][i+(k*4)] == 1){
-            kp.set((i%4)+(j*4),1);
-          }
-        }
-        if(set == 1){
-          if(probs[j][i+(k*4)] < prob){
-            kp.set((i%4)+(j*4),4);
-          }
-          if(probs[j][i+(k*4)] > prob){
-            kp.set((i%4)+(j*4),2);
-          }
-          if(probs[j][i+(k*4)] == 0){
-            kp.set((i%4)+(j*4),0);
-          }
-          if(probs[j][i+(k*4)] == prob){
-            kp.set((i%4)+(j*4),1);
           }
         }
       }
