@@ -42,13 +42,8 @@ void ProbSeq::pattMorph(int _pos){
   //Probability Pattern Morph
   if(morph>random(10)){
     for(int i=0;i<4;i++){
-      if(probs[i][_pos] > random(10)){
-        patt[i][_pos] = 1;
-      }
+      if(probs[i][_pos] > random(10)){patt[i][_pos] = 1;}
       else{patt[i][_pos] = 0;}
-      if(set == 0){
-        setPatt(i,_pos);
-      }
     }
   }
 }
@@ -204,34 +199,33 @@ void ProbSeq::drawMatrix(int _k){
 void ProbSeq::drawMatrixLED(int _k){
   for(int i=0;i<4;i++){
     for(int j=0;j<4;j++){
-      if(_k == selected){
-        if((i%4)+(j*4) != pos){
-          if(set==0){
-            if(patt[_k][(i%4)+(j*4)] == 0){
-              kp.set((i%4)+(j*4),0);
-            }
-            if(patt[_k][(i%4)+(j*4)] == 1){
-              kp.set((i%4)+(j*4),1);
-            }
+      if((i%4)+(j*4) != pos){
+        if(set==0){
+          if(patt[_k][(i%4)+(j*4)] == 0){
+            kp.set((i%4)+(j*4),0);
           }
-          if(set==1){
-            if(probs[_k][(i%4)+(j*4)] < prob){
-              kp.set((i%4)+(j*4),4);
-            }
-            if(probs[_k][(i%4)+(j*4)] > prob){
-              kp.set((i%4)+(j*4),2);
-            }
-            if(probs[_k][(i%4)+(j*4)] == 0){
-              kp.set((i%4)+(j*4),0);
-            }
-            if(probs[_k][(i%4)+(j*4)] == prob){
-              kp.set((i%4)+(j*4),1);
-            }
+          if(patt[_k][(i%4)+(j*4)] == 1){
+            kp.set((i%4)+(j*4),1);
+          }
+        }
+        if(set==1){
+          if(probs[_k][(i%4)+(j*4)] < prob){
+            kp.set((i%4)+(j*4),4);
+          }
+          if(probs[_k][(i%4)+(j*4)] > prob){
+            kp.set((i%4)+(j*4),2);
+          }
+          if(probs[_k][(i%4)+(j*4)] == 0){
+            kp.set((i%4)+(j*4),0);
+          }
+          if(probs[_k][(i%4)+(j*4)] == prob){
+            kp.set((i%4)+(j*4),1);
           }
         }
       }
     }
   }
+  writeNewPosition();
   kp.show();
 }
 
