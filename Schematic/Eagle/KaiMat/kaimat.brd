@@ -1695,10 +1695,7 @@ design rules under a new name.</description>
 <contactref element="TL04CN-1" pad="4"/>
 <wire x1="12.772" y1="22.275" x2="12.772" y2="19.7804" width="0.1524" layer="16"/>
 <wire x1="12.772" y1="19.7804" x2="12.766" y2="19.7744" width="0.1524" layer="16"/>
-<wire x1="18.525" y1="21.495" x2="13.552" y2="21.495" width="0.1524" layer="16"/>
-<wire x1="12.772" y1="22.275" x2="13.552" y2="21.495" width="0.1524" layer="16"/>
-<wire x1="18.525" y1="21.495" x2="18.52" y2="21.5" width="0.1524" layer="16"/>
-<wire x1="18.52" y1="21.5" x2="29" y2="21.5" width="0.1524" layer="16"/>
+<wire x1="19" y1="21.5" x2="29" y2="21.5" width="0.1524" layer="16"/>
 <wire x1="29" y1="6" x2="50" y2="6" width="0.1524" layer="16"/>
 <wire x1="29" y1="21.5" x2="29" y2="6" width="0.1524" layer="16"/>
 <via x="50" y="6" extent="1-16" drill="0.35"/>
@@ -1712,7 +1709,9 @@ design rules under a new name.</description>
 <wire x1="45.53" y1="45.97" x2="45.53" y2="46.5" width="0.1524" layer="16"/>
 <wire x1="52.5" y1="26" x2="51.5" y2="27" width="0.1524" layer="1"/>
 <wire x1="47.92" y1="26.5" x2="52" y2="26.5" width="0.1524" layer="16"/>
-<wire x1="52" y1="26.5" x2="51.5" y2="27" width="0" layer="19" extent="1-1"/>
+<wire x1="12.772" y1="22.275" x2="18.225" y2="22.275" width="0.1524" layer="16"/>
+<wire x1="18.225" y1="22.275" x2="19" y2="21.5" width="0.1524" layer="16"/>
+<wire x1="51.5" y1="27" x2="52" y2="26.5" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="+5V">
 <contactref element="U$2" pad="OUT"/>
