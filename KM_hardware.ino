@@ -176,8 +176,9 @@ void Display::drawText(int x, int y, bool inverted, String text){
   display.println(text);
 }
 
-void Display::drawBox(int x, int y, int boxwidth, int boxheight){
-  display.drawRect(x,y,boxwidth,boxheight,WHITE);
+void Display::drawBox(int x, int y, int boxwidth, int boxheight, bool fill){
+  if(fill == 0){display.drawRect(x,y,boxwidth,boxheight,WHITE);}
+  if(fill == 1){display.fillRect(x,y,boxwidth,boxheight,WHITE);}
 }
 
 //Global Functions

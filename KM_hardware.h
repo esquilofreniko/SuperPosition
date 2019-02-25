@@ -77,38 +77,6 @@ class RotaryEncoder {
 RotaryEncoder enc1(ENC1BUTTON,Encoder(ENC1PINA,ENC1PINB));
 RotaryEncoder enc2(ENC2BUTTON,Encoder(ENC2PINA,ENC2PINB));
 
-//OLED Display
-#include <SPI.h>
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
-
-class Display {
-  private:
-  Adafruit_SSD1306 display;
-
-  public:
-  bool redraw = 0;
-  bool invertedText = 0;
-  unsigned long lastRedrawMS = 0;
-
-  Display(Adafruit_SSD1306 _display);
-  void init();
-  void clear();
-  void show();
-  void drawText(int x, int y, bool inverted, String text);
-  void drawBox(int x, int y, int boxwidth, int boxheight);
-};
-
-#define OLED_RESET  8
-#define OLED_DC     9
-#define OLED_CS     10
-#define OLED_MOSI   11
-#define OLED_CLK   13
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &SPI, OLED_DC, OLED_RESET, OLED_CS);
-Display oled(display);
-
 //KeyMatrix
 #include <Wire.h>
 #include "Adafruit_NeoTrellis.h"
@@ -132,3 +100,35 @@ class KeyMatrix {
 
 Adafruit_NeoTrellis trellis;
 KeyMatrix kp(trellis);
+
+//OLED Display
+#include <SPI.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+class Display {
+  private:
+  Adafruit_SSD1306 display;
+
+  public:
+  bool redraw = 0;
+  bool invertedText = 0;
+  unsigned long lastRedrawMS = 0;
+
+  Display(Adafruit_SSD1306 _display);
+  void init();
+  void clear();
+  void show();
+  void drawText(int x, int y, bool inverted, String text);
+  void drawBox(int x, int y, int boxwidth, int boxheigh, bool fill);
+};
+
+#define OLED_RESET  8
+#define OLED_DC     9
+#define OLED_CS     10
+#define OLED_MOSI   11
+#define OLED_CLK   13
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &SPI, OLED_DC, OLED_RESET, OLED_CS);
+Display oled(display);

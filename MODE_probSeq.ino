@@ -165,6 +165,7 @@ void ProbSeq::drawBg(){
   oled.clear();
   drawInfo();
   for(int i=0;i<4;i++){drawMatrix(i);}
+  drawDivision();
 }
 
 void ProbSeq::drawInfo(){
@@ -197,7 +198,7 @@ void ProbSeq::drawMatrix(int _k){
       }
     }
   }
-  if(_k==selected){oled.drawBox(_k*32-2,31,33,33);}
+  if(_k==selected){oled.drawBox(_k*32-2,31,33,33,0);}
 }
 
 void ProbSeq::drawMatrixLED(int _k){
@@ -232,4 +233,11 @@ void ProbSeq::drawMatrixLED(int _k){
     }
   }
   kp.show();
+}
+
+void ProbSeq::drawDivision(){
+  for(int i=0;i<4;i++){
+    oled.drawText((i*4)+1,3,0,dectohex(i));
+  }
+  oled.drawBox((division*32)/2,24,32,8,0);
 }
