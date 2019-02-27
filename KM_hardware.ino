@@ -35,10 +35,10 @@ void Button::read() {
   state = digitalRead(pin);
   if (prevState == 1 && state == 0){buttonDownMs = millis();}
   else if (prevState == 0 && state == 1) {
-    if (millis() - buttonDownMs < 50) {}
-    else if (millis() - buttonDownMs < 250) {clicked = 1;}
+    if (millis() - buttonDownMs < 25) {}
+    else if (millis() - buttonDownMs < 500) {clicked = 1;}
   }
-  if(state == 0){if(millis()-buttonDownMs >= 250){held = 1;held_t = 1;}}
+  if(state == 0){if(millis()-buttonDownMs >= 500){held = 1;held_t = 1;}}
 };
 
 //Encoders
@@ -72,7 +72,7 @@ void RotaryEncoder::read() {
   state = digitalRead(pinButton);
   if (prevState == 1 && state == 0){buttonDownMs = millis();}
   else if (prevState == 0 && state == 1) {
-    if (millis() - buttonDownMs < 50) {}
+    if (millis() - buttonDownMs < 25) {}
     else if (millis() - buttonDownMs < 1000) {clicked = 1;}
   }
   if(state == 0){
@@ -185,12 +185,12 @@ void hardware_init(){
   pinMode(ENC1PINB, INPUT_PULLUP);
   pinMode(ENC2PINA, INPUT_PULLUP);
   pinMode(ENC2PINB, INPUT_PULLUP);
+  kp.init();
+  oled.init();
   b1.init();
   b2.init();
   enc1.init();
   enc2.init();
-  kp.init();
-  oled.init();
 }
 
 void hardware_read(){

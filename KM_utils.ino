@@ -7,6 +7,7 @@ String dectohex(int in){
   else if(in==13){out = "D";}
   else if(in==14){out = "E";}
   else if(in==15){out = "F";}
+  else if(in==16){out = "G";}
   return out;
 }
 
@@ -20,5 +21,6 @@ String dectohexPoint(int in){
   else if(in==13){out = "D";}
   else if(in==14){out = "E";}
   else if(in==15){out = "F";}
+  else if(in==16){out = "G";}
   return out;
 }
