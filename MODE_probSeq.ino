@@ -80,7 +80,7 @@ void ProbSeq::controls(){
     if(b1.held == 0 && b2.held == 0){
       for(int i=0;i<16;i++){
         if(kp.key[i]==1){
-          setStep(selected,i);
+          setStep(i);
         }
       }
     }
@@ -151,36 +151,36 @@ void ProbSeq::controls(){
   }
 }
 
-void ProbSeq::setStep(int _selected, int _pos){
+void ProbSeq::setStep(int key){
   if(param == 0){
     if(view == 0){
-      patt[_selected][_pos + (division*16)] = (patt[_selected][_pos + (division)*16]+1)%2;
+      patt[selected][key + (division*16)] = (patt[selected][key + (division)*16]+1)%2;
     }
     if(view == 1){
-      patt[_pos/4][((_pos%4)+(_selected*4))+(division*16)] = (patt[_pos/4][((_pos%4)+(_selected*4))+(division*16)]+1)%2;
+      patt[key/4][((key%4)+(selected*4))+(division*16)] = (patt[key/4][((key%4)+(selected*4))+(division*16)]+1)%2;
     }
   }
   if(param == 1){
     if(view == 0){
-      if(probs[_selected][_pos + (division)*16] != prob){probs[_selected][_pos + (division)*16] = prob;}
-      else{probs[_selected][_pos + (division)*16] = 0;}
+      if(probs[selected][key + (division)*16] != prob){probs[selected][key + (division)*16] = prob;}
+      else{probs[selected][key + (division)*16] = 0;}
     }
     if(view == 1){
-      if(probs[_pos/4][(_pos%4)+(_selected*4) + (division)*16] != prob){probs[_pos/4][(_pos%4)+(_selected*4) + (division)*16] = prob;}
-      else{probs[_pos/4][(_pos%4)+(_selected*4) + (division)*16] = 0;}
+      if(probs[key/4][(key%4)+(selected*4) + (division)*16] != prob){probs[key/4][(key%4)+(selected*4) + (division)*16] = prob;}
+      else{probs[key/4][(key%4)+(selected*4) + (division)*16] = 0;}
     }
   }
   if(param == 2){
     if(view == 0){
-      if(clockDiv[_selected][_pos + (division)*16] != clockDivision){clockDiv[_selected][_pos + (division)*16] = clockDivision;}
-      else{clockDiv[_selected][_pos + (division)*16] = 0;}
+      if(clockDiv[selected][key + (division)*16] != clockDivision){clockDiv[selected][key + (division)*16] = clockDivision;}
+      else{clockDiv[selected][key + (division)*16] = 0;}
     }
     if(view == 1){
-      if(clockDiv[_pos/4][(_pos%4)+(_selected*4) + (division)*16] != clockDivision){clockDiv[_pos/4][(_pos%4)+(_selected*4) + (division)*16] = clockDivision;}
-      else{clockDiv[_pos/4][(_pos%4)+(_selected*4) + (division)*16] = 0;}
+      if(clockDiv[key/4][(key%4)+(selected*4) + (division)*16] != clockDivision){clockDiv[key/4][(key%4)+(selected*4) + (division)*16] = clockDivision;}
+      else{clockDiv[key/4][(key%4)+(selected*4) + (division)*16] = 0;}
     }
   }
-  drawKey(_selected,(_pos%16)%4,(_pos%16)/4);
+  drawKey(selected,(key%16)%4,(key%16)/4);
   kp.show();
 }
 

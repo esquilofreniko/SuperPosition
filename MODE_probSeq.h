@@ -29,7 +29,7 @@ class ProbSeq {
     void drawMatrix(int k);
     void drawMatrixLED(int k);
     void drawKey(int k, int i, int j);
-    void setStep(int _selected, int _pos);
+    void setStep(int key);
     void drawInfo();
     void drawDivision();
     void drawControls();
