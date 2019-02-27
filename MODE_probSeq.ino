@@ -17,7 +17,11 @@ void ProbSeq::clock(){
 
 void ProbSeq::updatePosition(){
   //Clear Old Position
-  if(view == 0){if(pos/16 == division){drawKey(selected,(pos%16)%4,(pos%16)/4);}}
+  if(view == 0){
+    if(pos/16 == division){
+      drawKey(selected,(pos%16)%4,(pos%16)/4);
+    }
+  }
   if(view == 1){
     if(pos < ((selected+1)*4)+(division*16) && pos >= (selected*4)+(division*16)){
       for(int i=0;i<4;i++){
@@ -115,7 +119,6 @@ void ProbSeq::controls(){
       param += enc1.rotation;
       if(param > 2){param = 0;}
       if(param < 0){param = 2;}
-      drawMatrixLED(selected);
     }
     if(selparam == 1){
       if(set == 0){
@@ -128,7 +131,6 @@ void ProbSeq::controls(){
           prob += enc1.rotation;
           if(prob>10){prob = 10;}
           if(prob<0){prob = 0;}
-          drawMatrixLED(selected);
         }
         if(param == 2){
           clockDivision += enc1.rotation;
@@ -137,6 +139,7 @@ void ProbSeq::controls(){
         }
       }
     }
+    drawMatrixLED(selected);
   }
   if(enc2.rotation != 0){
     selected+= enc2.rotation;
@@ -163,8 +166,18 @@ void ProbSeq::setStep(int _selected, int _pos){
       else{probs[_selected][_pos + (division)*16] = 0;}
     }
     if(view == 1){
-      if(probs[_pos/4][(_pos%4)+(_selected*4)] != prob){probs[_pos/4][(_pos%4)+(_selected*4)] = prob;}
-      else{probs[_pos/4][(_pos%4)+(_selected*4)] = 0;}
+      if(probs[_pos/4][(_pos%4)+(_selected*4) + (division)*16] != prob){probs[_pos/4][(_pos%4)+(_selected*4) + (division)*16] = prob;}
+      else{probs[_pos/4][(_pos%4)+(_selected*4) + (division)*16] = 0;}
+    }
+  }
+  if(param == 2){
+    if(view == 0){
+      if(clockDiv[_selected][_pos + (division)*16] != clockDivision){clockDiv[_selected][_pos + (division)*16] = clockDivision;}
+      else{clockDiv[_selected][_pos + (division)*16] = 0;}
+    }
+    if(view == 1){
+      if(clockDiv[_pos/4][(_pos%4)+(_selected*4) + (division)*16] != clockDivision){clockDiv[_pos/4][(_pos%4)+(_selected*4) + (division)*16] = clockDivision;}
+      else{clockDiv[_pos/4][(_pos%4)+(_selected*4) + (division)*16] = 0;}
     }
   }
   drawKey(_selected,(_pos%16)%4,(_pos%16)/4);
