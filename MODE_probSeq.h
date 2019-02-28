@@ -12,7 +12,6 @@ class ProbSeq {
     int morph = 0;
     int length = 32;
     int division = 0;
-    int division_old = 0;
     bool view = 0;
     bool selparam = 0;
     byte follow = 0;
@@ -22,13 +21,13 @@ class ProbSeq {
     void clock();
     void updatePosition();
     void writeNewPosition();
-    void pattMorph(int _pos);
+    void pattMorph(int index);
     void output();
     void controls();
     void drawBg();
-    void drawMatrix(int k);
-    void drawMatrixLED(int k);
-    void drawKey(int k, int i, int j);
+    void drawMatrix();
+    void drawMatrixLED();
+    void drawKey(int i, int j);
     void setStep(int key);
     void drawInfo();
     void drawDivision();

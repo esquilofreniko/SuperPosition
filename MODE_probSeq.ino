@@ -19,13 +19,13 @@ void ProbSeq::updatePosition(){
   //Clear Old Position
   if(view == 0){
     if(pos/16 == division){
-      drawKey(selected,(pos%16)%4,(pos%16)/4);
+      drawKey((pos%16)%4,(pos%16)/4);
     }
   }
   if(view == 1){
     if(pos < ((selected+1)*4)+(division*16) && pos >= (selected*4)+(division*16)){
       for(int i=0;i<4;i++){
-        drawKey(selected,pos%4,i);
+        drawKey(pos%4,i);
       }
     }
   }
@@ -53,12 +53,12 @@ void ProbSeq::writeNewPosition(){
   kp.show();
 }
 
-void ProbSeq::pattMorph(int _pos){
+void ProbSeq::pattMorph(int index){
   //Probability Pattern Morph
   if(morph>random(10)){
     for(int i=0;i<4;i++){
-      if(probs[i][_pos] > random(10)){patt[i][_pos] = 1;}
-      else{patt[i][_pos] = 0;}
+      if(probs[i][index] > random(10)){patt[i][index] = 1;}
+      else{patt[i][index] = 0;}
     }
   }
 }
@@ -94,14 +94,14 @@ void ProbSeq::controls(){
           if(param==0){patt[i][j] = 0;}
           if(param==1){probs[i][j] = 0;}
         }
-        drawMatrixLED(selected);
+        drawMatrixLED();
       }
       if(kp.key[i+4]==1){
         for(int j=0;j<length;j++){
           if(param==0){patt[i][j] = 1;}
           if(param==1){probs[i][j] = prob;}
         }
-        drawMatrixLED(selected);
+        drawMatrixLED();
       }  
     }
   }
@@ -112,7 +112,7 @@ void ProbSeq::controls(){
   if(enc2.clicked == 1){follow = (follow+1)%2;}
   if(enc2.held_t==1){
     view = (view+1)%2;
-    drawMatrixLED(selected);
+    drawMatrixLED();
   }
   if(enc1.rotation != 0){
     if(selparam == 0){
@@ -139,7 +139,7 @@ void ProbSeq::controls(){
         }
       }
     }
-    drawMatrixLED(selected);
+    drawMatrixLED();
   }
   if(enc2.rotation != 0){
     selected+= enc2.rotation;
@@ -147,7 +147,7 @@ void ProbSeq::controls(){
     if(selected<0){selected=3;division--;}
     if(division>3){division=0;}
     if(division<0){division=3;}
-    drawMatrixLED(selected);
+    drawMatrixLED();
   }
 }
 
@@ -180,7 +180,7 @@ void ProbSeq::setStep(int key){
       else{clockDiv[key/4][(key%4)+(selected*4) + (division)*16] = 0;}
     }
   }
-  drawKey(selected,(key%16)%4,(key%16)/4);
+  drawKey((key%16)%4,(key%16)/4);
   kp.show();
 }
 
@@ -189,7 +189,7 @@ void ProbSeq::drawBg(){
   drawInfo();
   drawDivision();
   if(b1.held || b2.held){drawControls();}
-  else{for(int i=0;i<4;i++){drawMatrix(i);}}
+  else{drawMatrix();}
 }
 
 void ProbSeq::drawInfo(){
@@ -210,40 +210,42 @@ void ProbSeq::drawInfo(){
   }
 }
 
-void ProbSeq::drawMatrix(int k){
-  if(view == 0){
-    for(int i=0;i<4;i++){
-      for(int j=0;j<4;j++){
+void ProbSeq::drawMatrix(){
+  for(int k=0;k<4;k++){
+    if(view == 0){
+      for(int i=0;i<4;i++){
+        for(int j=0;j<4;j++){
+          oled.invertedText = 0;
+          if(((i%4)+(j*4))+(division*16) == pos){oled.invertedText = 1;}
+          if(param==0){
+            oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,dectohexPoint(patt[k][(i%4)+(j*4)+(division*16)]));
+          }
+          if(param==1){
+            oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,dectohexPoint(probs[k][(i%4)+(j*4)+(division*16)]));
+          }
+          if(param==2){
+            oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,dectohexPoint(clockDiv[k][(i%4)+(j*4)+(division*16)]));
+          }
+        }
+      }
+    }
+    if(view == 1){
+      for(int i=0;i<16;i++){
         oled.invertedText = 0;
-        if(((i%4)+(j*4))+(division*16) == pos){oled.invertedText = 1;}
+        if(pos == i+(division*16)){oled.invertedText = 1;}
         if(param==0){
-          oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,dectohexPoint(patt[k][(i%4)+(j*4)+(division*16)]));
+          oled.drawText(i,k+4,oled.invertedText,dectohexPoint(patt[k][i+(division*16)]));
         }
         if(param==1){
-          oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,dectohexPoint(probs[k][(i%4)+(j*4)+(division*16)]));
+          oled.drawText(i,k+4,oled.invertedText,dectohexPoint(probs[k][i+(division*16)]));
         }
         if(param==2){
-          oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,dectohexPoint(clockDiv[k][(i%4)+(j*4)+(division*16)]));
+          oled.drawText(i,k+4,oled.invertedText,dectohexPoint(clockDiv[k][i+(division*16)]));
         }
       }
     }
+    if(k==selected){oled.drawBox(k*32,31,32,33,0);}
   }
-  if(view == 1){
-    for(int i=0;i<16;i++){
-      oled.invertedText = 0;
-      if(pos == i+(division*16)){oled.invertedText = 1;}
-      if(param==0){
-        oled.drawText(i,k+4,oled.invertedText,dectohexPoint(patt[k][i+(division*16)]));
-      }
-      if(param==1){
-        oled.drawText(i,k+4,oled.invertedText,dectohexPoint(probs[k][i+(division*16)]));
-      }
-      if(param==2){
-        oled.drawText(i,k+4,oled.invertedText,dectohexPoint(clockDiv[k][i+(division*16)]));
-      }
-    }
-  }
-  if(k==selected){oled.drawBox(k*32,31,32,33,0);}
 }
 
 void ProbSeq::drawControls(){
@@ -254,89 +256,89 @@ void ProbSeq::drawControls(){
   if(b2.held == 1){}
 }
 
-void ProbSeq::drawKey(int k, int i, int j){
+void ProbSeq::drawKey(int i, int j){
   if(view == 0){
     if(param==0){
-      if(patt[k][(i%4)+(j*4)+(division*16)] == 0){
+      if(patt[selected][(i%4)+(j*4)+(division*16)] == 0){
         kp.set((i%4)+(j*4),0);
       }
-      if(patt[k][(i%4)+(j*4)+(division*16)] == 1){
+      if(patt[selected][(i%4)+(j*4)+(division*16)] == 1){
         kp.set((i%4)+(j*4),1);
       }
     }
     if(param==1){
-      if(probs[k][(i%4)+(j*4)+(division*16)] < prob){
+      if(probs[selected][(i%4)+(j*4)+(division*16)] < prob){
         kp.set((i%4)+(j*4),4);
       }
-      if(probs[k][(i%4)+(j*4)+(division*16)] > prob){
+      if(probs[selected][(i%4)+(j*4)+(division*16)] > prob){
         kp.set((i%4)+(j*4),2);
       }
-      if(probs[k][(i%4)+(j*4)+(division*16)] == prob){
+      if(probs[selected][(i%4)+(j*4)+(division*16)] == prob){
         kp.set((i%4)+(j*4),1);
       }
-      if(probs[k][(i%4)+(j*4)+(division*16)] == 0){
+      if(probs[selected][(i%4)+(j*4)+(division*16)] == 0){
         kp.set((i%4)+(j*4),0);
       }
     }
     if(param==2){
-      if(clockDiv[k][(i%4)+(j*4)+(division*16)] < clockDivision){
+      if(clockDiv[selected][(i%4)+(j*4)+(division*16)] < clockDivision){
         kp.set((i%4)+(j*4),4);
       }
-      if(clockDiv[k][(i%4)+(j*4)+(division*16)] > clockDivision){
+      if(clockDiv[selected][(i%4)+(j*4)+(division*16)] > clockDivision){
         kp.set((i%4)+(j*4),2);
       }
-      if(clockDiv[k][(i%4)+(j*4)+(division*16)] == clockDivision){
+      if(clockDiv[selected][(i%4)+(j*4)+(division*16)] == clockDivision){
         kp.set((i%4)+(j*4),1);
       }
-      if(clockDiv[k][(i%4)+(j*4)+(division*16)] == 0){
+      if(clockDiv[selected][(i%4)+(j*4)+(division*16)] == 0){
         kp.set((i%4)+(j*4),0);
       }
     }
   }
   if(view == 1){
     if(param == 0){
-      if(patt[j][i+(k*4)+(division*16)] == 0){
+      if(patt[j][i+(selected*4)+(division*16)] == 0){
         kp.set((i%4)+(j*4),0);
       }
-      if(patt[j][i+(k*4)+(division*16)] == 1){
+      if(patt[j][i+(selected*4)+(division*16)] == 1){
         kp.set((i%4)+(j*4),1);
       }
     }
     if(param == 1){
-      if(probs[j][i+(k*4)+(division*16)] < prob){
+      if(probs[j][i+(selected*4)+(division*16)] < prob){
         kp.set((i%4)+(j*4),4);
       }
-      if(probs[j][i+(k*4)+(division*16)] > prob){
+      if(probs[j][i+(selected*4)+(division*16)] > prob){
         kp.set((i%4)+(j*4),2);
       }
-      if(probs[j][i+(k*4)+(division*16)] == prob){
+      if(probs[j][i+(selected*4)+(division*16)] == prob){
         kp.set((i%4)+(j*4),1);
       }
-      if(probs[j][i+(k*4)+(division*16)] == 0){
+      if(probs[j][i+(selected*4)+(division*16)] == 0){
         kp.set((i%4)+(j*4),0);
       }
     }
     if(param == 2){
-      if(clockDiv[j][i+(k*4)+(division*16)] < clockDivision){
+      if(clockDiv[j][i+(selected*4)+(division*16)] < clockDivision){
         kp.set((i%4)+(j*4),4);
       }
-      if(clockDiv[j][i+(k*4)+(division*16)] > clockDivision){
+      if(clockDiv[j][i+(selected*4)+(division*16)] > clockDivision){
         kp.set((i%4)+(j*4),2);
       }
-      if(clockDiv[j][i+(k*4)+(division*16)] == clockDivision){
+      if(clockDiv[j][i+(selected*4)+(division*16)] == clockDivision){
         kp.set((i%4)+(j*4),1);
       }
-      if(clockDiv[j][i+(k*4)+(division*16)] == 0){
+      if(clockDiv[j][i+(selected*4)+(division*16)] == 0){
         kp.set((i%4)+(j*4),0);
       }
     }
   }
 }
 
-void ProbSeq::drawMatrixLED(int k){
+void ProbSeq::drawMatrixLED(){
   for(int i=0;i<4;i++){
     for(int j=0;j<4;j++){
-      drawKey(k,i,j);
+      drawKey(i,j);
     }
   }
   writeNewPosition();
