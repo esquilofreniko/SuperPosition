@@ -7,11 +7,11 @@ class ProbSeq {
     short clockDiv[4][64];
     short clockDivCount[4];
     short lengthMin[4] = {0,0,0,0};
-    short lengthMax[4] = {3,7,0,15};
+    short lengthMax[4] = {15,15,15,15};
     short clockDivOp;
     short clockDivision = 1;
     short lengthMinTemp = 0;
-    bool lengthSet = 1;
+    bool lengthSet = 0;
     short prob = 5;
     short set = 0;
     short param = 0;

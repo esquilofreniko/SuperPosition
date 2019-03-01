@@ -220,11 +220,11 @@ void ProbSeq::setStep(int key){
       else if(lengthSet==1){
         lengthMax[selected] = key + (division*16);
       }
-      // if(lengthMin[selected] > lengthMax[selected]){
-      //   temp = lengthMin[selected];
-      //   lengthMin[selected] = lengthMax[selected];
-      //   lengthMax[selected] = temp;
-      // }
+      if(lengthMin[selected] > lengthMax[selected]){
+        temp = lengthMin[selected];
+        lengthMin[selected] = lengthMax[selected];
+        lengthMax[selected] = temp;
+      }
       drawMatrixLED();
     }
     if(view == 1){}
@@ -280,7 +280,10 @@ void ProbSeq::drawMatrix(){
             oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,dectohexPoint(clockDiv[k][(i%4)+(j*4)+(division*16)]));
           }
           if(param==3){
-            if((i%4)+(j*4)+(division*16) == lengthMin[k]){oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,"S");}
+            if((i%4)+(j*4)+(division*16) == lengthMin[k] && (i%4)+(j*4)+(division*16) == lengthMax[k]){
+              oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,"A");
+            }
+            else if((i%4)+(j*4)+(division*16) == lengthMin[k]){oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,"S");}
             else if((i%4)+(j*4)+(division*16) == lengthMax[k]){oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,"E");}
             else{oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,".");}
           }
@@ -358,6 +361,9 @@ void ProbSeq::drawKey(int i, int j){
       }
       else if(lengthMax[selected] == (i%4)+(j*4) + (division*16)){
         kp.set(lengthMax[selected]%16,2);
+      }
+      else if((i%4)+(j*4)+(division*16) < lengthMax[selected] && (i%4)+(j*4)+(division*16) > lengthMin[selected]){
+        kp.set((i%4)+(j*4),1);
       }
       else{kp.set((i%4)+(j*4),0);}
     }
