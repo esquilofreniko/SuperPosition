@@ -23,9 +23,9 @@ void ProbSeq::updatePosition(){
     }
   }
   if(view == 1){
-    if(pos[selected] < ((selected+1)*4)+(division*16) && pos[selected] >= (selected*4)+(division*16)){
-      for(int i=0;i<4;i++){
-        drawKey(pos[selected]%4,i);
+    for(int i=0;i<4;i++){
+      if(pos[i] < ((selected+1)*4)+(division*16) && pos[selected] >= (selected*4)+(division*16)){
+        drawKey(pos[i]%4,i);
       }
     }
   }
@@ -51,10 +51,10 @@ void ProbSeq::writeNewPosition(){
     }
   }
   if(view == 1){
-    if(pos[selected] < ((selected+1)*4)+(division*16) && pos[selected] >= (selected*4)+(division*16)){
-      for(int i=0;i<4;i++){
-        if(patt[i][pos[selected]] == 0){kp.set((pos[selected]%4)+(i*4),6);}
-        if(patt[i][pos[selected]] == 1){kp.set((pos[selected]%4)+(i*4),3);}
+    for(int i=0;i<4;i++){
+      if(pos[i] < ((selected+1)*4)+(division*16) && pos[i] >= (selected*4)+(division*16)){
+        if(patt[i][pos[i]] == 0){kp.set((pos[i]%4)+(i*4),6);}
+        if(patt[i][pos[i]] == 1){kp.set((pos[i]%4)+(i*4),3);}
       }
     }
   }
