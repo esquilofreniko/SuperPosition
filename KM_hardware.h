@@ -60,8 +60,8 @@ class RotaryEncoder {
   bool held;
   bool held_t;
   bool post;
-  int pos;
-  int rotation;
+  short pos;
+  short rotation;
 
   RotaryEncoder(byte _pinButton, Encoder _enc);
   void init();

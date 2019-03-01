@@ -10,7 +10,8 @@ class ProbSeq {
     short lengthMax[4] = {3,7,0,15};
     short clockDivOp;
     short clockDivision = 1;
-    bool lengthSet = 0;
+    short lengthMinTemp = 0;
+    bool lengthSet = 1;
     short prob = 5;
     short set = 0;
     short param = 0;
@@ -18,7 +19,8 @@ class ProbSeq {
     short division = 0;
     bool view = 0;
     bool selparam = 0;
-    byte follow = 0;
+    short follow = 0;
+    short temp = 0;
 
     void run();
     void clock();
