@@ -1,5 +1,7 @@
 class ProbSeq {
     public:
+    int pos[4];
+    int length[4] = {16,32,48,64};
     int selected = 0;
     int probs[4][64];
     bool patt[4][64];
@@ -8,20 +10,17 @@ class ProbSeq {
     int prob = 5;
     int set = 0;
     int param = 0;
-    int pos = 0;
     int morph = 0;
-    int length = 32;
     int division = 0;
     bool view = 0;
     bool selparam = 0;
     byte follow = 0;
 
-
     void run();
     void clock();
     void updatePosition();
     void writeNewPosition();
-    void pattMorph(int index);
+    void pattMorph();
     void output();
     void controls();
     void drawBg();
