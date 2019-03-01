@@ -1,19 +1,21 @@
 class ProbSeq {
     public:
-    int pos[4];
-    int length[4] = {16,32,48,64};
-    int selected = 0;
-    int probs[4][64];
+    short pos[4];
+    short selected = 0;
+    short probs[4][64];
     bool patt[4][64];
     short clockDiv[4][64];
     short clockDivCount[4];
+    short lengthMin[4] = {0,0,0,0};
+    short lengthMax[4] = {3,7,0,15};
     short clockDivOp;
     short clockDivision = 1;
-    int prob = 5;
-    int set = 0;
-    int param = 0;
-    int morph = 0;
-    int division = 0;
+    bool lengthSet = 0;
+    short prob = 5;
+    short set = 0;
+    short param = 0;
+    short morph = 0;
+    short division = 0;
     bool view = 0;
     bool selparam = 0;
     byte follow = 0;

@@ -24,7 +24,7 @@ void ProbSeq::updatePosition(){
   }
   if(view == 1){
     for(int i=0;i<4;i++){
-      if(pos[i] < ((selected+1)*4)+(division*16) && pos[selected] >= (selected*4)+(division*16)){
+      if(pos[i] < ((selected+1)*4)+(division*16) && pos[i] >= (selected*4)+(division*16)){
         drawKey(pos[i]%4,i);
       }
     }
@@ -37,7 +37,7 @@ void ProbSeq::updatePosition(){
     clockDivCount[p] %= clockDivOp;
     if(clockDivCount[p]==0){
       pos[p] += 1;
-      pos[p] %= length[p];
+      if(pos[p] > lengthMax[p]){pos[p] = lengthMin[p];}
     }
   }
 }
@@ -65,8 +65,10 @@ void ProbSeq::pattMorph(){
   //Probability Pattern Morph
   if(morph>random(10)){
     for(int i=0;i<4;i++){
-      if(probs[i][pos[i]] > random(10)){patt[i][pos[i]] = 1;}
-      else{patt[i][pos[i]] = 0;}
+      if(clockDivCount[i] == 0){
+        if(probs[i][pos[i]] > random(10)){patt[i][pos[i]] = 1;}
+        else{patt[i][pos[i]] = 0;}
+      }
     }
   }
 }
@@ -74,11 +76,13 @@ void ProbSeq::pattMorph(){
 void ProbSeq::output(){
   //MIDI Out
   for(int i=0;i<4;i++){
-    if(patt[i][pos[i]] == 1){
-      usbMIDI.sendNoteOn(60,60,i+4);
-    }
-    if(patt[i][pos[i]] == 0){
-      usbMIDI.sendNoteOff(60,0,i+4);
+    if(clockDivCount[i]==0){
+      if(patt[i][pos[i]] == 1){
+        usbMIDI.sendNoteOn(60,60,i+4);
+      }
+      if(patt[i][pos[i]] == 0){
+       usbMIDI.sendNoteOff(60,0,i+4);
+      }
     }
   }
 }
@@ -93,21 +97,30 @@ void ProbSeq::controls(){
       }
     }
   }
-  if(b1.clicked== 1){}
-  if(b2.clicked== 1){}
+  if(b1.clicked== 1){
+    for(int i=0;i<4;i++){
+      pos[i] = lengthMin[i]-1;
+    }
+  }
+  if(b2.clicked== 1){
+    division += 1;
+    division %= 4;
+  }
   if(b1.held == 1){
     for(int i=0;i<4;i++){
       if(kp.key[i]==1){
-        for(int j=0;j<length[i];j++){
+        for(int j=lengthMin[i];j<=lengthMax[i];j++){
           if(param==0){patt[i][j] = 0;}
           if(param==1){probs[i][j] = 0;}
+          if(param==2){clockDiv[i][j] = 0;}
         }
         drawMatrixLED();
       }
       if(kp.key[i+4]==1){
-        for(int j=0;j<length[i];j++){
+        for(int j=lengthMin[i];j<=lengthMax[i];j++){
           if(param==0){patt[i][j] = 1;}
           if(param==1){probs[i][j] = prob;}
+          if(param==2){clockDiv[i][j] = clockDivision;}
         }
         drawMatrixLED();
       }  
@@ -151,10 +164,16 @@ void ProbSeq::controls(){
   }
   if(enc2.rotation != 0){
     selected+= enc2.rotation;
-    if(selected>3){selected=0;division++;}
-    if(selected<0){selected=3;division--;}
-    if(division>3){division=0;}
-    if(division<0){division=3;}
+    if(selected>3){
+      selected=0;
+      // division++;
+    }
+    if(selected<0){
+      selected=3;
+      // division--;
+    }
+    // if(division>3){division=0;}
+    // if(division<0){division=3;}
     drawMatrixLED();
   }
 }
@@ -211,6 +230,9 @@ void ProbSeq::drawInfo(){
     oled.invertedText=0;
     if(selparam == 1){if(param == 2){oled.invertedText=1;}}
     oled.drawText(8,1,oled.invertedText,"Div:" + dectohex(clockDivision));
+    oled.invertedText=0;
+    if(selparam == 1){if(param==3){oled.invertedText=1;}}
+    oled.drawText(12,1,oled.invertedText,"Lgt:B");
     oled.invertedText=0;
     if(selparam == 0){
       oled.drawBox(param*32,8,32,8,0);
@@ -355,10 +377,9 @@ void ProbSeq::drawMatrixLED(){
 
 void ProbSeq::drawDivision(){
   for(int i=0;i<4;i++){
-    if(floor(pos[i]/16)==i){oled.drawText((i*2)+8,3,0,dectohex(i)+".");}
-    else{oled.drawText((i*2)+8,3,0,dectohex(i)+" ");}
+    oled.drawText((i*2)+8,0,0,dectohex(i));
   }
-  oled.drawBox((division*16)+64,24,16,8,0);
+  oled.drawBox((division*16)+64,0,16,8,0);
 }
 
 void ProbSeq::followPos(){
