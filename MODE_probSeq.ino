@@ -31,8 +31,14 @@ void ProbSeq::updatePosition(){
   }
   for(int p=0;p<4;p++){
     //Update Position
-    pos[p] += 1;
-    pos[p] %= length[p];
+    clockDivOp = clockDiv[p][pos[p]];
+    if(clockDivOp==0){clockDivOp=1;}
+    clockDivCount[p] += 1;
+    clockDivCount[p] %= clockDivOp;
+    if(clockDivCount[p]==0){
+      pos[p] += 1;
+      pos[p] %= length[p];
+    }
   }
 }
 

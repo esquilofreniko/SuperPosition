@@ -6,6 +6,8 @@ class ProbSeq {
     int probs[4][64];
     bool patt[4][64];
     short clockDiv[4][64];
+    short clockDivCount[4];
+    short clockDivOp;
     short clockDivision = 1;
     int prob = 5;
     int set = 0;
