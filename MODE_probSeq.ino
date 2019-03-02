@@ -229,7 +229,20 @@ void ProbSeq::setStep(int key){
       }
       drawMatrixLED();
     }
-    if(view == 1){}
+    if(view == 1){
+      if(lengthSet==0){
+        lengthMin[key/4] = (key%4) + (selected*4) + (division*16);
+      }
+      else if(lengthSet==1){
+        lengthMax[key/4] = (key%4) + (selected*4) + (division*16);
+      }
+      if(lengthMin[key/4] > lengthMax[key/4]){
+        temp = lengthMin[key/4];
+        lengthMin[key/4] = lengthMax[key/4];
+        lengthMax[key/4] = temp;
+      }
+      drawMatrixLED();
+    }
   }
   drawKey((key%16)%4,(key%16)/4);
   kp.show();
