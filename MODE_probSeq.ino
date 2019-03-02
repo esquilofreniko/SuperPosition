@@ -167,12 +167,12 @@ void ProbSeq::controls(){
         if(param == 1){
           prob += enc2.rotation;
           if(prob>10){prob = 10;}
-          if(prob<0){prob = 0;}
+          if(prob<1){prob = 1;}
         }
         if(param == 2){
           clockDivision += enc2.rotation;
           if(clockDivision > 16){clockDivision=16;}
-          if(clockDivision < 0){clockDivision=0;}
+          if(clockDivision < 2){clockDivision=2;}
         }
         if(param == 3){
           if(enc2.rotation == 1){lengthSet = 1;}
@@ -257,7 +257,8 @@ void ProbSeq::drawBg(){
 void ProbSeq::drawInfo(){
   if(set == 0){
     oled.drawText(0,0,1,"Time");
-    oled.drawText(4,0,0,"Note");
+    oled.drawText(4,0,0,"Event");
+    oled.drawText(8,0,0," Pos:");
     drawDivision();
     if(selparam == 1){if(param == 0){oled.invertedText=1;}}
     oled.drawText(0,1,oled.invertedText,"Mrf:" + dectohex(morph));
@@ -278,7 +279,8 @@ void ProbSeq::drawInfo(){
   }
   if(set == 1){
     oled.drawText(0,0,0,"Time");
-    oled.drawText(4,0,1,"Note");
+    oled.drawText(4,0,1,"Event");
+    oled.drawText(8,0,0," Pos:");
     drawDivision();
   }
 }
