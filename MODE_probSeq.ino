@@ -99,13 +99,13 @@ void ProbSeq::controls(){
     }
   }
   if(b1.clicked== 1){
+
+  }
+  if(b2.clicked== 1){
     for(int i=0;i<4;i++){
       pos[i] = lengthMin[i]-1;
     }
-  }
-  if(b2.clicked== 1){
-    division += 1;
-    division %= 4;
+    drawMatrixLED();
   }
   if(b1.held == 1){
     for(int i=0;i<4;i++){
@@ -171,14 +171,14 @@ void ProbSeq::controls(){
     selected+= enc2.rotation;
     if(selected>3){
       selected=0;
-      // division++;
+      division++;
     }
     if(selected<0){
       selected=3;
-      // division--;
+      division--;
     }
-    // if(division>3){division=0;}
-    // if(division<0){division=3;}
+    if(division>3){division=0;}
+    if(division<0){division=3;}
     drawMatrixLED();
   }
 }
