@@ -99,13 +99,14 @@ void ProbSeq::controls(){
     }
   }
   if(b1.clicked== 1){
-
-  }
-  if(b2.clicked== 1){
     for(int i=0;i<4;i++){
       pos[i] = lengthMin[i]-1;
     }
     drawMatrixLED();
+  }
+  if(b2.clicked== 1){
+    set += 1;
+    set %= 2;
   }
   if(b1.held == 1){
     for(int i=0;i<4;i++){
@@ -128,49 +129,16 @@ void ProbSeq::controls(){
     }
   }
   if(b2.held == 1){}
-  if(enc1.clicked == 1){    
-    selparam = (selparam + 1)%2;
-  }
+  if(enc1.clicked == 1){}
   if(enc2.clicked == 1){
-    // follow = (follow+1)%2;
+    selparam = (selparam + 1)%2;
   }
   if(enc2.held_t==1){
     view = (view+1)%2;
     drawMatrixLED();
   }
   if(enc1.rotation != 0){
-    if(selparam == 0){
-      param += enc1.rotation;
-      if(param > 3){param = 0;}
-      if(param < 0){param = 3;}
-    }
-    if(selparam == 1){
-      if(set == 0){
-        if(param == 0){
-          morph += enc1.rotation;
-          if(morph>10){morph=10;}
-          if(morph<0){morph=0;}
-        }
-        if(param == 1){
-          prob += enc1.rotation;
-          if(prob>10){prob = 10;}
-          if(prob<0){prob = 0;}
-        }
-        if(param == 2){
-          clockDivision += enc1.rotation;
-          if(clockDivision > 16){clockDivision=16;}
-          if(clockDivision < 0){clockDivision=0;}
-        }
-        if(param == 3){
-          if(enc1.rotation == 1){lengthSet = 1;}
-          if(enc1.rotation == -1){lengthSet = 0;}
-        }
-      }
-    }
-    drawMatrixLED();
-  }
-  if(enc2.rotation != 0){
-    selected+= enc2.rotation;
+    selected+= enc1.rotation;
     if(selected>3){
       selected=0;
       division++;
@@ -181,6 +149,37 @@ void ProbSeq::controls(){
     }
     if(division>3){division=0;}
     if(division<0){division=3;}
+    drawMatrixLED();
+  }
+  if(enc2.rotation != 0){
+    if(selparam == 0){
+      param += enc2.rotation;
+      if(param > 3){param = 0;}
+      if(param < 0){param = 3;}
+    }
+    if(selparam == 1){
+      if(set == 0){
+        if(param == 0){
+          morph += enc2.rotation;
+          if(morph>10){morph=10;}
+          if(morph<0){morph=0;}
+        }
+        if(param == 1){
+          prob += enc2.rotation;
+          if(prob>10){prob = 10;}
+          if(prob<0){prob = 0;}
+        }
+        if(param == 2){
+          clockDivision += enc2.rotation;
+          if(clockDivision > 16){clockDivision=16;}
+          if(clockDivision < 0){clockDivision=0;}
+        }
+        if(param == 3){
+          if(enc2.rotation == 1){lengthSet = 1;}
+          if(enc2.rotation == -1){lengthSet = 0;}
+        }
+      }
+    }
     drawMatrixLED();
   }
 }
@@ -251,7 +250,6 @@ void ProbSeq::setStep(int key){
 void ProbSeq::drawBg(){
   oled.clear();
   drawInfo();
-  drawDivision();
   if(b1.held || b2.held){drawControls();}
   else{drawMatrix();}
 }
@@ -259,6 +257,8 @@ void ProbSeq::drawBg(){
 void ProbSeq::drawInfo(){
   if(set == 0){
     oled.drawText(0,0,1,"Time");
+    oled.drawText(4,0,0,"Note");
+    drawDivision();
     if(selparam == 1){if(param == 0){oled.invertedText=1;}}
     oled.drawText(0,1,oled.invertedText,"Mrf:" + dectohex(morph));
     oled.invertedText=0;
@@ -275,6 +275,11 @@ void ProbSeq::drawInfo(){
     if(selparam == 0){
       oled.drawBox(param*32,8,32,8,0);
     }
+  }
+  if(set == 1){
+    oled.drawText(0,0,0,"Time");
+    oled.drawText(4,0,1,"Note");
+    drawDivision();
   }
 }
 
@@ -386,7 +391,7 @@ void ProbSeq::drawKey(int i, int j){
         kp.set(lengthMax[selected]%16,2);
       }
       else if((i%4)+(j*4)+(division*16) < lengthMax[selected] && (i%4)+(j*4)+(division*16) > lengthMin[selected]){
-        kp.set((i%4)+(j*4),1);
+        kp.set((i%4)+(j*4),7);
       }
       else{kp.set((i%4)+(j*4),0);}
     }
@@ -436,7 +441,7 @@ void ProbSeq::drawKey(int i, int j){
         kp.set((i%4)+(j*4),2);
       }
       else if((i%4) + (selected*4) + (division*16) < lengthMax[j] && (i%4) + (selected*4) + (division*16) > lengthMin[j]){
-        kp.set((i%4)+(j*4),1);
+        kp.set((i%4)+(j*4),7);
       }
       else{kp.set((i%4)+(j*4),0);}
     }
@@ -455,9 +460,10 @@ void ProbSeq::drawMatrixLED(){
 
 void ProbSeq::drawDivision(){
   for(int i=0;i<4;i++){
-    oled.drawText((i*2)+8,0,0,dectohex(i));
+    if(i == division){oled.invertedText = 1;}
+    oled.drawText((i*1)+12,0,oled.invertedText,dectohex(i));
+    oled.invertedText = 0;
   }
-  oled.drawBox((division*16)+64,0,16,8,0);
 }
 
 void ProbSeq::followPos(){
