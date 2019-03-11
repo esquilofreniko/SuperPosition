@@ -19,13 +19,13 @@ void ProbSeq::updatePosition(){
   //Clear Old Position
   if(view == 0){
     if(pos[selected]/16 == division){
-      drawKey((pos[selected]%16)%4,(pos[selected]%16)/4);
+      drawKey(pos[selected]);
     }
   }
   if(view == 1){
     for(int i=0;i<4;i++){
       if(pos[i] < ((selected+1)*4)+(division*16) && pos[i] >= (selected*4)+(division*16)){
-        drawKey(pos[i]%4,i);
+        drawKey((pos[i]%4)+(i*4));
       }
     }
   }
@@ -39,6 +39,9 @@ void ProbSeq::updatePosition(){
       pos[p] += 1;
       if(pos[p] > lengthMax[p]){pos[p] = lengthMin[p];}
       pos[p] %= 64;
+      if(activeNote[p][pos[p]] == 0){
+        posNote[p] = pos[p];
+      }      
     }
   }
 }
@@ -185,65 +188,70 @@ void ProbSeq::controls(){
 }
 
 void ProbSeq::setStep(int key){
-  if(param == 0){
-    if(view == 0){
-      patt[selected][key + (division*16)] = (patt[selected][key + (division)*16]+1)%2;
+  if(set == 0){
+    if(param == 0){
+      if(view == 0){
+        patt[selected][key + (division*16)] = (patt[selected][key + (division)*16]+1)%2;
+      }
+      if(view == 1){
+        patt[key/4][((key%4)+(selected*4))+(division*16)] = (patt[key/4][((key%4)+(selected*4))+(division*16)]+1)%2;
+      }
     }
-    if(view == 1){
-      patt[key/4][((key%4)+(selected*4))+(division*16)] = (patt[key/4][((key%4)+(selected*4))+(division*16)]+1)%2;
+    if(param == 1){
+      if(view == 0){
+        if(probs[selected][key + (division)*16] != prob){probs[selected][key + (division)*16] = prob;}
+        else{probs[selected][key + (division)*16] = 0;}
+      }
+      if(view == 1){
+        if(probs[key/4][(key%4)+(selected*4) + (division)*16] != prob){probs[key/4][(key%4)+(selected*4) + (division)*16] = prob;}
+        else{probs[key/4][(key%4)+(selected*4) + (division)*16] = 0;}
+      }
+    }
+    if(param == 2){
+      if(view == 0){
+        if(clockDiv[selected][key + (division)*16] != clockDivision){clockDiv[selected][key + (division)*16] = clockDivision;}
+        else{clockDiv[selected][key + (division)*16] = 0;}
+      }
+      if(view == 1){
+        if(clockDiv[key/4][(key%4)+(selected*4) + (division)*16] != clockDivision){clockDiv[key/4][(key%4)+(selected*4) + (division)*16] = clockDivision;}
+        else{clockDiv[key/4][(key%4)+(selected*4) + (division)*16] = 0;}
+      }
+    }
+    if(param == 3){
+      if(view == 0){
+        if(lengthSet==0){
+          lengthMin[selected] = key + (division*16);
+        }
+        else if(lengthSet==1){
+          lengthMax[selected] = key + (division*16);
+        }
+        if(lengthMin[selected] > lengthMax[selected]){
+          temp = lengthMin[selected];
+          lengthMin[selected] = lengthMax[selected];
+          lengthMax[selected] = temp;
+        }
+        drawMatrixLED();
+      }
+      if(view == 1){
+        if(lengthSet==0){
+          lengthMin[key/4] = (key%4) + (selected*4) + (division*16);
+        }
+        else if(lengthSet==1){
+          lengthMax[key/4] = (key%4) + (selected*4) + (division*16);
+        }
+        if(lengthMin[key/4] > lengthMax[key/4]){
+          temp = lengthMin[key/4];
+          lengthMin[key/4] = lengthMax[key/4];
+          lengthMax[key/4] = temp;
+        }
+        drawMatrixLED();
+      }
     }
   }
-  if(param == 1){
-    if(view == 0){
-      if(probs[selected][key + (division)*16] != prob){probs[selected][key + (division)*16] = prob;}
-      else{probs[selected][key + (division)*16] = 0;}
-    }
-    if(view == 1){
-      if(probs[key/4][(key%4)+(selected*4) + (division)*16] != prob){probs[key/4][(key%4)+(selected*4) + (division)*16] = prob;}
-      else{probs[key/4][(key%4)+(selected*4) + (division)*16] = 0;}
-    }
+  if(set == 1){
+    activeNote[selected][key + (division*16)] = (activeNote[selected][key + (division)*16]+1)%2;    
   }
-  if(param == 2){
-    if(view == 0){
-      if(clockDiv[selected][key + (division)*16] != clockDivision){clockDiv[selected][key + (division)*16] = clockDivision;}
-      else{clockDiv[selected][key + (division)*16] = 0;}
-    }
-    if(view == 1){
-      if(clockDiv[key/4][(key%4)+(selected*4) + (division)*16] != clockDivision){clockDiv[key/4][(key%4)+(selected*4) + (division)*16] = clockDivision;}
-      else{clockDiv[key/4][(key%4)+(selected*4) + (division)*16] = 0;}
-    }
-  }
-  if(param == 3){
-    if(view == 0){
-      if(lengthSet==0){
-        lengthMin[selected] = key + (division*16);
-      }
-      else if(lengthSet==1){
-        lengthMax[selected] = key + (division*16);
-      }
-      if(lengthMin[selected] > lengthMax[selected]){
-        temp = lengthMin[selected];
-        lengthMin[selected] = lengthMax[selected];
-        lengthMax[selected] = temp;
-      }
-      drawMatrixLED();
-    }
-    if(view == 1){
-      if(lengthSet==0){
-        lengthMin[key/4] = (key%4) + (selected*4) + (division*16);
-      }
-      else if(lengthSet==1){
-        lengthMax[key/4] = (key%4) + (selected*4) + (division*16);
-      }
-      if(lengthMin[key/4] > lengthMax[key/4]){
-        temp = lengthMin[key/4];
-        lengthMin[key/4] = lengthMax[key/4];
-        lengthMax[key/4] = temp;
-      }
-      drawMatrixLED();
-    }
-  }
-  drawKey((key%16)%4,(key%16)/4);
+  drawKey(key);
   kp.show();
 }
 
@@ -256,9 +264,8 @@ void ProbSeq::drawBg(){
 
 void ProbSeq::drawInfo(){
   if(set == 0){
-    oled.drawText(0,0,1,"Time");
-    oled.drawText(4,0,0,"Event");
-    oled.drawText(8,0,0," Pos:");
+    oled.drawText(8,0,1,"Time");
+    oled.drawText(12,0,0,"Event");
     drawDivision();
     if(selparam == 1){if(param == 0){oled.invertedText=1;}}
     oled.drawText(0,1,oled.invertedText,"Mrf:" + dectohex(morph));
@@ -278,64 +285,72 @@ void ProbSeq::drawInfo(){
     }
   }
   if(set == 1){
-    oled.drawText(0,0,0,"Time");
-    oled.drawText(4,0,1,"Event");
-    oled.drawText(8,0,0," Pos:");
+    oled.drawText(8,0,0,"Time");
+    oled.drawText(12,0,1,"Event");
     drawDivision();
   }
 }
 
 void ProbSeq::drawMatrix(){
-  for(int k=0;k<4;k++){
-    if(view == 0){
-      for(int i=0;i<4;i++){
-        for(int j=0;j<4;j++){
+  if(set == 0){
+    for(int k=0;k<4;k++){
+      if(view == 0){
+        for(int i=0;i<4;i++){
+          for(int j=0;j<4;j++){
+            oled.invertedText = 0;
+            if(((i%4)+(j*4))+(division*16) == pos[k]){oled.invertedText = 1;}
+            if(param==0){
+              oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,boolString(patt[k][(i%4)+(j*4)+(division*16)]));
+            }
+            if(param==1){
+              oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,dectohexPoint(probs[k][(i%4)+(j*4)+(division*16)]));
+            }
+            if(param==2){
+              oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,dectohexPoint(clockDiv[k][(i%4)+(j*4)+(division*16)]));
+            }
+            if(param==3){
+              if((i%4)+(j*4)+(division*16) == lengthMin[k] && (i%4)+(j*4)+(division*16) == lengthMax[k]){
+                oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,"A");
+              }
+              else if((i%4)+(j*4)+(division*16) == lengthMin[k]){oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,"S");}
+              else if((i%4)+(j*4)+(division*16) == lengthMax[k]){oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,"E");}
+              else{oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,".");}
+            }
+          }
+        }
+      }
+      if(view == 1){
+        for(int i=0;i<16;i++){
           oled.invertedText = 0;
-          if(((i%4)+(j*4))+(division*16) == pos[k]){oled.invertedText = 1;}
+          if(pos[k] == i+(division*16)){oled.invertedText = 1;}
           if(param==0){
-            oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,dectohexPoint(patt[k][(i%4)+(j*4)+(division*16)]));
+            oled.drawText(i,k+4,oled.invertedText,boolString(patt[k][i+(division*16)]));
           }
           if(param==1){
-            oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,dectohexPoint(probs[k][(i%4)+(j*4)+(division*16)]));
+            oled.drawText(i,k+4,oled.invertedText,dectohexPoint(probs[k][i+(division*16)]));
           }
           if(param==2){
-            oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,dectohexPoint(clockDiv[k][(i%4)+(j*4)+(division*16)]));
+            oled.drawText(i,k+4,oled.invertedText,dectohexPoint(clockDiv[k][i+(division*16)]));
           }
           if(param==3){
-            if((i%4)+(j*4)+(division*16) == lengthMin[k] && (i%4)+(j*4)+(division*16) == lengthMax[k]){
-              oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,"A");
-            }
-            else if((i%4)+(j*4)+(division*16) == lengthMin[k]){oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,"S");}
-            else if((i%4)+(j*4)+(division*16) == lengthMax[k]){oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,"E");}
-            else{oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,".");}
+              if(i + (division*16) == lengthMin[k] && i + (k*4) + (division*16) == lengthMax[k]){
+                oled.drawText(i,k+4,oled.invertedText,"A");
+              }
+              else if(i + (division*16) == lengthMin[k]){oled.drawText(i,k+4,oled.invertedText,"S");}
+              else if(i + (division*16) == lengthMax[k]){oled.drawText(i,k+4,oled.invertedText,"E");}
+              else{oled.drawText(i,k+4,oled.invertedText,".");}
           }
         }
       }
+      if(k==selected){oled.drawBox(k*32,31,32,33,0);}
     }
-    if(view == 1){
-      for(int i=0;i<16;i++){
-        oled.invertedText = 0;
-        if(pos[k] == i+(division*16)){oled.invertedText = 1;}
-        if(param==0){
-          oled.drawText(i,k+4,oled.invertedText,dectohexPoint(patt[k][i+(division*16)]));
-        }
-        if(param==1){
-          oled.drawText(i,k+4,oled.invertedText,dectohexPoint(probs[k][i+(division*16)]));
-        }
-        if(param==2){
-          oled.drawText(i,k+4,oled.invertedText,dectohexPoint(clockDiv[k][i+(division*16)]));
-        }
-        if(param==3){
-            if(i + (division*16) == lengthMin[k] && i + (k*4) + (division*16) == lengthMax[k]){
-              oled.drawText(i,k+4,oled.invertedText,"A");
-            }
-            else if(i + (division*16) == lengthMin[k]){oled.drawText(i,k+4,oled.invertedText,"S");}
-            else if(i + (division*16) == lengthMax[k]){oled.drawText(i,k+4,oled.invertedText,"E");}
-            else{oled.drawText(i,k+4,oled.invertedText,".");}
-        }
-      }
+  }
+  if(set == 1){
+    for(int i=0;i<16;i++){
+      if(posNote[selected] == i+(division*16)){oled.invertedText=1;}
+      oled.drawText(((i%4)*2)+7,(i/4)+4,oled.invertedText,boolStringInv(activeNote[selected][i+(division*16)]));
+      oled.invertedText=0;
     }
-    if(k==selected){oled.drawBox(k*32,31,32,33,0);}
   }
 }
 
@@ -347,115 +362,113 @@ void ProbSeq::drawControls(){
   if(b2.held == 1){}
 }
 
-void ProbSeq::drawKey(int i, int j){
+void ProbSeq::drawKey(int key){
   if(view == 0){
     if(param==0){
-      if(patt[selected][(i%4)+(j*4)+(division*16)] == 0){
-        kp.set((i%4)+(j*4),0);
+      if(patt[selected][key+(division*16)] == 0){
+        kp.set(key,0);
       }
-      if(patt[selected][(i%4)+(j*4)+(division*16)] == 1){
-        kp.set((i%4)+(j*4),1);
+      if(patt[selected][key+(division*16)] == 1){
+        kp.set(key,1);
       }
     }
     if(param==1){
-      if(probs[selected][(i%4)+(j*4)+(division*16)] < prob){
-        kp.set((i%4)+(j*4),4);
+      if(probs[selected][key+(division*16)] < prob){
+        kp.set(key,4);
       }
-      if(probs[selected][(i%4)+(j*4)+(division*16)] > prob){
-        kp.set((i%4)+(j*4),2);
+      if(probs[selected][key+(division*16)] > prob){
+        kp.set(key,2);
       }
-      if(probs[selected][(i%4)+(j*4)+(division*16)] == prob){
-        kp.set((i%4)+(j*4),1);
+      if(probs[selected][key+(division*16)] == prob){
+        kp.set(key,1);
       }
-      if(probs[selected][(i%4)+(j*4)+(division*16)] == 0){
-        kp.set((i%4)+(j*4),0);
+      if(probs[selected][key+(division*16)] == 0){
+        kp.set(key,0);
       }
     }
     if(param==2){
-      if(clockDiv[selected][(i%4)+(j*4)+(division*16)] < clockDivision){
-        kp.set((i%4)+(j*4),4);
+      if(clockDiv[selected][key+(division*16)] < clockDivision){
+        kp.set(key,4);
       }
-      if(clockDiv[selected][(i%4)+(j*4)+(division*16)] > clockDivision){
-        kp.set((i%4)+(j*4),2);
+      if(clockDiv[selected][key+(division*16)] > clockDivision){
+        kp.set(key,2);
       }
-      if(clockDiv[selected][(i%4)+(j*4)+(division*16)] == clockDivision){
-        kp.set((i%4)+(j*4),1);
+      if(clockDiv[selected][key+(division*16)] == clockDivision){
+        kp.set(key,1);
       }
-      if(clockDiv[selected][(i%4)+(j*4)+(division*16)] == 0){
-        kp.set((i%4)+(j*4),0);
+      if(clockDiv[selected][key+(division*16)] == 0){
+        kp.set(key,0);
       }
     }
     if(param==3){
-      if(lengthMin[selected] == (i%4)+(j*4) + (division*16)){
+      if(lengthMin[selected] == key + (division*16)){
         kp.set(lengthMin[selected]%16,4);
       }
-      else if(lengthMax[selected] == (i%4)+(j*4) + (division*16)){
+      else if(lengthMax[selected] == key + (division*16)){
         kp.set(lengthMax[selected]%16,2);
       }
-      else if((i%4)+(j*4)+(division*16) < lengthMax[selected] && (i%4)+(j*4)+(division*16) > lengthMin[selected]){
-        kp.set((i%4)+(j*4),7);
+      else if(key+(division*16) < lengthMax[selected] && key+(division*16) > lengthMin[selected]){
+        kp.set(key,7);
       }
-      else{kp.set((i%4)+(j*4),0);}
+      else{kp.set(key,0);}
     }
   }
   if(view == 1){
+    int i = (key%16)%4;
+    int j = (key%16)/4;
     if(param == 0){
       if(patt[j][i+(selected*4)+(division*16)] == 0){
-        kp.set((i%4)+(j*4),0);
+        kp.set(key,0);
       }
       if(patt[j][i+(selected*4)+(division*16)] == 1){
-        kp.set((i%4)+(j*4),1);
+        kp.set(key,1);
       }
     }
     if(param == 1){
       if(probs[j][i+(selected*4)+(division*16)] < prob){
-        kp.set((i%4)+(j*4),4);
+        kp.set(key,4);
       }
       if(probs[j][i+(selected*4)+(division*16)] > prob){
-        kp.set((i%4)+(j*4),2);
+        kp.set(key,2);
       }
       if(probs[j][i+(selected*4)+(division*16)] == prob){
-        kp.set((i%4)+(j*4),1);
+        kp.set(key,1);
       }
       if(probs[j][i+(selected*4)+(division*16)] == 0){
-        kp.set((i%4)+(j*4),0);
+        kp.set(key,0);
       }
     }
     if(param == 2){
       if(clockDiv[j][i+(selected*4)+(division*16)] < clockDivision){
-        kp.set((i%4)+(j*4),4);
+        kp.set(key,4);
       }
       if(clockDiv[j][i+(selected*4)+(division*16)] > clockDivision){
-        kp.set((i%4)+(j*4),2);
+        kp.set(key,2);
       }
       if(clockDiv[j][i+(selected*4)+(division*16)] == clockDivision){
-        kp.set((i%4)+(j*4),1);
+        kp.set(key,1);
       }
       if(clockDiv[j][i+(selected*4)+(division*16)] == 0){
-        kp.set((i%4)+(j*4),0);
+        kp.set(key,0);
       }
     }
     if(param == 3){
       if(lengthMin[j] == (i%4) + (selected*4) + (division*16)){
-        kp.set((i%4)+(j*4),4);
+        kp.set(key,4);
       }
       else if(lengthMax[j] == (i%4) + (selected*4) + (division*16)){
-        kp.set((i%4)+(j*4),2);
+        kp.set(key,2);
       }
       else if((i%4) + (selected*4) + (division*16) < lengthMax[j] && (i%4) + (selected*4) + (division*16) > lengthMin[j]){
-        kp.set((i%4)+(j*4),7);
+        kp.set(key,7);
       }
-      else{kp.set((i%4)+(j*4),0);}
+      else{kp.set(key,0);}
     }
   }
 }
 
 void ProbSeq::drawMatrixLED(){
-  for(int i=0;i<4;i++){
-    for(int j=0;j<4;j++){
-      drawKey(i,j);
-    }
-  }
+  for(int i=0;i<16;i++){drawKey(i);}
   writeNewPosition();
   kp.show();
 }
@@ -463,8 +476,13 @@ void ProbSeq::drawMatrixLED(){
 void ProbSeq::drawDivision(){
   for(int i=0;i<4;i++){
     if(i == division){oled.invertedText = 1;}
-    oled.drawText((i*1)+12,0,oled.invertedText,dectohex(i));
+    oled.drawText((i*1)+4,0,oled.invertedText,dectohex(i));
     oled.invertedText = 0;
+    // if(set == 1){
+      if(i == selected){oled.invertedText = 1;}
+      oled.drawText((i*1),0,oled.invertedText,dectohex(i));
+      oled.invertedText = 0;
+    // }
   }
 }
 

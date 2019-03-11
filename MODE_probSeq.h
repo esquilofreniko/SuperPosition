@@ -1,5 +1,6 @@
 class ProbSeq {
     public:
+    //Time
     short pos[4];
     short selected = 0;
     short probs[4][64];
@@ -21,6 +22,10 @@ class ProbSeq {
     bool selparam = 0;
     short follow = 0;
     short temp = 0;
+    //Event
+    short posNote[4];
+    short note[4][64];
+    bool activeNote[4][64];
 
     void run();
     void clock();
@@ -32,7 +37,7 @@ class ProbSeq {
     void drawBg();
     void drawMatrix();
     void drawMatrixLED();
-    void drawKey(int i, int j);
+    void drawKey(int key);
     void setStep(int key);
     void drawInfo();
     void drawDivision();

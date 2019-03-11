@@ -1,3 +1,18 @@
+String boolStringInv(int in){
+  String out;
+  if(in == 1){out = ".";}
+  if(in == 0){out = "1";}
+  return out;
+}
+
+
+String boolString(int in){
+  String out;
+  if(in == 0){out = ".";}
+  if(in == 1){out = "1";}
+  return out;
+}
+
 String dectohex(int in){
   String out;
   if(in<10){out = String(in);}
