@@ -1,5 +1,5 @@
-#include "KM_hardware.h"
-#include "KM_MODE.h"
+#include "SP_hardware.h"
+#include "SP_MODE.h"
 int mode = 2;
 int oldmode = mode;
 
