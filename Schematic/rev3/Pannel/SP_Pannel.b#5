@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.5" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.05" altunitdist="mm" altunit="mm"/>
+<grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.05" altunitdist="mm" altunit="mm"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
@@ -293,16 +293,16 @@
 <wire x1="57.8" y1="56.8" x2="47.8" y2="56.8" width="0.1524" layer="20"/>
 <text x="3.5" y="117.5" size="1.778" layer="25">IN1</text>
 <text x="13" y="117.5" size="1.778" layer="25">IN2</text>
-<text x="24" y="117.5" size="1.778" layer="25">D1</text>
-<text x="34" y="117.5" size="1.778" layer="25">D2</text>
-<text x="44" y="117.5" size="1.778" layer="25">D3</text>
-<text x="54" y="117.5" size="1.778" layer="25">D4</text>
+<text x="23" y="117.5" size="1.778" layer="25">TR1</text>
+<text x="33" y="117.5" size="1.778" layer="25">TR2</text>
+<text x="43" y="117.5" size="1.778" layer="25">TR3</text>
+<text x="53" y="117.5" size="1.778" layer="25">TR4</text>
 <text x="3.5" y="105" size="1.778" layer="25">IN3</text>
-<text x="13" y="105" size="1.778" layer="25">IN4</text>
-<text x="24" y="105" size="1.778" layer="25">A1</text>
-<text x="34" y="105" size="1.778" layer="25">A2</text>
-<text x="44" y="105" size="1.778" layer="25">A3</text>
-<text x="54" y="105" size="1.778" layer="25">A4</text>
+<text x="13.5" y="105" size="1.778" layer="25">IN4</text>
+<text x="23.5" y="105" size="1.778" layer="25">CV1</text>
+<text x="33.5" y="105" size="1.778" layer="25">CV2</text>
+<text x="43.5" y="105" size="1.778" layer="25">CV3</text>
+<text x="53" y="105" size="1.778" layer="25">CV4</text>
 <text x="6" y="90" size="1.778" layer="25">ENC1</text>
 <text x="7.5" y="76.5" size="1.778" layer="25">B1</text>
 <text x="50" y="76.5" size="1.778" layer="25">B2</text>
