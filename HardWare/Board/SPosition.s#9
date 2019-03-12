@@ -4265,8 +4265,8 @@ EC12E series with push-on switch</description>
 <instance part="U$2" gate="G$1" x="99.06" y="152.4" smashed="yes">
 <attribute name="NAME" x="104.14" y="160.02" size="1.778" layer="95" rot="R180"/>
 </instance>
-<instance part="GND1" gate="1" x="30.48" y="144.526" smashed="yes">
-<attribute name="VALUE" x="27.94" y="141.986" size="1.778" layer="96"/>
+<instance part="GND1" gate="1" x="-20.32" y="147.066" smashed="yes">
+<attribute name="VALUE" x="-22.86" y="144.526" size="1.778" layer="96"/>
 </instance>
 <instance part="GND2" gate="1" x="99.06" y="136.906" smashed="yes">
 <attribute name="VALUE" x="96.52" y="134.366" size="1.778" layer="96"/>
@@ -4443,12 +4443,12 @@ EC12E series with push-on switch</description>
 <attribute name="NAME" x="270.51" y="172.72" size="1.778" layer="95" align="center-left"/>
 <attribute name="VALUE" x="270.51" y="172.72" size="1.778" layer="96" align="center-left"/>
 </instance>
-<instance part="D2" gate="1" x="-5.08" y="144.78" smashed="yes">
-<attribute name="NAME" x="-7.62" y="146.5326" size="1.778" layer="95"/>
-<attribute name="VALUE" x="-10.16" y="141.1986" size="1.778" layer="96"/>
+<instance part="D2" gate="1" x="-5.08" y="139.7" smashed="yes">
+<attribute name="NAME" x="-7.62" y="141.4526" size="1.778" layer="95"/>
+<attribute name="VALUE" x="-10.16" y="136.1186" size="1.778" layer="96"/>
 </instance>
-<instance part="SUPPLY1" gate="G$1" x="-17.78" y="144.78" smashed="yes" rot="R270">
-<attribute name="VALUE" x="-19.939" y="149.225" size="1.778" layer="96"/>
+<instance part="SUPPLY1" gate="G$1" x="-17.78" y="139.7" smashed="yes" rot="R270">
+<attribute name="VALUE" x="-19.939" y="144.145" size="1.778" layer="96"/>
 </instance>
 <instance part="SUPPLY2" gate="G$1" x="307.34" y="96.52" smashed="yes" rot="R90">
 <attribute name="VALUE" x="314.833" y="98.425" size="1.778" layer="96" rot="R180"/>
@@ -4677,9 +4677,7 @@ EC12E series with push-on switch</description>
 <pinref part="SV1" gate="G$1" pin="5"/>
 <wire x1="21.59" y1="149.86" x2="21.59" y2="152.4" width="0.1524" layer="91"/>
 <junction x="21.59" y="149.86"/>
-<wire x1="30.48" y1="149.86" x2="21.59" y2="149.86" width="0.1524" layer="91"/>
 <pinref part="GND1" gate="1" pin="GND"/>
-<wire x1="30.48" y1="149.86" x2="30.48" y2="147.066" width="0.1524" layer="91"/>
 <wire x1="21.59" y1="152.4" x2="6.35" y2="152.4" width="0.1524" layer="91"/>
 <junction x="21.59" y="152.4"/>
 <junction x="6.35" y="152.4"/>
@@ -4687,6 +4685,8 @@ EC12E series with push-on switch</description>
 <wire x1="21.59" y1="147.32" x2="6.35" y2="147.32" width="0.1524" layer="91"/>
 <junction x="21.59" y="147.32"/>
 <junction x="6.35" y="147.32"/>
+<wire x1="-20.32" y1="149.606" x2="-20.32" y2="149.86" width="0.1524" layer="91"/>
+<wire x1="-20.32" y1="149.86" x2="6.35" y2="149.86" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="GND"/>
@@ -5505,7 +5505,7 @@ EC12E series with push-on switch</description>
 <segment>
 <pinref part="D2" gate="1" pin="A"/>
 <pinref part="SUPPLY1" gate="G$1" pin="VSS"/>
-<wire x1="-7.62" y1="144.78" x2="-15.24" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="-7.62" y1="139.7" x2="-15.24" y2="139.7" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <wire x1="304.8" y1="96.52" x2="289.56" y2="96.52" width="0.1524" layer="91"/>
@@ -5522,7 +5522,7 @@ EC12E series with push-on switch</description>
 <segment>
 <pinref part="SV1" gate="G$1" pin="2"/>
 <pinref part="D2" gate="1" pin="C"/>
-<wire x1="6.35" y1="144.78" x2="-2.54" y2="144.78" width="0.1524" layer="91"/>
+<wire x1="6.35" y1="144.78" x2="-2.54" y2="139.7" width="0.1524" layer="91"/>
 <junction x="6.35" y="144.78"/>
 <pinref part="SV1" gate="G$1" pin="1"/>
 <wire x1="6.35" y1="144.78" x2="21.59" y2="144.78" width="0.1524" layer="91"/>
