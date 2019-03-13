@@ -3812,9 +3812,9 @@ design rules under a new name.</description>
 <signal name="DAC2LDAC">
 <contactref element="U$1" pad="31/A12"/>
 <contactref element="MCP4922-2" pad="8"/>
-<wire x1="34.616" y1="4.861" x2="35.255" y2="5.5" width="0.1524" layer="1"/>
-<wire x1="35.255" y1="5.5" x2="54.75" y2="5.5" width="0.1524" layer="1"/>
-<wire x1="54.75" y1="5.5" x2="56.5" y2="7.25" width="0.1524" layer="1"/>
+<wire x1="34.616" y1="4.861" x2="35.005" y2="5.25" width="0.1524" layer="1"/>
+<wire x1="35.005" y1="5.25" x2="54.5" y2="5.25" width="0.1524" layer="1"/>
+<wire x1="54.5" y1="5.25" x2="56.5" y2="7.25" width="0.1524" layer="1"/>
 <wire x1="56.5" y1="7.25" x2="56.5" y2="8.5" width="0.1524" layer="1"/>
 </signal>
 <signal name="DAC2MOSI">
