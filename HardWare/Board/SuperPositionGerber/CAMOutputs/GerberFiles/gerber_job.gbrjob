@@ -1,0 +1,24 @@
+{
+    "Header": {
+        "Comment": "All values are metric (mm)",
+        "CreationDate": "2019-03-14T15:39:21Z",
+        "GenerationSoftware": {
+            "Application": "EAGLE",
+            "Vendor": "Autodesk",
+            "Version": "9.3.0"
+        },
+        "Part": "Single"
+    },
+    "Overall": {
+        "BoardThickness": 1.57,
+        "LayerNumber": 2,
+        "Name": {
+            "ProjectId": "SPosition"
+        },
+        "Owner": "Afonso Proenca <esquilofreniko@gmail.com>",
+        "Size": {
+            "X": 60.002,
+            "Y": 110
+        }
+    }
+}
