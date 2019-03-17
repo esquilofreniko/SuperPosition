@@ -1,7 +1,11 @@
 class ProbSeq {
     public:
+    bool view = 0;
+    bool follow = 0;
+    short set = 0;
+    short matrix = 0;
+    short division = 0;
     short pos[4];
-    short selected = 0;
     short probs[4][64];
     bool patt[4][64];
     short clockDiv[4][64];
@@ -11,13 +15,9 @@ class ProbSeq {
     short clockDivOp;
     short clockDivision = 2;
     short lengthMinTemp = 0;
-    bool lengthSet = 0;
+    bool lengthSet = 1;
     short prob = 5;
-    short set = 0;
     short morph = 0;
-    short division = 0;
-    bool view = 0;
-    short follow = 0;
     short temp = 0;
     short posNote[4];
     short note[4][64];
@@ -25,6 +25,12 @@ class ProbSeq {
     bool selParam = 0;
     short timeParam = 0;
     short eventParam = 0;
+    short eventType[4] = {0,0,0,0};
+    short eventMode[4] = {0,0,0,0};
+    short eventProbMin[4] = {0,0,0,0};
+    short eventProbMax[4] = {96,96,96,96};
+    String eventTypeName[2] = {"Prob","Mrkov"};
+    String eventModeName[2] = {"Sync","Trig"};
 
     void run();
     void clock();
@@ -42,4 +48,5 @@ class ProbSeq {
     void drawDivision();
     void drawControls();
     void followPos();
+    void drawParams();
 };

@@ -1,7 +1,7 @@
 String boolStringInv(int in){
   String out;
   if(in == 1){out = ".";}
-  if(in == 0){out = "1";}
+  if(in == 0){out = "x";}
   return out;
 }
 
@@ -9,7 +9,7 @@ String boolStringInv(int in){
 String boolString(int in){
   String out;
   if(in == 0){out = ".";}
-  if(in == 1){out = "1";}
+  if(in == 1){out = "x";}
   return out;
 }
 
@@ -23,6 +23,7 @@ String dectohex(int in){
   else if(in==14){out = "E";}
   else if(in==15){out = "F";}
   else if(in==16){out = "G";}
+  else{out = in;}
   return out;
 }
 

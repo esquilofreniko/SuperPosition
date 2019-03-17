@@ -121,6 +121,7 @@ class Display {
   void show();
   void drawText(int x, int y, bool inverted, String text);
   void drawBox(int x, int y, int boxwidth, int boxheigh, bool fill);
+  void setTextSize(int size);
 };
 
 #define OLED_RESET  8

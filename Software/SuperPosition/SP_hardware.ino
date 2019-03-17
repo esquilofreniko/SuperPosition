@@ -179,6 +179,10 @@ void Display::drawBox(int x, int y, int boxwidth, int boxheight, bool fill){
   if(fill == 1){display.fillRect(x,y,boxwidth,boxheight,WHITE);}
 }
 
+void Display::setTextSize(int size){
+  display.setTextSize(size);
+}
+
 //Global Functions
 void hardware_init(){
   pinMode(ENC1PINA, INPUT_PULLUP);
