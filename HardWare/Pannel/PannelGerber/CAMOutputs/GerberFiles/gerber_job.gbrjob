@@ -1,0 +1,24 @@
+{
+    "Header": {
+        "Comment": "All values are metric (mm)",
+        "CreationDate": "2019-03-14T16:28:11Z",
+        "GenerationSoftware": {
+            "Application": "EAGLE",
+            "Vendor": "Autodesk",
+            "Version": "9.3.0"
+        },
+        "Part": "Single"
+    },
+    "Overall": {
+        "BoardThickness": 1.57,
+        "LayerNumber": 2,
+        "Name": {
+            "ProjectId": "SP_Pannel"
+        },
+        "Owner": "Afonso Proenca <esquilofreniko@gmail.com>",
+        "Size": {
+            "X": 60.6,
+            "Y": 128.5
+        }
+    }
+}

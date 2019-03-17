@@ -302,7 +302,7 @@
 <text x="24" y="105" size="1.778" layer="25">A1</text>
 <text x="34" y="105" size="1.778" layer="25">A2</text>
 <text x="44" y="105" size="1.778" layer="25">A3</text>
-<text x="53" y="105" size="1.778" layer="25">CV4</text>
+<text x="54.5" y="105" size="1.778" layer="25">A4</text>
 <text x="6" y="90" size="1.778" layer="25">ENC1</text>
 <text x="7.5" y="76.5" size="1.778" layer="25">B1</text>
 <text x="50" y="76.5" size="1.778" layer="25">B2</text>

@@ -165,7 +165,6 @@
 <dimension x1="-7.97" y1="0.03" x2="-7.97" y2="9.28" x3="-7.97" y3="4.655" textsize="1.778" layer="1"/>
 <dimension x1="-7.47" y1="119.28" x2="-7.47" y2="128.53" x3="-7.47" y3="123.905" textsize="1.778" layer="1"/>
 <dimension x1="0.03" y1="-3.47" x2="53.25" y2="-3.46" x3="26.639996875" y3="-3.465" textsize="1.778" layer="1"/>
-<text x="23.33" y="124.53" size="1.778" layer="25">SuperPosition</text>
 <dimension x1="0.03" y1="-6.72" x2="7.53" y2="-6.72" x3="3.78" y3="-6.72" textsize="1.778" layer="1"/>
 <hole x="5.25" y="112.25" drill="6" locked="yes"/>
 <hole x="15.25" y="112.25" drill="6"/>

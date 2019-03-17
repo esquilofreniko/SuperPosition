@@ -14,16 +14,17 @@ class ProbSeq {
     bool lengthSet = 0;
     short prob = 5;
     short set = 0;
-    short param = 0;
     short morph = 0;
     short division = 0;
     bool view = 0;
-    bool selparam = 0;
     short follow = 0;
     short temp = 0;
     short posNote[4];
     short note[4][64];
     bool activeNote[4][64];
+    bool selParam = 0;
+    short timeParam = 0;
+    short eventParam = 0;
 
     void run();
     void clock();
