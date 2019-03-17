@@ -39,7 +39,7 @@ void ProbSeq::updatePosition(){
       pos[p] += 1;
       if(pos[p] > lengthMax[p]){pos[p] = lengthMin[p];}
       pos[p] %= 64;
-      if(activeNote[p][pos[p]] == 0){
+      if(eventActiveNote[p][pos[p]] == 0){
         posNote[p] = pos[p];
       }      
     }
@@ -142,7 +142,9 @@ void ProbSeq::controls(){
     selParam = (selParam + 1)%2;
   }
   if(enc2.held_t==1){
-    view = (view+1)%2;
+    if(menu == 0){menu = 1;}
+    else{menu = 0;}
+    // view = (view+1)%2;
     drawMatrixLED();
   }
   if(enc1.rotation != 0){
@@ -197,19 +199,19 @@ void ProbSeq::controls(){
           if(eventType[matrix]>1){eventType[matrix]=1;}
         }
         if(eventParam == 1){
-          eventMode[matrix] += enc2.rotation;
-          if(eventMode[matrix]<0){eventMode[matrix]=0;}
-          if(eventMode[matrix]>1){eventMode[matrix]=1;}
+          eventStep[matrix] += enc2.rotation;
+          if(eventStep[matrix]<0){eventStep[matrix]=0;}
+          if(eventStep[matrix]>1){eventStep[matrix]=1;}
         }
         if(eventParam == 2){
-          eventProbMin[matrix] += enc2.rotation;
-          if(eventProbMin[matrix]<0){eventProbMin[matrix]=0;}
-          if(eventProbMin[matrix]>96){eventProbMin[matrix]=96;}
+          eventSetProbMin += enc2.rotation;
+          if(eventSetProbMin<0){eventSetProbMin=0;}
+          if(eventSetProbMin>96){eventSetProbMin=96;}
         }
         if(eventParam == 3){
-          eventProbMax[matrix] += enc2.rotation;
-          if(eventProbMax[matrix]<0){eventProbMax[matrix]=0;}
-          if(eventProbMax[matrix]>96){eventProbMax[matrix]=96;}
+          eventSetProbMax += enc2.rotation;
+          if(eventSetProbMax<0){eventSetProbMax=0;}
+          if(eventSetProbMax>96){eventSetProbMax=96;}
         }
       }
     }
@@ -279,7 +281,7 @@ void ProbSeq::setStep(int key){
     }
   }
   if(set == 1){
-    activeNote[matrix][key + (division*16)] = (activeNote[matrix][key + (division)*16]+1)%2;    
+    eventActiveNote[matrix][key + (division*16)] = (eventActiveNote[matrix][key + (division)*16]+1)%2;    
   }
   drawKey(key);
   kp.show();
@@ -288,8 +290,10 @@ void ProbSeq::setStep(int key){
 void ProbSeq::drawBg(){
   oled.clear();
   drawInfo();
-  if(b1.held || b2.held){drawControls();}
-  else{drawMatrix();}
+  if(menu == 0){
+    if(b1.held || b2.held){drawControls();}
+    else{drawMatrix();}
+  }
 }
 
 void ProbSeq::drawParams(){
@@ -310,19 +314,31 @@ void ProbSeq::drawParams(){
     if(selParam == 0){oled.drawBox((timeParam%2)*64,(timeParam/2)*8+8,64,8,0);}
   }
   if(set == 1){
-    if(selParam == 1){if(eventParam == 0){oled.invertedText=1;}}
-    oled.drawText(0,1,oled.invertedText,"Type:" + eventTypeName[eventType[matrix]]);
-    oled.invertedText=0;
-    if(selParam == 1){if(eventParam == 1){oled.invertedText=1;}}
-    oled.drawText(8,1,oled.invertedText,"Mode:" + eventModeName[eventMode[matrix]]);
-    oled.invertedText=0;
-    if(selParam == 1){if(eventParam == 2){oled.invertedText=1;}}
-    oled.drawText(0,2,oled.invertedText,"Min:" + String(eventProbMin[matrix]));
-    oled.invertedText=0;
-    if(selParam == 1){if(eventParam == 3){oled.invertedText=1;}}
-    oled.drawText(8,2,oled.invertedText,"Max:" + String(eventProbMax[matrix]));
-    oled.invertedText=0;
-    if(selParam == 0){oled.drawBox((eventParam%2)*64,(eventParam/2)*8+8,64,8,0);}
+    if(eventParam < 2){
+      if(selParam == 1){if(eventParam == 0){oled.invertedText=1;}}
+      oled.drawText(0,1,oled.invertedText,"Type:" + eventTypeName[eventType[matrix]]);
+      oled.invertedText=0;
+      if(selParam == 1){if(eventParam == 1){oled.invertedText=1;}}
+      oled.drawText(8,1,oled.invertedText,"Step:" + eventStepName[eventStep[matrix]]);
+      oled.invertedText=0;
+    }
+    else if(eventParam < 4){
+      if(selParam == 1){if(eventParam == 2){oled.invertedText=1;}}
+      oled.drawText(0,1,oled.invertedText,"Min:" + String(eventSetProbMin));
+      oled.invertedText=0;
+      if(selParam == 1){if(eventParam == 3){oled.invertedText=1;}}
+      oled.drawText(8,1,oled.invertedText,"Max:" + String(eventSetProbMax));
+      oled.invertedText=0;
+    }
+    else if(eventParam < 6){
+      if(selParam == 1){if(eventParam == 4){oled.invertedText=1;}}
+      oled.drawText(0,1,oled.invertedText,"Offset:");
+      oled.invertedText=0;
+      if(selParam == 1){if(eventParam == 5){oled.invertedText=1;}}
+      oled.drawText(8,1,oled.invertedText,"Quantize:");
+      oled.invertedText=0;
+    }
+    if(selParam == 0){oled.drawBox((eventParam%2)*64,8,64,8,0);}
   }
 }
 
@@ -342,7 +358,9 @@ void ProbSeq::drawInfo(){
     oled.invertedText = 0;
   }
   // drawDivision();
-  drawParams();
+  if(menu == 0){
+    drawParams();
+  }
 }
 
 void ProbSeq::drawMatrix(){
@@ -401,9 +419,16 @@ void ProbSeq::drawMatrix(){
   }
   if(set == 1){
     for(int i=0;i<16;i++){
-      if(posNote[matrix] == i+(division*16)){oled.invertedText=1;}
-      oled.drawText(((i%4)*2)+7,(i/4)+4,oled.invertedText,boolStringInv(activeNote[matrix][i+(division*16)]));
-      oled.invertedText=0;
+      if(eventParam == 0){
+        if(posNote[matrix] == i+(division*16)){oled.invertedText=1;}
+        oled.drawText(((i%4)*2)+8,(i/4)+4,oled.invertedText,String(eventProbNotes[matrix][i]));
+        oled.invertedText=0;
+      }
+      else if(eventParam == 1){
+        if(posNote[matrix] == i+(division*16)){oled.invertedText=1;}
+        oled.drawText(((i%4)*2)+8,(i/4)+4,oled.invertedText,boolStringInv(eventActiveNote[matrix][i]));
+        oled.invertedText=0;
+      }
     }
   }
 }

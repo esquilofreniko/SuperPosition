@@ -1,5 +1,6 @@
 class ProbSeq {
     public:
+    short menu = 0;
     bool view = 0;
     bool follow = 0;
     short set = 0;
@@ -21,16 +22,20 @@ class ProbSeq {
     short temp = 0;
     short posNote[4];
     short note[4][64];
-    bool activeNote[4][64];
     bool selParam = 0;
     short timeParam = 0;
     short eventParam = 0;
     short eventType[4] = {0,0,0,0};
-    short eventMode[4] = {0,0,0,0};
-    short eventProbMin[4] = {0,0,0,0};
-    short eventProbMax[4] = {96,96,96,96};
+    short eventStep[4] = {0,0,0,0};
     String eventTypeName[2] = {"Prob","Mrkov"};
-    String eventModeName[2] = {"Sync","Trig"};
+    String eventStepName[2] = {"Sync","Trig"};
+    short eventSetProbMin = 0;
+    short eventSetProbMax = 96;
+    short eventPos[4];
+    bool eventActiveNote[4][16];
+    short eventProbNotes[4][16];
+    short eventProbMin[4][16];
+    short eventProbMax[4][16];
 
     void run();
     void clock();
