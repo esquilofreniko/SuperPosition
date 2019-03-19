@@ -152,6 +152,12 @@ void ProbSeq::controls(){
           if(timeParam==1){probs[channel][i] = 0;}
           if(timeParam==2){clockDiv[channel][i] = 0;}
         }
+        else if(set == 1){
+          if(eventParam==0){eventProbActive[channel][i]=0;}
+          if(eventParam==1){eventProbNote[channel][i]=0;}
+          if(eventParam==2){eventProbMin[channel][i]=0;}
+          if(eventParam==3){eventProbMax[channel][i]=0;}
+        }
       }
       drawMatrixLED();
       // for(int i=0;i<4;i++){
@@ -181,6 +187,12 @@ void ProbSeq::controls(){
           if(timeParam==0){patt[channel][i] = 1;}
           if(timeParam==1){probs[channel][i] = prob;}
           if(timeParam==2){clockDiv[channel][i] = clockDivision;}
+        }
+        else if(set == 1){
+          if(eventParam==0){eventProbActive[channel][i]=1;}
+          if(eventParam==1){eventProbNote[channel][i]=eventProbSetNote;}
+          if(eventParam==2){eventProbMin[channel][i]=eventProbSetMin;}
+          if(eventParam==3){eventProbMax[channel][i]=eventProbSetMax;}
         }
       }
       drawMatrixLED();
