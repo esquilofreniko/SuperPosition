@@ -2,7 +2,6 @@ class ProbSeq {
     public:
     short menu = 0;
     bool view = 0;
-    bool follow = 0;
     short set = 0;
     short channel = 0;
     short division = 0;
@@ -18,7 +17,7 @@ class ProbSeq {
     short lengthMinTemp = 0;
     bool lengthSet = 1;
     short prob = 5;
-    short morph = 0;
+    short pattMorph = 0;
     short temp = 0;
     short posNote[4];
     short note[4][64];
@@ -31,21 +30,22 @@ class ProbSeq {
     short eventStep[4] = {0,0,0,0};
     String eventModeName[2] = {"Probability","Markov Chain"};
     String eventStepName[2] = {"Sync","Trig"};
-    short eventSetProbMin = 0;
-    short eventSetProbMax = 96;
+    short eventProbSetMin = 0;
+    short eventProbSetMax = 96;
     short eventPos[4];
-    bool eventActiveNote[4][16];
+    bool eventProbActive[4][16];
     short eventProbSetNote = 0;
-    short eventProbNotes[4][16];
+    short eventProbNote[4][16];
     short eventProbMorph[4] = {0,0,0,0};
     short eventProbMin[4][16];
     short eventProbMax[4][16];
 
+    ProbSeq();
     void run();
     void clock();
     void updatePosition();
     void writeNewPosition();
-    void pattMorph();
+    void morph();
     void output();
     void controls();
     void drawBg();
@@ -55,8 +55,6 @@ class ProbSeq {
     void setStep(int key);
     void drawInfo();
     void drawDivision();
-    void drawControls();
-    void followPos();
     void drawParams();
     void drawMenu();
 };

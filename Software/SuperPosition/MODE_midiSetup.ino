@@ -23,7 +23,7 @@ void midi_read() {
 
 void myNoteOn(byte channel, byte note, byte velocity) {
   midiclock = 0;
-  if(channel == 5){
+  if(channel == 1){
     midiclock = 1;
   }
 }
