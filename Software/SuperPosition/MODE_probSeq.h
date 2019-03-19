@@ -4,7 +4,7 @@ class ProbSeq {
     bool view = 0;
     bool follow = 0;
     short set = 0;
-    short matrix = 0;
+    short channel = 0;
     short division = 0;
     short pos[4];
     short probs[4][64];
@@ -25,15 +25,19 @@ class ProbSeq {
     bool selParam = 0;
     short timeParam = 0;
     short eventParam = 0;
-    short eventType[4] = {0,0,0,0};
+    short timeMenuParam = 0;
+    short eventMenuParam = 0;
+    short eventMode[4] = {0,0,0,0};
     short eventStep[4] = {0,0,0,0};
-    String eventTypeName[2] = {"Prob","Mrkov"};
+    String eventModeName[2] = {"Probability","Markov Chain"};
     String eventStepName[2] = {"Sync","Trig"};
     short eventSetProbMin = 0;
     short eventSetProbMax = 96;
     short eventPos[4];
     bool eventActiveNote[4][16];
+    short eventProbSetNote = 0;
     short eventProbNotes[4][16];
+    short eventProbMorph[4] = {0,0,0,0};
     short eventProbMin[4][16];
     short eventProbMax[4][16];
 
@@ -54,4 +58,5 @@ class ProbSeq {
     void drawControls();
     void followPos();
     void drawParams();
+    void drawMenu();
 };

@@ -18,13 +18,13 @@ void ProbSeq::clock(){
 void ProbSeq::updatePosition(){
   //Clear Old Position
   if(view == 0){
-    if(pos[matrix]/16 == division){
-      drawKey(pos[matrix]%16);
+    if(pos[channel]/16 == division){
+      drawKey(pos[channel]%16);
     }
   }
   if(view == 1){
     for(int i=0;i<4;i++){
-      if(pos[i] < ((matrix+1)*4)+(division*16) && pos[i] >= (matrix*4)+(division*16)){
+      if(pos[i] < ((channel+1)*4)+(division*16) && pos[i] >= (channel*4)+(division*16)){
         drawKey((pos[i]%4)+(i*4));
       }
     }
@@ -49,14 +49,14 @@ void ProbSeq::updatePosition(){
 void ProbSeq::writeNewPosition(){
   //Write New Position
   if(view == 0){
-    if(pos[matrix]/16 == division){
-      if(patt[matrix][pos[matrix]] == 0){kp.set(pos[matrix]%16,6);}
-      if(patt[matrix][pos[matrix]] == 1){kp.set(pos[matrix]%16,3);}
+    if(pos[channel]/16 == division){
+      if(patt[channel][pos[channel]] == 0){kp.set(pos[channel]%16,6);}
+      if(patt[channel][pos[channel]] == 1){kp.set(pos[channel]%16,3);}
     }
   }
   if(view == 1){
     for(int i=0;i<4;i++){
-      if(pos[i] < ((matrix+1)*4)+(division*16) && pos[i] >= (matrix*4)+(division*16)){
+      if(pos[i] < ((channel+1)*4)+(division*16) && pos[i] >= (channel*4)+(division*16)){
         if(patt[i][pos[i]] == 0){kp.set((pos[i]%4)+(i*4),6);}
         if(patt[i][pos[i]] == 1){kp.set((pos[i]%4)+(i*4),3);}
       }
@@ -93,12 +93,18 @@ void ProbSeq::output(){
 
 void ProbSeq::controls(){
   if(kp.pressed == 1){
-    if(b1.held == 0 && b2.held == 0){
-      for(int i=0;i<16;i++){
-        if(kp.key[i]==1){
-          setStep(i);
+    if(menu == 0){
+      if(b1.held == 0 && b2.held == 0){
+        for(int i=0;i<16;i++){
+          if(kp.key[i]==1){
+            setStep(i);
+          }
         }
       }
+    }
+    else if(menu==1){
+      menu = 0;
+      selParam = 0;
     }
   }
   if(b1.clicked== 1){
@@ -112,23 +118,25 @@ void ProbSeq::controls(){
     // drawMatrixLED();
   }
   if(b1.held == 1){
-    for(int i=0;i<4;i++){
-      if(kp.key[i]==1){
-        for(int j=lengthMin[i];j<=lengthMax[i];j++){
-          if(timeParam==0){patt[i][j] = 0;}
-          if(timeParam==1){probs[i][j] = 0;}
-          if(timeParam==2){clockDiv[i][j] = 0;}
+    if(menu == 0){
+      for(int i=0;i<4;i++){
+        if(kp.key[i]==1){
+          for(int j=lengthMin[i];j<=lengthMax[i];j++){
+            if(timeParam==0){patt[i][j] = 0;}
+            if(timeParam==1){probs[i][j] = 0;}
+            if(timeParam==2){clockDiv[i][j] = 0;}
+          }
+          drawMatrixLED();
         }
-        drawMatrixLED();
+        if(kp.key[i+4]==1){
+          for(int j=lengthMin[i];j<=lengthMax[i];j++){
+            if(timeParam==0){patt[i][j] = 1;}
+            if(timeParam==1){probs[i][j] = prob;}
+            if(timeParam==2){clockDiv[i][j] = clockDivision;}
+          }
+          drawMatrixLED();
+        }  
       }
-      if(kp.key[i+4]==1){
-        for(int j=lengthMin[i];j<=lengthMax[i];j++){
-          if(timeParam==0){patt[i][j] = 1;}
-          if(timeParam==1){probs[i][j] = prob;}
-          if(timeParam==2){clockDiv[i][j] = clockDivision;}
-        }
-        drawMatrixLED();
-      }  
     }
   }
   if(b2.held == 1){}
@@ -144,78 +152,115 @@ void ProbSeq::controls(){
   if(enc2.held_t==1){
     if(menu == 0){menu = 1;}
     else{menu = 0;}
-    // view = (view+1)%2;
+    selParam = 0;
     drawMatrixLED();
   }
   if(enc1.rotation != 0){
-    matrix+= enc1.rotation;
-    if(matrix>3){
-      matrix=0;
+    channel+= enc1.rotation;
+    if(channel>3){
+      channel=0;
     }
-    if(matrix<0){
-      matrix=3;
+    if(channel<0){
+      channel=3;
     }
     drawMatrixLED();
   }
   if(enc2.rotation != 0){
-    if(selParam == 0){
-      if(set == 0){
-        timeParam += enc2.rotation;
-        if(timeParam > 3){timeParam = 0;}
-        if(timeParam < 0){timeParam = 3;}
+    if(menu==0){
+      if(selParam == 0){
+        if(set == 0){
+          timeParam += enc2.rotation;
+          if(timeParam > 3){timeParam = 0;}
+          else if(timeParam < 0){timeParam = 3;}
+        }
+        else if(set == 1){
+          eventParam += enc2.rotation;
+          if(eventParam > 3){eventParam = 0;}
+          else if(eventParam < 0){eventParam = 3;}
+        }
       }
-      if(set == 1){
-        eventParam += enc2.rotation;
-        if(eventParam > 3){eventParam = 0;}
-        if(eventParam < 0){eventParam = 3;}
+      else if(selParam == 1){
+        if(set == 0){
+          if(timeParam == 0){
+            morph += enc2.rotation;
+            if(morph>10){morph=10;}
+            else if(morph<0){morph=0;}
+          }
+          else if(timeParam == 1){
+            prob += enc2.rotation;
+            if(prob>10){prob = 10;}
+            else if(prob<1){prob = 1;}
+          }
+          else if(timeParam == 2){
+            clockDivision += enc2.rotation;
+            if(clockDivision > 16){clockDivision=16;}
+            else if(clockDivision < 2){clockDivision=2;}
+          }
+          else if(timeParam == 3){
+            if(enc2.rotation == 1){lengthSet = 1;}
+            else if(enc2.rotation == -1){lengthSet = 0;}
+          }
+        }
+        else if(set == 1){
+          if(eventParam == 0){
+            eventProbMorph[channel] += enc2.rotation;
+            if(eventProbMorph[channel]<0){eventProbMorph[channel]=0;}
+            else if(eventProbMorph[channel]>10){eventProbMorph[channel]=10;}
+          }
+          else if(eventParam == 1){
+            eventProbSetNote += enc2.rotation;
+            if(eventProbSetNote<0){eventProbSetNote=0;}
+            else if(eventProbSetNote>96){eventProbSetNote=96;}
+          }
+          else if(eventParam == 2){
+            eventSetProbMin += enc2.rotation;
+            if(eventSetProbMin<0){eventSetProbMin=0;}
+            else if(eventSetProbMin>96){eventSetProbMin=96;}
+          }
+          else if(eventParam == 3){
+            eventSetProbMax += enc2.rotation;
+            if(eventSetProbMax<0){eventSetProbMax=0;}
+            else if(eventSetProbMax>96){eventSetProbMax=96;}
+          }
+        }
+      }
+      drawMatrixLED();
+    }
+    else if(menu == 1){
+      if(selParam == 0){
+        if(set == 0){
+          timeMenuParam += enc2.rotation;
+          if(timeMenuParam > 3){timeMenuParam = 0;}
+          if(timeMenuParam < 0){timeMenuParam = 3;}
+        }
+        if(set == 1){
+          eventMenuParam += enc2.rotation;
+          if(eventMenuParam > 3){eventMenuParam = 0;}
+          if(eventMenuParam < 0){eventMenuParam = 3;}
+        }
+      }
+      else if(selParam == 1){
+        if(set == 0){
+          if(timeMenuParam == 0){
+            view += enc2.rotation;
+            if(view < 0){view = 0;}
+            else if(view > 1){view = 1;}
+          }
+        }
+        else if(set == 1){
+          if(eventMenuParam == 0){
+            eventMode[channel] += enc2.rotation;
+            if(eventMode[channel]<0){eventMode[channel] = 0;}
+            else if(eventMode[channel]>1){eventMode[channel] = 1;}
+          }
+          else if(eventMenuParam == 1){
+            eventStep[channel] += enc2.rotation;
+            if(eventStep[channel]<0){eventStep[channel] = 0;}
+            else if(eventStep[channel]>1){eventStep[channel] = 1;}
+          }
+        }
       }
     }
-    if(selParam == 1){
-      if(set == 0){
-        if(timeParam == 0){
-          morph += enc2.rotation;
-          if(morph>10){morph=10;}
-          if(morph<0){morph=0;}
-        }
-        if(timeParam == 1){
-          prob += enc2.rotation;
-          if(prob>10){prob = 10;}
-          if(prob<1){prob = 1;}
-        }
-        if(timeParam == 2){
-          clockDivision += enc2.rotation;
-          if(clockDivision > 16){clockDivision=16;}
-          if(clockDivision < 2){clockDivision=2;}
-        }
-        if(timeParam == 3){
-          if(enc2.rotation == 1){lengthSet = 1;}
-          if(enc2.rotation == -1){lengthSet = 0;}
-        }
-      }
-      if(set == 1){
-        if(eventParam == 0){
-          eventType[matrix] += enc2.rotation;
-          if(eventType[matrix]<0){eventType[matrix]=0;}
-          if(eventType[matrix]>1){eventType[matrix]=1;}
-        }
-        if(eventParam == 1){
-          eventStep[matrix] += enc2.rotation;
-          if(eventStep[matrix]<0){eventStep[matrix]=0;}
-          if(eventStep[matrix]>1){eventStep[matrix]=1;}
-        }
-        if(eventParam == 2){
-          eventSetProbMin += enc2.rotation;
-          if(eventSetProbMin<0){eventSetProbMin=0;}
-          if(eventSetProbMin>96){eventSetProbMin=96;}
-        }
-        if(eventParam == 3){
-          eventSetProbMax += enc2.rotation;
-          if(eventSetProbMax<0){eventSetProbMax=0;}
-          if(eventSetProbMax>96){eventSetProbMax=96;}
-        }
-      }
-    }
-    drawMatrixLED();
   }
 }
 
@@ -223,53 +268,53 @@ void ProbSeq::setStep(int key){
   if(set == 0){
     if(timeParam == 0){
       if(view == 0){
-        patt[matrix][key + (division*16)] = (patt[matrix][key + (division)*16]+1)%2;
+        patt[channel][key + (division*16)] = (patt[channel][key + (division)*16]+1)%2;
       }
       if(view == 1){
-        patt[key/4][((key%4)+(matrix*4))+(division*16)] = (patt[key/4][((key%4)+(matrix*4))+(division*16)]+1)%2;
+        patt[key/4][((key%4)+(channel*4))+(division*16)] = (patt[key/4][((key%4)+(channel*4))+(division*16)]+1)%2;
       }
     }
     if(timeParam == 1){
       if(view == 0){
-        if(probs[matrix][key + (division)*16] != prob){probs[matrix][key + (division)*16] = prob;}
-        else{probs[matrix][key + (division)*16] = 0;}
+        if(probs[channel][key + (division)*16] != prob){probs[channel][key + (division)*16] = prob;}
+        else{probs[channel][key + (division)*16] = 0;}
       }
       if(view == 1){
-        if(probs[key/4][(key%4)+(matrix*4) + (division)*16] != prob){probs[key/4][(key%4)+(matrix*4) + (division)*16] = prob;}
-        else{probs[key/4][(key%4)+(matrix*4) + (division)*16] = 0;}
+        if(probs[key/4][(key%4)+(channel*4) + (division)*16] != prob){probs[key/4][(key%4)+(channel*4) + (division)*16] = prob;}
+        else{probs[key/4][(key%4)+(channel*4) + (division)*16] = 0;}
       }
     }
     if(timeParam == 2){
       if(view == 0){
-        if(clockDiv[matrix][key + (division)*16] != clockDivision){clockDiv[matrix][key + (division)*16] = clockDivision;}
-        else{clockDiv[matrix][key + (division)*16] = 0;}
+        if(clockDiv[channel][key + (division)*16] != clockDivision){clockDiv[channel][key + (division)*16] = clockDivision;}
+        else{clockDiv[channel][key + (division)*16] = 0;}
       }
       if(view == 1){
-        if(clockDiv[key/4][(key%4)+(matrix*4) + (division)*16] != clockDivision){clockDiv[key/4][(key%4)+(matrix*4) + (division)*16] = clockDivision;}
-        else{clockDiv[key/4][(key%4)+(matrix*4) + (division)*16] = 0;}
+        if(clockDiv[key/4][(key%4)+(channel*4) + (division)*16] != clockDivision){clockDiv[key/4][(key%4)+(channel*4) + (division)*16] = clockDivision;}
+        else{clockDiv[key/4][(key%4)+(channel*4) + (division)*16] = 0;}
       }
     }
     if(timeParam == 3){
       if(view == 0){
         if(lengthSet==0){
-          lengthMin[matrix] = key + (division*16);
+          lengthMin[channel] = key + (division*16);
         }
         else if(lengthSet==1){
-          lengthMax[matrix] = key + (division*16);
+          lengthMax[channel] = key + (division*16);
         }
-        if(lengthMin[matrix] > lengthMax[matrix]){
-          temp = lengthMin[matrix];
-          lengthMin[matrix] = lengthMax[matrix];
-          lengthMax[matrix] = temp;
+        if(lengthMin[channel] > lengthMax[channel]){
+          temp = lengthMin[channel];
+          lengthMin[channel] = lengthMax[channel];
+          lengthMax[channel] = temp;
         }
         drawMatrixLED();
       }
       if(view == 1){
         if(lengthSet==0){
-          lengthMin[key/4] = (key%4) + (matrix*4) + (division*16);
+          lengthMin[key/4] = (key%4) + (channel*4) + (division*16);
         }
         else if(lengthSet==1){
-          lengthMax[key/4] = (key%4) + (matrix*4) + (division*16);
+          lengthMax[key/4] = (key%4) + (channel*4) + (division*16);
         }
         if(lengthMin[key/4] > lengthMax[key/4]){
           temp = lengthMin[key/4];
@@ -280,8 +325,24 @@ void ProbSeq::setStep(int key){
       }
     }
   }
-  if(set == 1){
-    eventActiveNote[matrix][key + (division*16)] = (eventActiveNote[matrix][key + (division)*16]+1)%2;    
+  else if(set == 1){
+    if(eventParam == 0){
+      eventActiveNote[channel][key] = (eventActiveNote[channel][key]+1)%2;   
+    }
+    else if(eventParam == 1){
+      if(eventProbNotes[channel][key] == eventProbSetNote){
+        eventProbNotes[channel][key] = 0;
+      }
+      else{
+        eventProbNotes[channel][key] = eventProbSetNote;
+      }
+    }
+    else if(eventParam == 2){
+      eventProbMin[channel][key] = eventSetProbMin;
+    }
+    else if(eventParam == 3){
+      eventProbMax[channel][key] = eventSetProbMax;
+    } 
   }
   drawKey(key);
   kp.show();
@@ -291,8 +352,12 @@ void ProbSeq::drawBg(){
   oled.clear();
   drawInfo();
   if(menu == 0){
+    drawParams();
     if(b1.held || b2.held){drawControls();}
     else{drawMatrix();}
+  }
+  else if(menu == 1){
+    drawMenu();
   }
 }
 
@@ -316,10 +381,10 @@ void ProbSeq::drawParams(){
   if(set == 1){
     if(eventParam < 2){
       if(selParam == 1){if(eventParam == 0){oled.invertedText=1;}}
-      oled.drawText(0,1,oled.invertedText,"Type:" + eventTypeName[eventType[matrix]]);
+      oled.drawText(0,1,oled.invertedText,"Morph:" + String(eventProbMorph[channel]));
       oled.invertedText=0;
       if(selParam == 1){if(eventParam == 1){oled.invertedText=1;}}
-      oled.drawText(8,1,oled.invertedText,"Step:" + eventStepName[eventStep[matrix]]);
+      oled.drawText(8,1,oled.invertedText,"Note:" + String(eventProbSetNote));
       oled.invertedText=0;
     }
     else if(eventParam < 4){
@@ -353,13 +418,9 @@ void ProbSeq::drawInfo(){
   }
   for(int i=0;i<4;i++){
     oled.drawText(8,0,0,"Chan:");
-    if(i == matrix){oled.invertedText = 1;}
+    if(i == channel){oled.invertedText = 1;}
     oled.drawText((i*1)+12,0,oled.invertedText,dectohex(i));
     oled.invertedText = 0;
-  }
-  // drawDivision();
-  if(menu == 0){
-    drawParams();
   }
 }
 
@@ -369,7 +430,6 @@ void ProbSeq::drawMatrix(){
       if(view == 0){
         for(int i=0;i<4;i++){
           for(int j=0;j<4;j++){
-            oled.invertedText = 0;
             if(((i%4)+(j*4))+(division*16) == pos[k]){oled.invertedText = 1;}
             if(timeParam==0){
               oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,boolString(patt[k][(i%4)+(j*4)+(division*16)]));
@@ -388,12 +448,12 @@ void ProbSeq::drawMatrix(){
               else if((i%4)+(j*4)+(division*16) == lengthMax[k]){oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,"E");}
               else{oled.drawText((i*1)+(k*4),(j*1)+4,oled.invertedText,".");}
             }
+            oled.invertedText = 0;
           }
         }
       }
       if(view == 1){
         for(int i=0;i<16;i++){
-          oled.invertedText = 0;
           if(pos[k] == i+(division*16)){oled.invertedText = 1;}
           if(timeParam==0){
             oled.drawText(i,k+4,oled.invertedText,boolString(patt[k][i+(division*16)]));
@@ -412,23 +472,28 @@ void ProbSeq::drawMatrix(){
               else if(i + (division*16) == lengthMax[k]){oled.drawText(i,k+4,oled.invertedText,"E");}
               else{oled.drawText(i,k+4,oled.invertedText,".");}
           }
+          oled.invertedText = 0;
         }
       }
-      if(k==matrix){oled.drawBox(k*32,31,32,33,0);}
+      if(k==channel){oled.drawBox(k*32,31,32,33,0);}
     }
   }
   if(set == 1){
     for(int i=0;i<16;i++){
+      if(posNote[channel] == i+(division*16)){oled.invertedText=1;}
       if(eventParam == 0){
-        if(posNote[matrix] == i+(division*16)){oled.invertedText=1;}
-        oled.drawText(((i%4)*2)+8,(i/4)+4,oled.invertedText,String(eventProbNotes[matrix][i]));
-        oled.invertedText=0;
+        oled.drawText(((i%4)*2)+8,(i/4)+4,oled.invertedText,boolStringInv(eventActiveNote[channel][i]));
       }
       else if(eventParam == 1){
-        if(posNote[matrix] == i+(division*16)){oled.invertedText=1;}
-        oled.drawText(((i%4)*2)+8,(i/4)+4,oled.invertedText,boolStringInv(eventActiveNote[matrix][i]));
-        oled.invertedText=0;
+        oled.drawText(((i%4)*2)+8,(i/4)+4,oled.invertedText,String(eventProbNotes[channel][i]));
       }
+      else if(eventParam == 2){
+        oled.drawText(((i%4)*2)+8,(i/4)+4,oled.invertedText,String(eventProbMin[channel][i]));
+      }
+      else if(eventParam == 3){
+        oled.drawText(((i%4)*2)+8,(i/4)+4,oled.invertedText,String(eventProbMax[channel][i]));
+      }
+      oled.invertedText = 0;
     }
   }
 }
@@ -445,49 +510,49 @@ void ProbSeq::drawKey(int key){
   if(set==0){
     if(view == 0){
       if(timeParam==0){
-        if(patt[matrix][key+(division*16)] == 0){
+        if(patt[channel][key+(division*16)] == 0){
           kp.set(key,0);
         }
-        if(patt[matrix][key+(division*16)] == 1){
+        if(patt[channel][key+(division*16)] == 1){
           kp.set(key,1);
         }
       }
       if(timeParam==1){
-        if(probs[matrix][key+(division*16)] < prob){
+        if(probs[channel][key+(division*16)] < prob){
           kp.set(key,4);
         }
-        if(probs[matrix][key+(division*16)] > prob){
+        if(probs[channel][key+(division*16)] > prob){
           kp.set(key,2);
         }
-        if(probs[matrix][key+(division*16)] == prob){
+        if(probs[channel][key+(division*16)] == prob){
           kp.set(key,1);
         }
-        if(probs[matrix][key+(division*16)] == 0){
+        if(probs[channel][key+(division*16)] == 0){
           kp.set(key,0);
         }
       }
       if(timeParam==2){
-        if(clockDiv[matrix][key+(division*16)] < clockDivision){
+        if(clockDiv[channel][key+(division*16)] < clockDivision){
           kp.set(key,4);
         }
-        if(clockDiv[matrix][key+(division*16)] > clockDivision){
+        if(clockDiv[channel][key+(division*16)] > clockDivision){
           kp.set(key,2);
         }
-        if(clockDiv[matrix][key+(division*16)] == clockDivision){
+        if(clockDiv[channel][key+(division*16)] == clockDivision){
           kp.set(key,1);
         }
-        if(clockDiv[matrix][key+(division*16)] == 0){
+        if(clockDiv[channel][key+(division*16)] == 0){
           kp.set(key,0);
         }
       }
       if(timeParam==3){
-        if(lengthMin[matrix] == key + (division*16)){
-          kp.set(lengthMin[matrix]%16,4);
+        if(lengthMin[channel] == key + (division*16)){
+          kp.set(lengthMin[channel]%16,4);
         }
-        else if(lengthMax[matrix] == key + (division*16)){
-          kp.set(lengthMax[matrix]%16,2);
+        else if(lengthMax[channel] == key + (division*16)){
+          kp.set(lengthMax[channel]%16,2);
         }
-        else if(key+(division*16) < lengthMax[matrix] && key+(division*16) > lengthMin[matrix]){
+        else if(key+(division*16) < lengthMax[channel] && key+(division*16) > lengthMin[channel]){
           kp.set(key,7);
         }
         else{kp.set(key,0);}
@@ -497,49 +562,49 @@ void ProbSeq::drawKey(int key){
       int i = (key%16)%4;
       int j = (key%16)/4;
       if(timeParam == 0){
-        if(patt[j][i+(matrix*4)+(division*16)] == 0){
+        if(patt[j][i+(channel*4)+(division*16)] == 0){
           kp.set(key,0);
         }
-        if(patt[j][i+(matrix*4)+(division*16)] == 1){
+        if(patt[j][i+(channel*4)+(division*16)] == 1){
           kp.set(key,1);
         }
       }
       if(timeParam == 1){
-        if(probs[j][i+(matrix*4)+(division*16)] < prob){
+        if(probs[j][i+(channel*4)+(division*16)] < prob){
           kp.set(key,4);
         }
-        if(probs[j][i+(matrix*4)+(division*16)] > prob){
+        if(probs[j][i+(channel*4)+(division*16)] > prob){
           kp.set(key,2);
         }
-        if(probs[j][i+(matrix*4)+(division*16)] == prob){
+        if(probs[j][i+(channel*4)+(division*16)] == prob){
           kp.set(key,1);
         }
-        if(probs[j][i+(matrix*4)+(division*16)] == 0){
+        if(probs[j][i+(channel*4)+(division*16)] == 0){
           kp.set(key,0);
         }
       }
       if(timeParam == 2){
-        if(clockDiv[j][i+(matrix*4)+(division*16)] < clockDivision){
+        if(clockDiv[j][i+(channel*4)+(division*16)] < clockDivision){
           kp.set(key,4);
         }
-        if(clockDiv[j][i+(matrix*4)+(division*16)] > clockDivision){
+        if(clockDiv[j][i+(channel*4)+(division*16)] > clockDivision){
           kp.set(key,2);
         }
-        if(clockDiv[j][i+(matrix*4)+(division*16)] == clockDivision){
+        if(clockDiv[j][i+(channel*4)+(division*16)] == clockDivision){
           kp.set(key,1);
         }
-        if(clockDiv[j][i+(matrix*4)+(division*16)] == 0){
+        if(clockDiv[j][i+(channel*4)+(division*16)] == 0){
           kp.set(key,0);
         }
       }
       if(timeParam == 3){
-        if(lengthMin[j] == (i%4) + (matrix*4) + (division*16)){
+        if(lengthMin[j] == (i%4) + (channel*4) + (division*16)){
           kp.set(key,4);
         }
-        else if(lengthMax[j] == (i%4) + (matrix*4) + (division*16)){
+        else if(lengthMax[j] == (i%4) + (channel*4) + (division*16)){
           kp.set(key,2);
         }
-        else if((i%4) + (matrix*4) + (division*16) < lengthMax[j] && (i%4) + (matrix*4) + (division*16) > lengthMin[j]){
+        else if((i%4) + (channel*4) + (division*16) < lengthMax[j] && (i%4) + (channel*4) + (division*16) > lengthMin[j]){
           kp.set(key,7);
         }
         else{kp.set(key,0);}
@@ -564,7 +629,26 @@ void ProbSeq::drawDivision(){
 
 void ProbSeq::followPos(){
   if(follow == 1){
-    if(view == 1){matrix = (pos[0]%16)/4;}
+    if(view == 1){channel = (pos[0]%16)/4;}
     division = (pos[0]%64)/16;
+  }
+}
+
+void ProbSeq::drawMenu(){
+  if(set == 0){
+    if(selParam == 1){if(timeMenuParam == 0){oled.invertedText=1;}}
+    if(view == 0){oled.drawText(0,1,oled.invertedText,"(G)View:Vertical");}
+    else if(view == 1){oled.drawText(0,1,oled.invertedText,"(G)View:Horizontal");}
+    oled.invertedText = 0;
+    if(selParam == 0){oled.drawBox(0,(timeMenuParam+1)*8,128,8,0);}
+  }
+  else if(set == 1){
+    if(selParam == 1){if(eventMenuParam == 0){oled.invertedText=1;}}
+    oled.drawText(0,1,oled.invertedText,"Mode:" + eventModeName[eventMode[channel]]);
+    oled.invertedText = 0;
+    if(selParam == 1){if(eventMenuParam == 1){oled.invertedText=1;}}
+    oled.drawText(0,2,oled.invertedText,"Step:" + eventStepName[eventStep[channel]]);
+    oled.invertedText = 0;
+    if(selParam == 0){oled.drawBox(0,(eventMenuParam+1)*8,128,8,0);}
   }
 }
