@@ -1,4 +1,4 @@
-class ProbSeq {
+class Gen {
     public:
     bool menu = 0;
     bool view = 0;
@@ -41,7 +41,7 @@ class ProbSeq {
     short eventQuantMode[4];
     bool eventQuant[4][96];
 
-    ProbSeq();
+    Gen();
     void run();
     void clock();
     void updatePosition();

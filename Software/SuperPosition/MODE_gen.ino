@@ -1,4 +1,4 @@
-ProbSeq::ProbSeq(){
+Gen::Gen(){
   for(int i=0;i<4;i++){
     for(int j=0;j<16;j++){
       eventProbActive[i][j] = 1;
@@ -10,13 +10,13 @@ ProbSeq::ProbSeq(){
   }
 }  
 
-void ProbSeq::run(){
+void Gen::run(){
   clock();
   controls();
   if(oled.redraw == 1){drawBg();}
 }
 
-void ProbSeq::clock(){
+void Gen::clock(){
   if(midiclock == 1){
     midiclock = 0;
     updatePosition();
@@ -26,7 +26,7 @@ void ProbSeq::clock(){
   }
 }
 
-void ProbSeq::updatePosition(){
+void Gen::updatePosition(){
   //Clear Old Position
   if(set == 0){
     if(view == 0){
@@ -63,7 +63,7 @@ void ProbSeq::updatePosition(){
   }
 }
 
-void ProbSeq::writeNewPosition(){
+void Gen::writeNewPosition(){
   //Write New Position
   if(set == 0){
     if(view == 0){
@@ -89,7 +89,7 @@ void ProbSeq::writeNewPosition(){
   kp.show();
 }
 
-void ProbSeq::morph(){
+void Gen::morph(){
   //Probability Pattern Morph
   if(pattMorph>random(10)){
     for(int i=0;i<4;i++){
@@ -124,7 +124,7 @@ void ProbSeq::morph(){
   }
 }
 
-void ProbSeq::output(){
+void Gen::output(){
   //MIDI Out
   for(int i=0;i<4;i++){
     if(clockDivCount[i]==0){
@@ -139,7 +139,7 @@ void ProbSeq::output(){
   }
 }
 
-void ProbSeq::controls(){
+void Gen::controls(){
   if(kp.pressed == 1){
     if(menu == 0){
       if(b1.held == 0 && b2.held == 0){
@@ -178,6 +178,7 @@ void ProbSeq::controls(){
           if(eventParam==1){eventNote[channel][i]=0;}
           if(eventParam==2){eventProbMin[channel][i]=0;}
           if(eventParam==3){eventProbMax[channel][i]=0;}
+          if(eventParam==4){eventQuant[channel][i+(eventQuantMode[channel]*16)]=0;}
         }
       }
       drawMatrixLED();
@@ -196,6 +197,7 @@ void ProbSeq::controls(){
           if(eventParam==1){eventNote[channel][i]=eventProbSetNote;}
           if(eventParam==2){eventProbMin[channel][i]=eventProbSetMin;}
           if(eventParam==3){eventProbMax[channel][i]=eventProbSetMax;}
+          if(eventParam==4){eventQuant[channel][i+(eventQuantMode[channel]*16)]=1;}
         }
       }
       drawMatrixLED();
@@ -312,7 +314,7 @@ void ProbSeq::controls(){
   }
 }
 
-void ProbSeq::setStep(int key){
+void Gen::setStep(int key){
   if(set == 0){
     if(timeParam == 0){
       if(view == 0){
@@ -411,7 +413,7 @@ void ProbSeq::setStep(int key){
   kp.show();
 }
 
-void ProbSeq::drawBg(){
+void Gen::drawBg(){
   oled.clear();
   drawInfo();
   if(menu == 0){
@@ -423,7 +425,7 @@ void ProbSeq::drawBg(){
   }
 }
 
-void ProbSeq::drawParams(){
+void Gen::drawParams(){
   if(set == 0){
     if(selParam == 1){if(timeParam == 0){oled.invertedText=1;}}
     oled.drawText(0,1,oled.invertedText,"Morph:" + dectohex(pattMorph));
@@ -469,7 +471,7 @@ void ProbSeq::drawParams(){
   }
 }
 
-void ProbSeq::drawInfo(){
+void Gen::drawInfo(){
   if(set == 0){
     oled.drawText(0,0,1,"Tempo");
     oled.drawText(4,0,0,"Event");
@@ -486,7 +488,7 @@ void ProbSeq::drawInfo(){
   }
 }
 
-void ProbSeq::drawMatrix(){
+void Gen::drawMatrix(){
   if(set == 0){
     for(int k=0;k<4;k++){
       if(view == 0){
@@ -566,7 +568,7 @@ void ProbSeq::drawMatrix(){
   }
 }
 
-void ProbSeq::drawKey(int key){
+void Gen::drawKey(int key){
   if(set==0){
     if(view == 0){
       if(timeParam==0){
@@ -735,13 +737,13 @@ void ProbSeq::drawKey(int key){
   }
 }
 
-void ProbSeq::drawMatrixLED(){
+void Gen::drawMatrixLED(){
   for(int i=0;i<16;i++){drawKey(i);}
   writeNewPosition();
   kp.show();
 }
 
-void ProbSeq::drawDivision(){
+void Gen::drawDivision(){
   // for(int i=0;i<4;i++){
     // if(i == division){oled.invertedText = 1;}
     // oled.drawText((i*1)+8,0,oled.invertedText,dectohex(i));
@@ -749,7 +751,7 @@ void ProbSeq::drawDivision(){
   // }
 }
 
-void ProbSeq::drawMenu(){
+void Gen::drawMenu(){
   if(set == 0){
     if(selParam == 1){if(timeMenuParam == 0){oled.invertedText=1;}}
     if(view == 0){oled.drawText(0,1,oled.invertedText,"(G)View:Vertical");}
