@@ -30,7 +30,6 @@ class ProbSeq {
     short eventStep[4];
     const String eventModeName[2] = {"Probability","Markov Chain"};
     const String eventStepName[2] = {"Sync","Trig"};
-    short eventPos[4];
     short eventNote[4][16];
     short eventMorph[4];
     short eventProbSetMin = 0;

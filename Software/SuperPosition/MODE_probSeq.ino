@@ -101,7 +101,25 @@ void ProbSeq::morph(){
   }
   for(int i=0;i<4;i++){
     if(eventMode[i] == 0){
-      if(eventMorph[i] > random(10)){eventNote[i][posNote[i]] = random(eventProbMin[i][posNote[i]],eventProbMax[i][posNote[i]]);}
+      if(eventMorph[i] > random(10)){
+        eventNote[i][posNote[i]] = random(eventProbMin[i][posNote[i]],eventProbMax[i][posNote[i]]);
+        for(int quantize=0;quantize<96;quantize++){
+          int tMin = eventNote[i][posNote[i]] - quantize;
+          if(tMin >= 0){
+            if(eventQuant[i][tMin] == 1){
+              eventNote[i][posNote[i]] = tMin;
+              break;
+            }
+          }
+          int tMax = eventNote[i][posNote[i]] + quantize;
+          if(tMax < 96){
+            if(eventQuant[i][tMin] == 1){
+              eventNote[i][posNote[i]] = tMax;
+              break;
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -255,7 +273,7 @@ void ProbSeq::controls(){
           }
           else if(eventParam == 4){
             eventQuantMode[channel] += enc2.rotation;
-            eventQuantMode[channel] = limit(eventQuantMode[channel],0,6);
+            eventQuantMode[channel] = limit(eventQuantMode[channel],0,5);
           }
         }
       }
@@ -384,13 +402,9 @@ void ProbSeq::setStep(int key){
       }
     }
     else if(eventParam == 4){
-      if(eventQuantMode[channel] == 0){
-        // int t = (eventQuantMode[channel]-1) * 16;
-        int t1 = ((3-(key/4))*4)+(key%4);
-        if(t1 < 12){
-          eventQuant[channel][t1] = !eventQuant[channel][t1];
-        }
-      }
+      int t = (eventQuantMode[channel]) * 16;
+      int t1 = ((3-(key/4))*4)+(key%4);
+      eventQuant[channel][t1+t] = !eventQuant[channel][t1+t];
     } 
   }
   drawKey(key);
@@ -445,8 +459,7 @@ void ProbSeq::drawParams(){
     }
     else if(eventParam < 6){
       if(selParam == 1){if(eventParam == 4){oled.invertedText=1;}}
-      if(eventQuantMode[channel]==0){oled.drawText(0,1,oled.invertedText,"Quant:Scl");}
-      else{oled.drawText(0,1,oled.invertedText,"Quant:+"+String((eventQuantMode[channel]-1)*16));}
+      oled.drawText(0,1,oled.invertedText,"Quant:+"+String((eventQuantMode[channel])*16));
       oled.invertedText=0;
       if(selParam == 1){if(eventParam == 5){oled.invertedText=1;}}
       oled.drawText(8,1,oled.invertedText,"Divid:");
@@ -543,19 +556,10 @@ void ProbSeq::drawMatrix(){
         oled.drawText(((i%4)*2)+8,(i/4)+4,oled.invertedText,String(eventProbMax[channel][i]));
       }
       else if(eventParam == 4){
-        if(eventQuantMode[channel] == 0){
-          if(i<12){
-            oled.invertedText = 0;
-            if(eventQuant[channel][i] == 1){oled.invertedText = 1;}
-            oled.drawText(((i%4)*2)+8,7-(i/4),oled.invertedText,String(i));
-          }
-        }
-        else if(eventQuantMode[channel] > 0){
-          int t = (eventQuantMode[channel]-1) * 16;
-          oled.invertedText = 0;
-          if(eventQuant[channel][i+t] == 1){oled.invertedText = 1;}
-          oled.drawText(((i%4)*2)+8,7-(i/4),oled.invertedText,String(i+t));
-        }
+        int t = (eventQuantMode[channel]) * 16;
+        oled.invertedText = 0;
+        if(eventQuant[channel][i+t] == 1){oled.invertedText = 1;}
+        oled.drawText(((i%4)*2)+8,7-(i/4),oled.invertedText,String(i+t));
       }
       oled.invertedText = 0;
     }
@@ -716,6 +720,16 @@ void ProbSeq::drawKey(int key){
         }
         if(eventProbMax[channel][key+(division*16)] == 0){
           kp.set(key,0);
+        }
+      }
+      if(eventParam==4){
+        int t = (eventQuantMode[channel]) * 16;
+        int t1 = ((3-(key/4))*4)+(key%4);
+        if(eventQuant[channel][t1+t] == 0){
+          kp.set(key,0);
+        }
+        if(eventQuant[channel][t1+t] == 1){
+          kp.set(key,1);
         }
       }
   }
