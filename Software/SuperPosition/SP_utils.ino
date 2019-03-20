@@ -1,10 +1,16 @@
+int limit(int in, int minimum, int maximum){
+  int out = in;
+  if(in < minimum){out = minimum;}
+  else if(in > maximum){out = maximum;}
+  return out;
+}
+
 String boolStringInv(int in){
   String out;
   if(in == 1){out = ".";}
   if(in == 0){out = "x";}
   return out;
 }
-
 
 String boolString(int in){
   String out;

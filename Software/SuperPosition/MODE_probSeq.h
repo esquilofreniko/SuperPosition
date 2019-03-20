@@ -1,6 +1,6 @@
 class ProbSeq {
     public:
-    short menu = 0;
+    bool menu = 0;
     bool view = 0;
     short set = 0;
     short channel = 0;
@@ -26,19 +26,21 @@ class ProbSeq {
     short eventParam = 0;
     short timeMenuParam = 0;
     short eventMenuParam = 0;
-    short eventMode[4] = {0,0,0,0};
-    short eventStep[4] = {0,0,0,0};
-    String eventModeName[2] = {"Probability","Markov Chain"};
-    String eventStepName[2] = {"Sync","Trig"};
+    short eventMode[4];
+    short eventStep[4];
+    const String eventModeName[2] = {"Probability","Markov Chain"};
+    const String eventStepName[2] = {"Sync","Trig"};
+    short eventPos[4];
+    short eventNote[4][16];
+    short eventMorph[4];
     short eventProbSetMin = 0;
     short eventProbSetMax = 96;
-    short eventPos[4];
     bool eventProbActive[4][16];
     short eventProbSetNote = 0;
-    short eventProbNote[4][16];
-    short eventProbMorph[4] = {0,0,0,0};
     short eventProbMin[4][16];
     short eventProbMax[4][16];
+    short eventQuantMode[4];
+    bool eventQuant[4][96];
 
     ProbSeq();
     void run();
