@@ -488,7 +488,7 @@ void Gen::drawParams(){
     }
     else if(eventParam < 6){
       if(selParam == 1){if(eventParam == 4){oled.invertedText=1;}}
-      if(eventQuantMode[channel]==0){oled.drawText(0,1,oled.invertedText,"Quant:Scale");}
+      if(eventQuantMode[channel]==0){oled.drawText(0,1,oled.invertedText,"Quant:Scl");}
       else{oled.drawText(0,1,oled.invertedText,"Quant:+"+String((eventQuantMode[channel]-1)*16));}
       oled.invertedText=0;
       if(selParam == 1){if(eventParam == 5){oled.invertedText=1;}}
