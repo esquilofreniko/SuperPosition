@@ -20,6 +20,7 @@ class Gen {
     short pattMorph = 0;
     short temp = 0;
     short posNote[4];
+    short posNoteOld[4];
     short note[4][64];
     bool selParam = 0;
     short timeParam = 0;
@@ -27,9 +28,11 @@ class Gen {
     short timeMenuParam = 0;
     short eventMenuParam = 0;
     short eventMode[4];
-    short eventStep[4];
+    short eventStep[4] = {1,1,1,1};
+    short eventSkip[4];
     const String eventModeName[2] = {"Probability","Markov Chain"};
-    const String eventStepName[2] = {"Sync","Trig"};
+    const String eventStepName[3] = {"Follow","Sync","Trig"};
+    const String eventSkipName[2] = {"Skip","Sleep"};
     short eventNote[4][16];
     short eventMorph[4];
     short eventProbSetMin = 0;
@@ -39,6 +42,9 @@ class Gen {
     short eventProbMin[4][16];
     short eventProbMax[4][16];
     short eventQuantMode[4];
+    short eventDivision = 2;
+    short eventDiv[4][16];
+    short eventDivCount[4];
     bool eventQuant[4][96];
 
     Gen();
@@ -46,7 +52,8 @@ class Gen {
     void clock();
     void updatePosition();
     void writeNewPosition();
-    void morph();
+    void morphPatt();
+    void morphNote();
     void output();
     void controls();
     void drawBg();
