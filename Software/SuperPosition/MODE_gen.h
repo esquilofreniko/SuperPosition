@@ -46,6 +46,8 @@ class Gen {
     short eventDiv[4][16];
     short eventDivCount[4];
     bool eventQuant[4][96];
+    short eventSlew[4][16];
+    short eventSetSlew;
 
     Gen();
     void run();
