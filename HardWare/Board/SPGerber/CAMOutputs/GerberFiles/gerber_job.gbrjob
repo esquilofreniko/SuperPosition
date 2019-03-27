@@ -1,7 +1,7 @@
 {
     "Header": {
         "Comment": "All values are metric (mm)",
-        "CreationDate": "2019-03-14T15:39:21Z",
+        "CreationDate": "2019-03-27T20:37:42Z",
         "GenerationSoftware": {
             "Application": "EAGLE",
             "Vendor": "Autodesk",
@@ -18,7 +18,7 @@
         "Owner": "Afonso Proenca <esquilofreniko@gmail.com>",
         "Size": {
             "X": 60.002,
-            "Y": 110
+            "Y": 110.5
         }
     }
 }

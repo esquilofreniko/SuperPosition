@@ -1919,13 +1919,13 @@ EC12E series with push-on switch</description>
 <wire x1="-30.48" y1="-29.464" x2="29.464" y2="-29.464" width="0.1524" layer="21"/>
 <wire x1="29.464" y1="-29.464" x2="29.464" y2="30.48" width="0.1524" layer="21"/>
 <wire x1="29.464" y1="30.48" x2="-30.48" y2="30.48" width="0.1524" layer="21"/>
-<pad name="INT" x="-5.588" y="-26.924" drill="0.6"/>
-<pad name="VIN" x="-3.048" y="-26.924" drill="0.6"/>
-<pad name="GND" x="-0.508" y="-26.924" drill="0.6"/>
-<pad name="SCL" x="2.032" y="-26.924" drill="0.6"/>
-<pad name="SDA" x="4.572" y="-26.924" drill="0.6"/>
-<hole x="-15.4905" y="0.5067" drill="2.8" locked="yes"/>
-<hole x="14.4815" y="0.5067" drill="2.8" locked="yes"/>
+<pad name="INT" x="-5.588" y="-26.924" drill="0.9652"/>
+<pad name="VIN" x="-3.048" y="-26.924" drill="0.9652"/>
+<pad name="GND" x="-0.508" y="-26.924" drill="0.9652"/>
+<pad name="SCL" x="2.032" y="-26.924" drill="0.9652"/>
+<pad name="SDA" x="4.572" y="-26.924" drill="0.9652"/>
+<hole x="-15.4905" y="0.5067" drill="2.8"/>
+<hole x="14.4815" y="0.5067" drill="2.8"/>
 <hole x="1.5555" y="15.5207" drill="2.8" locked="yes"/>
 <hole x="-2.4445" y="-14.4793" drill="2.8" locked="yes"/>
 </package>
