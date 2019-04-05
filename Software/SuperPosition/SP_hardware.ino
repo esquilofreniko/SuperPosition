@@ -1,3 +1,43 @@
+//ADC
+ADC::ADC(byte _pin1,byte _pin2,byte _pin3,byte _pin4):
+  pin1(_pin1),
+  pin2(_pin2),
+  pin3(_pin3),
+  pin4(_pin4)
+{};
+
+void ADC::init(){
+  pin[0] = pin1;
+  pin[1] = pin2;
+  pin[2] = pin3;
+  pin[3] = pin4;
+  for(int i=0;i<4;i++){
+    pinMode(pin[i],INPUT);
+    _in[i] = analogRead(pin[i]);
+  }
+};
+
+void ADC::read(){
+  for(int i=0;i<4;i++){
+    in[i] = analogRead(pin[i]);
+    trig[i] = 0;
+    if(millis() - lastSave >= trigDelay){
+      if(in[i] - _in[i] > 100){
+        trig[i] = 1;
+      }
+      _in[i] = in[i];
+      lastSave = millis();
+    }
+  }
+  if(trig[0]){
+    for(int i=0;i<4;i++){
+      Serial.print(" in" + String(i+1) + ": ");
+      Serial.print(in[i]);
+    }
+    Serial.println();
+  }
+};
+
 //DAC
 DAC8568::DAC8568(DA8568C _dac):
   dac8568(_dac)
@@ -86,10 +126,10 @@ void RotaryEncoder::read() {
 //KeyMatrix
 TrellisCallback blink(keyEvent evt){
   if (evt.bit.EDGE == SEESAW_KEYPAD_EDGE_RISING) {
-    kp.key[evt.bit.NUM] = 1;
+    kp.key[rotate1(evt.bit.NUM)] = 1;
     kp.pressed = 1;
   } else if (evt.bit.EDGE == SEESAW_KEYPAD_EDGE_FALLING) {
-    kp.key[evt.bit.NUM] = 0;
+    kp.key[rotate1(evt.bit.NUM)] = 0;
     kp.released = 1;
   }
 }
@@ -121,6 +161,7 @@ void KeyMatrix::show(){
 }
 
 void KeyMatrix::set(int pos, int color){
+  pos = rotate2(pos);
   if(color == 0){
     trellis.pixels.setPixelColor(pos,0);
   }
@@ -199,8 +240,9 @@ void hardware_init(){
   pinMode(ENC1PINB, INPUT_PULLUP);
   pinMode(ENC2PINA, INPUT_PULLUP);
   pinMode(ENC2PINB, INPUT_PULLUP);
-  kp.init();
+  adc.init();
   oled.init();
+  kp.init();
   b1.init();
   b2.init();
   enc1.init();
@@ -208,6 +250,7 @@ void hardware_init(){
 }
 
 void hardware_read(){
+  adc.read();
   b1.read();
   b2.read();
   enc1.read();

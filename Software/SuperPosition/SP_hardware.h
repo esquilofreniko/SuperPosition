@@ -1,10 +1,26 @@
 //ADC
-class ADC {};
+class ADC {
+  private:
+  const byte pin1,pin2,pin3,pin4;
+  int _in[4];
+  byte pin[4];
+  public:
+  ADC(byte _pin1,byte _pin2,byte _pin3,byte _pin4);
+  int in[4];
+  int trig[4];
+  int trigDelay = 5;
+  int lastSave=0;
+  bool printAdc = 0;
+  void init();
+  void read();
+};
 
-#define CVINPIN1 23
-#define CVINPIN2 22
-#define CVINPIN3 21
-#define CVINPIN4 20
+#define CVINPIN1 17
+#define CVINPIN2 16
+#define CVINPIN3 15
+#define CVINPIN4 14
+
+ADC adc(CVINPIN1,CVINPIN2,CVINPIN3,CVINPIN4);
 
 //DAC
 #include <DA8568C.h>
@@ -39,8 +55,8 @@ class Button {
   void read();
 };
 
-#define B1PIN 17
-#define B2PIN 12
+#define B1PIN 20
+#define B2PIN 3
 Button b1(B1PIN);
 Button b2(B2PIN);
 
@@ -71,9 +87,9 @@ class RotaryEncoder {
 #define ENC1BUTTON 0
 #define ENC1PINA 1
 #define ENC1PINB 2
-#define ENC2BUTTON 14
-#define ENC2PINA 15
-#define ENC2PINB 16
+#define ENC2BUTTON 23
+#define ENC2PINA 22
+#define ENC2PINB 21
 RotaryEncoder enc1(ENC1BUTTON,Encoder(ENC1PINA,ENC1PINB));
 RotaryEncoder enc2(ENC2BUTTON,Encoder(ENC2PINA,ENC2PINB));
 

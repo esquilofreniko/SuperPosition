@@ -17,7 +17,7 @@ void Gen::run(){
 }
 
 void Gen::clock(){
-  if(midiclock == 1){
+  if(midiclock == 1 || adc.trig[0] == 1){
     midiclock = 0;
     updatePosition();
     morphNote();
