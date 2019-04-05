@@ -148,9 +148,10 @@ void Gen::morphNote(){
 }
 
 void Gen::output(){
-  //MIDI Out
+  //Out
   for(int i=0;i<4;i++){
     if(clockDivCount[i]==0){
+      gate.write(i,patt[i][pos[i]]);
       if(patt[i][pos[i]] == 1){
         usbMIDI.sendNoteOn(60,60,i+2);
       }
@@ -158,6 +159,7 @@ void Gen::output(){
        usbMIDI.sendNoteOff(60,0,i+2);
       }
     }
+    dac.write(i,noteToVolt(eventNote[i][posNote[i]]));
     usbMIDI.sendNoteOn(eventNote[i][posNote[i]],96,i+6);
   }
 }

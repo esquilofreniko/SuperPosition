@@ -2,12 +2,13 @@
 class ADC {
   private:
   const byte pin1,pin2,pin3,pin4;
-  int _in[4];
   byte pin[4];
   public:
   ADC(byte _pin1,byte _pin2,byte _pin3,byte _pin4);
   int in[4];
   int trig[4];
+  int gate[4];
+  int _gate[4];
   int trigDelay = 5;
   int lastSave=0;
   bool printAdc = 0;
@@ -22,21 +23,52 @@ class ADC {
 
 ADC adc(CVINPIN1,CVINPIN2,CVINPIN3,CVINPIN4);
 
-//DAC
-#include <DA8568C.h>
-
-class DAC8568 {
-    private:
-    DA8568C dac8568;
-
-    public:
-    DAC8568(DA8568C _dac);
-    void init();
-    void set(int channel, float voltage);
+//Gate
+class Gate{
+  private:
+  byte pin1,pin2,pin3,pin4;
+  public:
+  byte pin[4];
+  bool val[4];
+  Gate(byte _pin1,byte _pin2,byte _pin3,byte _pin4);
+  void init();
+  void write(byte channel, bool _val);
 };
 
-DA8568C dacInput;
-DAC8568 dac(dacInput);
+#define DPIN1 4
+#define DPIN2 5
+#define DPIN3 6
+#define DPIN4 7
+Gate gate(DPIN1,DPIN2,DPIN3,DPIN4);
+
+//DAC
+#include "SP_MCP4922.h"
+class DAC{
+  public:
+  SP_MCP4922 a1;
+  SP_MCP4922 a2;
+  SP_MCP4922 a3;
+  SP_MCP4922 a4;
+  DAC(SP_MCP4922 _a1,SP_MCP4922 _a2,SP_MCP4922 _a3,SP_MCP4922 _a4);
+  int v[4];
+  void init();
+  void write(byte channel, float voltage);
+};
+
+#define dacpin11 27
+#define dacpin12 31
+#define dacpin21 26
+#define dacpin22 30
+#define dacpin31 25
+#define dacpin32 29
+#define dacpin41 24
+#define dacpin42 28
+
+SP_MCP4922 _a1(dacpin11,dacpin21,dacpin31,dacpin41,0);    
+SP_MCP4922 _a2(dacpin11,dacpin21,dacpin31,dacpin41,1);
+SP_MCP4922 _a3(dacpin12,dacpin22,dacpin32,dacpin42,0);
+SP_MCP4922 _a4(dacpin12,dacpin22,dacpin32,dacpin42,1);
+DAC dac(_a1,_a2,_a3,_a4);
 
 //Buttons
 class Button {

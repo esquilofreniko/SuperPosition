@@ -1,4 +1,4 @@
-//ADC
+//Inputs
 ADC::ADC(byte _pin1,byte _pin2,byte _pin3,byte _pin4):
   pin1(_pin1),
   pin2(_pin2),
@@ -12,48 +12,81 @@ void ADC::init(){
   pin[2] = pin3;
   pin[3] = pin4;
   for(int i=0;i<4;i++){
+    gate[4] = 0;
+    _gate[4] = 0;
     pinMode(pin[i],INPUT);
-    _in[i] = analogRead(pin[i]);
   }
 };
 
 void ADC::read(){
   for(int i=0;i<4;i++){
-    in[i] = analogRead(pin[i]);
     trig[i] = 0;
-    if(millis() - lastSave >= trigDelay){
-      if(in[i] - _in[i] > 100){
-        trig[i] = 1;
-      }
-      _in[i] = in[i];
-      lastSave = millis();
-    }
+    in[i] = analogRead(pin[i]);
+    gate[i] = digitalRead(pin[i]);
+    if(gate[i] == 1 && _gate[i]==0){trig[i] = 1;}
+    _gate[i] = gate[i];
   }
   if(trig[0]){
     for(int i=0;i<4;i++){
       Serial.print(" in" + String(i+1) + ": ");
-      Serial.print(in[i]);
+      Serial.print(gate[i]);
     }
     Serial.println();
   }
 };
 
-//DAC
-DAC8568::DAC8568(DA8568C _dac):
-  dac8568(_dac)
+//Digital Outputs
+Gate::Gate(byte _pin1,byte _pin2,byte _pin3,byte _pin4):
+  pin1(_pin1),
+  pin2(_pin2),
+  pin3(_pin3),
+  pin4(_pin4)
 {};
 
-void DAC8568::init(){
-  dac8568.init();
-  dac8568.enable_internal_ref();
+void Gate::init(){
+  pin[0] = pin1;
+  pin[1] = pin2;
+  pin[2] = pin3;
+  pin[3] = pin4;
+  for(int i=0;i<4;i++){
+    pinMode(pin[i],OUTPUT);
+    digitalWrite(pin[i],0);
+  };
+}
+
+void Gate::write(byte channel, bool val){
+  digitalWrite(pin[channel],val);
+}
+
+//Analog Outputs
+DAC::DAC(SP_MCP4922 _a1,SP_MCP4922 _a2,SP_MCP4922 _a3,SP_MCP4922 _a4):
+a1(_a1),
+a2(_a2),
+a3(_a3),
+a4(_a4)
+{};
+
+void DAC::init(){
+  a1.setValue(0);
+  a2.setValue(0);
+  a3.setValue(0);
+  a4.setValue(0);
 };
 
-void DAC8568::set(int channel, float voltage){
-  // voltage = 0 // 0V 
-  // voltage = 4.435 // 8V
-  if(voltage<0){voltage = 0;}
-  if(voltage>65535){voltage = 65535;}
-  dac8568.write(WRITE_UPDATE_N, channel, voltage);
+void DAC::write(byte channel, float voltage){
+  int output = (voltage/10)*4095;
+  if(channel == 0){
+    a1.setValue(output);
+  }
+  else if(channel == 1){
+    a2.setValue(output);
+  }
+  else if(channel == 2){
+    a3.setValue(output);
+  }
+  else if(channel == 3){
+    a4.setValue(output);
+  }
 };
 
 //Buttons
@@ -224,7 +257,6 @@ void Display::drawBox(int x, int y, int boxwidth, int boxheight, bool fill){
 void Display::setTextSize(int size){
   display.setTextSize(size);
 }
-
 void Display::setFont(int font){
   if(font == 1){
     // display.setFont(&Tiny3x3a2pt7b);
@@ -241,6 +273,12 @@ void hardware_init(){
   pinMode(ENC2PINA, INPUT_PULLUP);
   pinMode(ENC2PINB, INPUT_PULLUP);
   adc.init();
+  gate.init();
+  dac.init();
+  // dac.write(0,2.5);
+  // dac.write(1,5);
+  // dac.write(2,7.5);
+  // dac.write(3,10);
   oled.init();
   kp.init();
   b1.init();

@@ -1,3 +1,8 @@
+float noteToVolt(int note){
+  float vout = note * 0.0833333;
+  return vout;
+}
+
 int rotate1(int in){
   int out = in;
   if(in == 12){out = 0;}
