@@ -166,10 +166,17 @@ void Gen::morphNote(){
 
 void Gen::output(){
   //Out
-  for(int i=0;i<4;i++){
+  for(int i=3;i>-1;i--){
     dac.write(i,noteToVolt(eventNote[i][posNote[i]]));
     if(clockDivCount[i]==0){
-      gate.write(i,patt[i][pos[i]]);
+      // gate.write(i,patt[i][pos[i]]);
+      if(patt[i][pos[i]]==1){
+        for(int j=0;j<4;j++){
+          if(gateOut[i][j] == 1){
+            gate.write(j,1);
+          }
+        }
+      }
     }
   }
 }

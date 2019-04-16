@@ -48,6 +48,7 @@ class Gen {
     bool eventQuant[4][96];
     short eventSlew[4][16];
     short eventSetSlew;
+    bool gateOut[4][4] = {{1,0,0,0},{0,1,0,0},{0,1,1,0},{0,0,0,1}};
 
     Gen();
     void run();

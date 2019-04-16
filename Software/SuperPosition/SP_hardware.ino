@@ -21,18 +21,22 @@ void ADC::init(){
 void ADC::read(){
   for(int i=3;i>-1;i--){
     trig[i] = 0;
-    // in[i] = analogRead(pin[i]);
+    avg[i][avgCounter] = analogRead(pin[i]);
     gate[i] = digitalRead(pin[i]);
     if(gate[i] == 1 && _gate[i]==0){trig[i] = 1;}
     _gate[i] = gate[i];
   }
-  // if(trig[0]){
-  //   for(int i=0;i<4;i++){
-  //     Serial.print(" in" + String(i+1) + ": ");
-  //     Serial.print(gate[i]);
-  //   }
-  //   Serial.println();
-  // }
+  avgCounter++;
+  avgCounter %= avgMax;
+  if(avgCounter == 0){    
+    for(int i=3;i>-1;i--){
+      in[i] = 0;
+      for(int j=0;j<avgMax;j++){
+        in[i] += avg[i][j];
+      }
+      in[i] = in[i] / avgMax;
+    }
+  }
 };
 
 //Digital Outputs
@@ -63,6 +67,7 @@ void Gate::read(){
       else if (val[i] == 1 && prev[i] == 1){
         if(millis() - trigStart > trigTime){
           digitalWrite(pin[i],0);
+          val[i] = 0;
         }
       }
       prev[i] = val[i];

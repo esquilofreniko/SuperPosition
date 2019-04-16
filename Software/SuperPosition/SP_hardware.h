@@ -2,14 +2,17 @@
 class ADC {
   private:
   const byte pin1,pin2,pin3,pin4;
+  const int avgMax = 100;
   byte pin[4];
   public:
   ADC(byte _pin1,byte _pin2,byte _pin3,byte _pin4);
   int in[4];
+  int avg[4][100];
+  int avgCounter = 0;
   int trig[4];
   int gate[4];
   int _gate[4];
-  int trigDelay = 5;
+  // int trigDelay = 5;
   int lastSave=0;
   bool printAdc = 0;
   void init();
@@ -33,7 +36,7 @@ class Gate{
   bool prev[4];
   bool trigger[4] = {1,1,1,1};
   long trigStart;
-  short trigTime = 5;
+  short trigTime = 10;
   Gate(byte _pin1,byte _pin2,byte _pin3,byte _pin4);
   void init();
   void read();
