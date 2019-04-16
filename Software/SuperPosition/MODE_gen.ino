@@ -17,8 +17,25 @@ void Gen::run(){
 }
 
 void Gen::clock(){
-  if(midiclock == 1 || adc.trig[0] == 1){
-    midiclock = 0;
+  //reset
+  if(adc.trig[1] == 1){
+    for(int i=0;i<4;i++){
+      pos[i] = lengthMin[i]-1;
+      posNote[i] = -1;
+      clockDivCount[i] = -1;
+      eventDivCount[i] = -1;
+    }
+    updatePosition();
+  }
+  if(adc.trig[0] == 1){
+    if(adc.gate[1] == 1){
+      for(int i=0;i<4;i++){
+        pos[i] = lengthMin[i]-1;
+        posNote[i] = -1;
+        clockDivCount[i] = -1;
+        eventDivCount[i] = -1;
+      }
+    }
     updatePosition();
     morphNote();
     morphPatt();
@@ -150,17 +167,10 @@ void Gen::morphNote(){
 void Gen::output(){
   //Out
   for(int i=0;i<4;i++){
+    dac.write(i,noteToVolt(eventNote[i][posNote[i]]));
     if(clockDivCount[i]==0){
       gate.write(i,patt[i][pos[i]]);
-      if(patt[i][pos[i]] == 1){
-        usbMIDI.sendNoteOn(60,60,i+2);
-      }
-      if(patt[i][pos[i]] == 0){
-       usbMIDI.sendNoteOff(60,0,i+2);
-      }
     }
-    dac.write(i,noteToVolt(eventNote[i][posNote[i]]));
-    usbMIDI.sendNoteOn(eventNote[i][posNote[i]],96,i+6);
   }
 }
 

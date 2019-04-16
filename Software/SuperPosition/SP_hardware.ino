@@ -19,20 +19,20 @@ void ADC::init(){
 };
 
 void ADC::read(){
-  for(int i=0;i<4;i++){
+  for(int i=3;i>-1;i--){
     trig[i] = 0;
-    in[i] = analogRead(pin[i]);
+    // in[i] = analogRead(pin[i]);
     gate[i] = digitalRead(pin[i]);
     if(gate[i] == 1 && _gate[i]==0){trig[i] = 1;}
     _gate[i] = gate[i];
   }
-  if(trig[0]){
-    for(int i=0;i<4;i++){
-      Serial.print(" in" + String(i+1) + ": ");
-      Serial.print(gate[i]);
-    }
-    Serial.println();
-  }
+  // if(trig[0]){
+  //   for(int i=0;i<4;i++){
+  //     Serial.print(" in" + String(i+1) + ": ");
+  //     Serial.print(gate[i]);
+  //   }
+  //   Serial.println();
+  // }
 };
 
 //Digital Outputs
@@ -54,8 +54,25 @@ void Gate::init(){
   };
 }
 
-void Gate::write(byte channel, bool val){
-  digitalWrite(pin[channel],val);
+void Gate::read(){
+  for(int i=0;i<4;i++){
+    if(trigger[i] == 1){
+      if(val[i] == 1 && prev[i] == 0){
+        trigStart = millis();
+      }
+      else if (val[i] == 1 && prev[i] == 1){
+        if(millis() - trigStart > trigTime){
+          digitalWrite(pin[i],0);
+        }
+      }
+      prev[i] = val[i];
+    }
+  }
+}
+
+void Gate::write(byte channel, bool _val){
+  digitalWrite(pin[channel],_val);
+  val[channel] = _val;
 }
 
 //Analog Outputs
@@ -74,7 +91,22 @@ void DAC::init(){
 };
 
 void DAC::write(byte channel, float voltage){
-  int output = (voltage/10)*4095;
+  voltage = voltage * 0.99; //1k Output Resistor
+  // if(voltage != 0){
+  //   if(channel == 0){
+  //     voltage += 0.012;
+  //   }
+  //   else if(channel == 1){
+  //     voltage += 0.015;
+  //   }
+  //   else if(channel == 2){
+  //     voltage += 0;
+  //   }
+  //   else if(channel == 3){
+  //     voltage += 0.009;
+  //   }
+  // }
+  int output = map(voltage,0,10,0,4095);
   if(channel == 0){
     a1.setValue(output);
   }
@@ -275,10 +307,6 @@ void hardware_init(){
   adc.init();
   gate.init();
   dac.init();
-  // dac.write(0,2.5);
-  // dac.write(1,5);
-  // dac.write(2,7.5);
-  // dac.write(3,10);
   oled.init();
   kp.init();
   b1.init();
@@ -289,6 +317,7 @@ void hardware_init(){
 
 void hardware_read(){
   adc.read();
+  gate.read();
   b1.read();
   b2.read();
   enc1.read();

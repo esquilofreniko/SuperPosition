@@ -30,8 +30,13 @@ class Gate{
   public:
   byte pin[4];
   bool val[4];
+  bool prev[4];
+  bool trigger[4] = {1,1,1,1};
+  long trigStart;
+  short trigTime = 5;
   Gate(byte _pin1,byte _pin2,byte _pin3,byte _pin4);
   void init();
+  void read();
   void write(byte channel, bool _val);
 };
 
@@ -66,8 +71,8 @@ class DAC{
 
 SP_MCP4922 _a1(dacpin11,dacpin21,dacpin31,dacpin41,0);    
 SP_MCP4922 _a2(dacpin11,dacpin21,dacpin31,dacpin41,1);
-SP_MCP4922 _a3(dacpin12,dacpin22,dacpin32,dacpin42,0);
-SP_MCP4922 _a4(dacpin12,dacpin22,dacpin32,dacpin42,1);
+SP_MCP4922 _a3(dacpin12,dacpin22,dacpin32,dacpin42,1);
+SP_MCP4922 _a4(dacpin12,dacpin22,dacpin32,dacpin42,0);
 DAC dac(_a1,_a2,_a3,_a4);
 
 //Buttons
