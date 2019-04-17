@@ -13,6 +13,13 @@ class Gen {
     short probs[4][64];
     bool patt[4][64];
     short clockDiv[4][64];
+    short setBurst = 2;
+    short setBurstProb = 1;
+    short ratchet[4] = {0,0,0,0};
+    short ratchetTrig[4] = {0,0,0,0};
+    long ratchetCounter[4] = {0,0,0,0};
+    short burst[4][64];
+    short burstProb[4][64];
     short clockDivCount[4];
     short lengthMin[4] = {0,0,0,0};
     short lengthMax[4] = {15,15,15,15};
@@ -74,4 +81,5 @@ class Gen {
     void drawInfo();
     void drawParams();
     void drawMenu();
+    void ratcheting();
 };

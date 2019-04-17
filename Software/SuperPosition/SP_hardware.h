@@ -35,7 +35,7 @@ class Gate{
   bool prev[4];
   bool trigger[4] = {1,1,1,1};
   long trigStart;
-  short trigTime = 10;
+  short trigTime = 5;
   Gate(byte _pin1,byte _pin2,byte _pin3,byte _pin4);
   void init();
   void read();
