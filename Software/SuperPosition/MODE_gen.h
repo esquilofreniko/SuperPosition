@@ -22,7 +22,7 @@ class Gen {
     bool lengthSet = 1;
     short prob = 5;
     short pattMorph = 0;
-    short temp = 0;
+    // short temp = 0;
     short posNote[4];
     short posNoteOld[4];
     short note[4][64];
@@ -37,6 +37,9 @@ class Gen {
     const String eventModeName[2] = {"Probability","Markov Chain"};
     const String eventStepName[3] = {"Follow","Sync","Trig"};
     const String eventSkipName[2] = {"Skip","Sleep"};
+    bool eventSizeSet = 1;
+    short eventSizeMin[4] = {0,0,0,0};
+    short eventSizeMax[4] = {15,15,15,15};
     short eventNote[4][64];
     short eventMorph[4];
     short eventProbSetMin = 0;
