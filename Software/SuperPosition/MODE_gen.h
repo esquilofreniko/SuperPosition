@@ -37,20 +37,20 @@ class Gen {
     const String eventModeName[2] = {"Probability","Markov Chain"};
     const String eventStepName[3] = {"Follow","Sync","Trig"};
     const String eventSkipName[2] = {"Skip","Sleep"};
-    short eventNote[4][16];
+    short eventNote[4][64];
     short eventMorph[4];
     short eventProbSetMin = 0;
     short eventProbSetMax = 96;
-    bool eventProbActive[4][16];
+    bool eventProbActive[4][64];
     short eventProbSetNote = 0;
-    short eventProbMin[4][16];
-    short eventProbMax[4][16];
+    short eventProbMin[4][64];
+    short eventProbMax[4][64];
     short eventQuantMode[4];
     short eventDivision = 2;
-    short eventDiv[4][16];
+    short eventDiv[4][64];
     short eventDivCount[4];
     bool eventQuant[4][96];
-    short eventSlew[4][16];
+    short eventSlew[4][64];
     short eventSetSlew;
     bool gateOut[4][4] = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
 

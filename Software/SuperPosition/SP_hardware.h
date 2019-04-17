@@ -12,7 +12,6 @@ class ADC {
   int trig[4];
   int gate[4];
   int _gate[4];
-  // int trigDelay = 5;
   int lastSave=0;
   bool printAdc = 0;
   void init();
