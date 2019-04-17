@@ -15,23 +15,32 @@ void Gen::run(){
   clock();
   controls();
   if(oled.redraw == 1){drawBg();}
+  if(adc.trig[0] == 1 || millis() - lastTrig > 1000){
+    if(drawLEDS == 1){drawMatrixLED();drawLEDS=0;}
+  }
   if(showLEDS == 1){kp.show();showLEDS = 0;}
 }
 
 void Gen::reset(){
-  if(adc.gate[1] == 1){
+  if(adc.trig[1] == 1){
     for(int i=0;i<4;i++){
       if(channel == i){drawKey(pos[i]);showLEDS = 1;}
-      pos[i] = lengthMin[i]-1;
-      posNote[i] = -1;
-      clockDivCount[i] = -1;
-      eventDivCount[i] = -1;
+      pos[i] = lengthMin[i];
+      posNote[i] = 0;
+      clockDivCount[i] = 0;
+      eventDivCount[i] = 0;
     }
+    morphNote();
+    morphPatt();
+    output();
+    writeNewPosition();
   }
 }
 
 void Gen::clock(){
   if(adc.trig[0] == 1){
+    clockSpeed = millis() - lastTrig;
+    lastTrig = millis();
     updatePosition();
     morphNote();
     morphPatt();
@@ -196,12 +205,12 @@ void Gen::controls(){
   if(b1.clicked== 1){
     set += 1;
     set %= 2;
-    drawMatrixLED();
+    drawLEDS = 1;
   }
   if(b2.clicked== 1){
     // division++;
     // division%=4;
-    // drawMatrixLED();
+    drawLEDS = 1;
   }
   if(b1.held_t == 1){
     if(menu == 0){
@@ -229,7 +238,7 @@ void Gen::controls(){
           }
         }
       }
-      drawMatrixLED();
+      drawLEDS = 1;
     }
   }
   if(b2.held_t == 1){
@@ -258,7 +267,7 @@ void Gen::controls(){
           }
         }
       }
-      drawMatrixLED();
+      drawLEDS = 1;
     }
   }
   if(enc1.clicked == 1){
@@ -268,7 +277,7 @@ void Gen::controls(){
       clockDivCount[i] = -1;
       eventDivCount[i] = -1;
     }
-    drawMatrixLED();
+    drawLEDS = 1;
   }
   if(enc2.clicked == 1){
     selParam = (selParam + 1)%2;
@@ -276,16 +285,17 @@ void Gen::controls(){
   if(enc2.held_t==1){
     menu = !menu;
     selParam = 0;
-    drawMatrixLED();
+    drawLEDS = 1;
   }
   if(enc1.rotation != 0){
+    drawLEDS = 1;
     channel+= enc1.rotation;
     if(channel>3){channel=0;}
     if(channel<0){channel=3;}
-    drawMatrixLED();
   }
   if(enc2.rotation != 0){
     if(menu==0){
+      drawLEDS = 1;
       if(selParam == 0){
         if(set == 0){
           timeParam += enc2.rotation;
@@ -348,7 +358,6 @@ void Gen::controls(){
           }
         }
       }
-      drawMatrixLED();
     }
     else if(menu == 1){
       if(selParam == 0){
@@ -430,7 +439,7 @@ void Gen::setStep(int key){
           lengthMin[channel] = lengthMax[channel];
           lengthMax[channel] = temp;
         }
-        drawMatrixLED();
+        drawLEDS = 1;
       }
       if(view == 1){
         if(lengthSet==0){
@@ -444,7 +453,7 @@ void Gen::setStep(int key){
           lengthMin[key/4] = lengthMax[key/4];
           lengthMax[key/4] = temp;
         }
-        drawMatrixLED();
+        drawLEDS = 1;
       }
     }
   }

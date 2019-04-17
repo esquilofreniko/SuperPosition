@@ -1,6 +1,9 @@
 class Gen {
     public:
     bool showLEDS = 0;
+    bool drawLEDS = 0;
+    long lastTrig = 0;
+    int clockSpeed = 0;
     bool menu = 0;
     bool view = 0;
     short set = 0;
@@ -49,7 +52,7 @@ class Gen {
     bool eventQuant[4][96];
     short eventSlew[4][16];
     short eventSetSlew;
-    bool gateOut[4][4] = {{1,0,0,0},{0,1,0,0},{0,1,1,0},{0,0,0,1}};
+    bool gateOut[4][4] = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
 
     Gen();
     void run();

@@ -138,17 +138,20 @@ void Button::init() {
 
 void Button::read() {
   clicked = 0;
-  bool prevHeld = held;
-  held = 0;
   held_t = 0;
+  bool prevHeld = held;
   int prevState = state;
   state = digitalRead(pin);
   if (prevState == 1 && state == 0){buttonDownMs = millis();}
-  else if (prevState == 0 && state == 1) {
+  if (prevState == 0 && state == 1) {
     if (millis() - buttonDownMs < 25) {}
     else if (millis() - buttonDownMs < 500) {clicked = 1;}
   }
-  if(state == 0){if(millis()-buttonDownMs >= 500){held = 1;held_t = 1;}}
+  if(state == 0){
+    if(millis()-buttonDownMs >= 500){held = 1;}
+    if(prevHeld == 0 && held == 1){held_t = 1;}
+  }
+  else if(state == 1){held = 0;}
 };
 
 //Encoders
@@ -175,22 +178,20 @@ void RotaryEncoder::read() {
     post = 0;
   }
   clicked = 0;
-  bool prevHeld = held;
-  held = 0;
   held_t = 0;
+  bool prevHeld = held;
   int prevState = state;
   state = digitalRead(pinButton);
   if (prevState == 1 && state == 0){buttonDownMs = millis();}
-  else if (prevState == 0 && state == 1) {
+  if (prevState == 0 && state == 1) {
     if (millis() - buttonDownMs < 25) {}
-    else if (millis() - buttonDownMs < 1000) {clicked = 1;}
+    else if (millis() - buttonDownMs < 500) {clicked = 1;}
   }
   if(state == 0){
-    if(millis()-buttonDownMs >= 1000){held = 1;}
+    if(millis()-buttonDownMs >= 500){held = 1;}
+    if(prevHeld == 0 && held == 1){held_t = 1;}
   }
-  if(prevHeld == 0 && held == 1){
-    held_t = 1;
-  }
+  else if(state == 1){held = 0;}
 }
 
 //KeyMatrix

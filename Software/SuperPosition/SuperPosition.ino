@@ -17,6 +17,7 @@ void loop(){
     oled.clear();
     oled.redraw = 1;
     oled.lastRedrawMS = millis();
+    // kp.show();
   }
   if(oldmode != mode){oled.clear();oled.redraw=1;oldmode=mode;}
 }
