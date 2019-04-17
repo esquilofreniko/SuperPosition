@@ -22,7 +22,6 @@ class Gen {
     bool lengthSet = 1;
     short prob = 5;
     short pattMorph = 0;
-    // short temp = 0;
     short posNote[4];
     short posNoteOld[4];
     short note[4][64];

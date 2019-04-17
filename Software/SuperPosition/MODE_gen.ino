@@ -25,7 +25,13 @@ void Gen::reset(){
   for(int i=0;i<4;i++){
     if(channel == i){drawKey(pos[i]);showLEDS = 1;}
     pos[i] = lengthMin[i];
-    posNote[i] = 0;
+    posNote[i] = eventSizeMin[i];
+    for(int count=0;count<16;count++){
+      if(eventProbActive[i][posNote[i]] == 0){
+        posNote[i] += 1;
+        if(posNote[i] > eventSizeMax[i]){posNote[i] = eventSizeMin[i];}
+      }
+    }
     clockDivCount[i] = 0;
     eventDivCount[i] = 0;
   }
@@ -92,9 +98,12 @@ void Gen::updatePosition(){
         if(posNote[i] > eventSizeMax[i]){posNote[i] = eventSizeMin[i];}
         if(eventSkip[i] == 0){
           //Skip Unactive
-          if(eventProbActive[i][posNote[i]] == 0){
-            posNote[i] += 1;
-            if(posNote[i] > eventSizeMax[i]){posNote[i] = eventSizeMin[i];}
+          for(int count=0;count<16;count++){
+            if(eventProbActive[i][posNote[i]] == 0){
+              posNote[i] += 1;
+              if(posNote[i] > eventSizeMax[i]){posNote[i] = eventSizeMin[i];}
+            }
+            else{break;}
           }
         }
       } 
@@ -121,10 +130,8 @@ void Gen::writeNewPosition(){
     }
   }
   else if(set == 1){
-    if(eventMode[channel] == 0){
-      if(posNote[channel]/16 == division){
-        kp.set(posNote[channel]%16,6);
-      }
+    if(posNote[channel]/16 == division){
+      kp.set(posNote[channel]%16,6);
     }
   }
   showLEDS = 1;
@@ -223,8 +230,7 @@ void Gen::controls(){
           else if(eventParam==2){eventProbMin[channel][i]=0;}
           else if(eventParam==3){eventProbMax[channel][i]=0;}
           else if(eventParam==4){eventSlew[channel][i] = 0;}
-          else if(eventParam==5){eventDiv[channel][i] = 0;}
-          else if(eventParam==6){
+          else if(eventParam==5){
             if(eventQuantMode[channel] == 0){
               for(int j=0;j<6;j++){
                 int j2 = j*16;
@@ -233,6 +239,7 @@ void Gen::controls(){
             }
             else{eventQuant[channel][i+((eventQuantMode[channel]-1)*16)]=0;}
           }
+          else if(eventParam==6){eventDiv[channel][i] = 0;}
         }
       }
       drawLEDS = 1;
@@ -252,8 +259,7 @@ void Gen::controls(){
           else if(eventParam==2){eventProbMin[channel][i]=eventProbSetMin;}
           else if(eventParam==3){eventProbMax[channel][i]=eventProbSetMax;}
           else if(eventParam==4){eventSlew[channel][i] = eventSetSlew;}
-          else if(eventParam==5){eventDiv[channel][i] = eventDivision;}
-          else if(eventParam==6){
+          else if(eventParam==5){
             if(eventQuantMode[channel] == 0){
               for(int j=0;j<6;j++){
                 int j2 = j*16;
@@ -262,6 +268,7 @@ void Gen::controls(){
             }
             else{eventQuant[channel][i+((eventQuantMode[channel]-1)*16)]=1;}
           }
+          else if(eventParam==6){eventDiv[channel][i] = eventDivision;}
         }
       }
       drawLEDS = 1;
@@ -346,12 +353,12 @@ void Gen::controls(){
             eventSetSlew = limit(eventSetSlew,0,16);
           }
           else if(eventParam == 5){
-            eventDivision += enc2.rotation;
-            eventDivision = limit(eventDivision,2,16);
-          }
-          else if(eventParam == 6){
             eventQuantMode[channel] += enc2.rotation;
             eventQuantMode[channel] = limit(eventQuantMode[channel],0,6);
+          }
+          else if(eventParam == 6){
+            eventDivision += enc2.rotation;
+            eventDivision = limit(eventDivision,2,16);
           }
           else if(eventParam == 7){
             if(enc2.rotation == 1){eventSizeSet = 1;}
@@ -491,10 +498,6 @@ void Gen::setStep(int key){
       else{eventSlew[channel][key+(division*16)] = eventSetSlew;}
     } 
     else if(eventParam == 5){
-      if(eventDiv[channel][key+(division*16)] == eventDivision){eventDiv[channel][key+(division*16)] = 0;}
-      else{eventDiv[channel][key+(division*16)] = eventDivision;}
-    } 
-    else if(eventParam == 6){
       int revKey = ((3-(key/4))*4)+(key%4);
       if(eventQuantMode[channel] == 0){
         if(revKey < 12){
@@ -510,6 +513,10 @@ void Gen::setStep(int key){
         eventQuant[channel][revKey+t] = !eventQuant[channel][revKey+t];
       }
     }
+    else if(eventParam == 6){
+      if(eventDiv[channel][key+(division*16)] == eventDivision){eventDiv[channel][key+(division*16)] = 0;}
+      else{eventDiv[channel][key+(division*16)] = eventDivision;}
+    } 
     else if(eventParam == 7){
         if(eventSizeSet==0){
           eventSizeMin[channel] = key + (division*16);
@@ -553,7 +560,7 @@ void Gen::drawParams(){
     }
     else if(timeParam < 4){
       if(selParam == 1){if(timeParam == 2){oled.invertedText=1;}}
-      oled.drawText(0,2,oled.invertedText,"Divid:" + dectohex(clockDivision));
+      oled.drawText(0,2,oled.invertedText,"Div:" + dectohex(clockDivision));
       oled.invertedText=0;
       if(selParam == 1){if(timeParam==3){oled.invertedText=1;}}
       if(lengthSet == 0){oled.drawText(8,2,oled.invertedText,"Size:Start");}
@@ -584,13 +591,13 @@ void Gen::drawParams(){
       oled.drawText(0,2,oled.invertedText,"Slew:"+String(eventSetSlew));
       oled.invertedText=0;
       if(selParam == 1){if(eventParam == 5){oled.invertedText=1;}}
-      oled.drawText(8,2,oled.invertedText,"Div:"+String(eventDivision));
+      if(eventQuantMode[channel]==0){oled.drawText(8,2,oled.invertedText,"Quant:Scl");}
+      else{oled.drawText(8,2,oled.invertedText,"Quant:+"+String((eventQuantMode[channel]-1)*16));}
       oled.invertedText=0;
     }
     else if (eventParam < 8){
       if(selParam == 1){if(eventParam == 6){oled.invertedText=1;}}
-      if(eventQuantMode[channel]==0){oled.drawText(0,2,oled.invertedText,"Quant:Scl");}
-      else{oled.drawText(0,2,oled.invertedText,"Quant:+"+String((eventQuantMode[channel]-1)*16));}
+      oled.drawText(0,2,oled.invertedText,"Div:"+String(eventDivision));
       oled.invertedText=0;
       if(selParam == 1){if(eventParam==7){oled.invertedText=1;}}
       if(eventSizeSet == 0){oled.drawText(8,2,oled.invertedText,"Size:Start");}
@@ -679,36 +686,37 @@ void Gen::drawMatrix(){
       if(posNote[channel] == i+(division*16)){oled.invertedText=1;}
       if(eventParam < 2){
         oled.drawText(((i%4)*2)+0,(i/4)+4,oled.invertedText,boolString(eventProbActive[channel][i+(division*16)]));
-        oled.drawText(((i%4)*2)+8,(i/4)+4,oled.invertedText,String(eventNote[channel][i+(division*16)]));
+        oled.drawText(((i%4)*2)+8,(i/4)+4,oled.invertedText,zeroPoint(eventNote[channel][i+(division*16)]));
       }
       else if(eventParam < 4){
-        oled.drawText(((i%4)*2)+0,(i/4)+4,oled.invertedText,String(eventProbMin[channel][i+(division*16)]));
-        oled.drawText(((i%4)*2)+8,(i/4)+4,oled.invertedText,String(eventProbMax[channel][i+(division*16)]));  
+        oled.drawText(((i%4)*2)+0,(i/4)+4,oled.invertedText,zeroPoint(eventProbMin[channel][i+(division*16)]));
+        oled.drawText(((i%4)*2)+8,(i/4)+4,oled.invertedText,zeroPoint(eventProbMax[channel][i+(division*16)]));  
       }
       else if(eventParam < 6){
-        oled.drawText(((i%4)*2)+0,(i/4)+4,oled.invertedText,String(eventSlew[channel][i+(division*16)]));
-        oled.drawText(((i%4)*2)+8,(i/4)+4,oled.invertedText,String(eventDiv[channel][i+(division*16)]));    
-      }
-      else if(eventParam < 8){
+        oled.drawText(((i%4)*2)+0,(i/4)+4,oled.invertedText,zeroPoint(eventSlew[channel][i+(division*16)]));
         oled.invertedText = 0;
         if(eventQuantMode[channel] == 0){
           if(i<12){
             int t = (eventQuantMode[channel]) * 16;
             if(eventQuant[channel][i+t] == 1){oled.invertedText = 1;}
-            oled.drawText(((i%4)*2)+0,7-(i/4),oled.invertedText,String(i+t));
+            oled.drawText(((i%4)*2)+8,7-(i/4),oled.invertedText,String(i+t));
           }
         }
         else{
           int t = (eventQuantMode[channel]-1) * 16;
           if(eventQuant[channel][i+t] == 1){oled.invertedText = 1;}
-          oled.drawText(((i%4)*2)+0,7-(i/4),oled.invertedText,String(i+t));
+          oled.drawText(((i%4)*2)+8,7-(i/4),oled.invertedText,String(i+t));
         }
+
+      }
+      else if(eventParam < 8){
+        oled.drawText(((i%4)*2)+0,(i/4)+4,oled.invertedText,zeroPoint(eventDiv[channel][i+(division*16)]));    
         if(i+(division*16) == eventSizeMin[channel] && i+(division*16) == eventSizeMax[channel]){
-          oled.drawText((i%4)+8,(i/4)+4,oled.invertedText,"A");
+          oled.drawText((i%4)*2+8,(i/4)+4,oled.invertedText,"A");
         }
-        else if(i+(division*16) == eventSizeMin[channel]){oled.drawText((i%4)+8,(i/4)+4,oled.invertedText,"S");}
-        else if(i+(division*16) == eventSizeMax[channel]){oled.drawText((i%4)+8,(i/4)+4,oled.invertedText,"E");}
-        else{oled.drawText((i%4)+8,(i/4)+4,oled.invertedText,".");}
+        else if(i+(division*16) == eventSizeMin[channel]){oled.drawText((i%4)*2+8,(i/4)+4,oled.invertedText,"S");}
+        else if(i+(division*16) == eventSizeMax[channel]){oled.drawText((i%4)*2+8,(i/4)+4,oled.invertedText,"E");}
+        else{oled.drawText((i%4)*2+8,(i/4)+4,oled.invertedText,".");}
       }
       oled.invertedText = 0;
     }
@@ -886,20 +894,6 @@ void Gen::drawKey(int key){
       }
     }
     else if(eventParam==5){
-      if(eventDiv[channel][key] < eventDivision){
-        kp.set(key,4);
-      }
-      if(eventDiv[channel][key] > eventDivision){
-        kp.set(key,2);
-      }
-      if(eventDiv[channel][key] == eventDivision){
-        kp.set(key,1);
-      }
-      if(eventDiv[channel][key] == 0){
-        kp.set(key,0);
-      }
-    }
-    else if(eventParam==6){
       int revKey = ((3-(key/4))*4)+(key%4);
       if(eventQuantMode[channel] == 0){
         int t = (eventQuantMode[channel]) * 16;
@@ -916,6 +910,32 @@ void Gen::drawKey(int key){
         if(eventQuant[channel][revKey+t] == 0){kp.set(key,0);}
         if(eventQuant[channel][revKey+t] == 1){kp.set(key,1);}
       }
+    }
+    else if(eventParam==6){
+      if(eventDiv[channel][key] < eventDivision){
+        kp.set(key,4);
+      }
+      if(eventDiv[channel][key] > eventDivision){
+        kp.set(key,2);
+      }
+      if(eventDiv[channel][key] == eventDivision){
+        kp.set(key,1);
+      }
+      if(eventDiv[channel][key] == 0){
+        kp.set(key,0);
+      }
+    }
+    else if(eventParam==7){
+      if(eventSizeMin[channel] == key + (division*16)){
+        kp.set(eventSizeMin[channel]%16,4);
+      }
+      else if(eventSizeMax[channel] == key + (division*16)){
+        kp.set(eventSizeMax[channel]%16,2);
+      }
+      else if(key+(division*16) < eventSizeMax[channel] && key+(division*16) > eventSizeMin[channel]){
+        kp.set(key,7);
+      }
+      else{kp.set(key,0);}
     }
   }
 }

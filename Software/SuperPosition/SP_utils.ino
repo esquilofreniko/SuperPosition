@@ -52,6 +52,12 @@ int limit(int in, int minimum, int maximum){
   return out;
 }
 
+String zeroPoint(int in){
+  String out = in;
+  if(in == 0){out = ".";}
+  return out;
+}
+
 String boolStringInv(int in){
   String out;
   if(in == 1){out = ".";}
