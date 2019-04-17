@@ -160,6 +160,7 @@ KeyMatrix kp(trellis);
 #include <SPI.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
+#include <Fonts/FreeMonoOblique9pt7b.h>
 
 class Display {
   private:

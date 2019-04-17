@@ -266,7 +266,7 @@ Display::Display(Adafruit_SSD1306 _display):
 
 void Display::init(){
   if(!display.begin(SSD1306_SWITCHCAPVCC)) {for(;;);}
-  display.setFont();
+  display.setFont(0);
   display.setTextSize(1);
   display.setTextColor(WHITE);
   display.clearDisplay();
@@ -296,12 +296,7 @@ void Display::setTextSize(int size){
   display.setTextSize(size);
 }
 void Display::setFont(int font){
-  if(font == 1){
-    // display.setFont(&Tiny3x3a2pt7b);
-  }
-  else{
-    display.setFont();
-  }
+  display.setFont();
 }
 
 //Global Functions

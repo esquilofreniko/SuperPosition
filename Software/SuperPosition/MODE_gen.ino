@@ -192,7 +192,7 @@ void Gen::morphNote(){
     }
   }
 }
-//
+
 void Gen::output(){
   //Out
   for(int i=3;i>-1;i--){
@@ -614,15 +614,15 @@ void Gen::drawParams(){
       oled.drawText(0,2,oled.invertedText,"Morph:" + dectohex(pattMorph));
       oled.invertedText=0;
       if(selParam == 1){if(timeParam == 1){oled.invertedText=1;}}
-      oled.drawText(8,2,oled.invertedText,"Prob:" + String(prob));
-      oled.invertedText=0;  
+      oled.drawText(8,2,oled.invertedText,"Prob:" + dectohex(prob));
+      oled.invertedText=0;
     }
     else if(timeParam < 4){
       if(selParam == 1){if(timeParam == 2){oled.invertedText=1;}}
       oled.drawText(0,2,oled.invertedText,"Burst:" + dectohex(setBurst));
       oled.invertedText=0;
       if(selParam == 1){if(timeParam == 3){oled.invertedText=1;}}
-      oled.drawText(8,2,oled.invertedText,"BProb:" + String(setBurstProb));
+      oled.drawText(8,2,oled.invertedText,"BProb:" + dectohex(setBurstProb));
       oled.invertedText=0;  
     }
     else if(timeParam < 6){
