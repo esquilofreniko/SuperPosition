@@ -9,6 +9,12 @@ class Gen {
     short set = 0;
     short channel = 0;
     short division = 0;
+    float vOut[4] = {0,0,0,0};
+    float slewTarget[4];
+    float slewStep[4];
+    short slewTime[4];
+    long slewBegin[4];
+    float slewOut[4];
     short pos[4];
     short probs[4][64];
     bool patt[4][64];
@@ -84,4 +90,5 @@ class Gen {
     void drawParams();
     void drawMenu();
     void ratcheting();
+    void slew();
 };

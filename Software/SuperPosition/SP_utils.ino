@@ -79,6 +79,33 @@ String probString(int in){
   return out;
 }
 
+String slewStringPoint(int in){
+  String out = in;
+  if (in == 0){out = ".";}
+  else if(in == -1){out = "/1";}
+  else if(in == -2){out = "/2";}
+  else if(in == -3){out = "/3";}
+  else if(in == -4){out = "/4";}
+  else if(in == -5){out = "/5";}
+  else if(in == -6){out = "/6";}
+  else if(in == -7){out = "/7";}
+  else if(in == -8){out = "/8";}
+  return out;
+}
+
+String slewString(int in){
+  String out = in;
+  if(in == -1){out = "/1";}
+  else if(in == -2){out = "/2";}
+  else if(in == -3){out = "/3";}
+  else if(in == -4){out = "/4";}
+  else if(in == -5){out = "/5";}
+  else if(in == -6){out = "/6";}
+  else if(in == -7){out = "/7";}
+  else if(in == -8){out = "/8";}
+  return out;
+}
+
 String dectohex(int in){
   String out = in;
   if(in<10){out = String(in);}

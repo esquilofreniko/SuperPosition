@@ -15,6 +15,7 @@ void Gen::run(){
   if(adc.trig[1] == 1){reset();}
   clock();
   ratcheting();
+  slew();
   controls();
   if(oled.redraw == 1){drawBg();}
   if(adc.trig[0] == 1 || millis() - lastTrig > 1000){
@@ -193,10 +194,56 @@ void Gen::morphNote(){
   }
 }
 
+void Gen::slew(){
+  for(int i=0;i<4;i++){
+    if(eventSlew[i][posNote[i]] != 0){
+      if(millis() - slewBegin[i] >= 1){
+        slewTime[i] = millis() - slewBegin[i];
+        if(slewStep[i] > 0){
+          if(vOut[i] < slewTarget[i]){
+            vOut[i] = slewOut[i] + (slewStep[i]*slewTime[i]);
+          }
+          else{
+            vOut[i] = slewTarget[i];
+            slewOut[i] = slewTarget[i];
+          }
+        }
+        else if(slewStep[i] < 0){
+          if(vOut[i] > slewTarget[i]){
+            vOut[i] = slewOut[i] + (slewStep[i]*slewTime[i]);
+          }
+          else{
+            vOut[i] = slewTarget[i];
+            slewOut[i] = slewTarget[i];
+          }
+        }
+        dac.write(i,vOut[i]);
+      }
+    }
+  }
+}
+
 void Gen::output(){
-  //Out
   for(int i=3;i>-1;i--){
-    dac.write(i,noteToVolt(eventNote[i][posNote[i]]));
+    //Analog Output
+    if(eventSlew[i][posNote[i]] == 0){
+      vOut[i] = noteToVolt(eventNote[i][posNote[i]]);
+      slewOut[i] = vOut[i];
+      dac.write(i,vOut[i]);
+    }
+    else if(eventSlew[i][posNote[i]] > 0){
+      slewBegin[i] = millis();
+      slewTarget[i] = noteToVolt(eventNote[i][posNote[i]]);
+      slewStep[i] = (slewTarget[i] - vOut[i]) / (clockSpeed*eventSlew[i][posNote[i]]);
+      slewOut[i] = vOut[i];
+    }
+    else if(eventSlew[i][posNote[i]] < 0){
+      slewBegin[i] = millis();
+      slewTarget[i] = noteToVolt(eventNote[i][posNote[i]]);
+      slewStep[i] = (slewTarget[i] - vOut[i]) / (clockSpeed/abs(eventSlew[i][posNote[i]]));
+      slewOut[i] = vOut[i];
+    }
+    //Digital Output
     if(clockDivCount[i]==0){
       // gate.write(i,patt[i][pos[i]]);
       if(patt[i][pos[i]]==1){
@@ -385,7 +432,7 @@ void Gen::controls(){
           }
           else if(eventParam == 4){
             eventSetSlew += enc2.rotation;
-            eventSetSlew = limit(eventSetSlew,0,16);
+            eventSetSlew = limit(eventSetSlew,-8,8);
           }
           else if(eventParam == 5){
             eventQuantMode[channel] += enc2.rotation;
@@ -655,7 +702,7 @@ void Gen::drawParams(){
     }
     else if (eventParam < 6){
       if(selParam == 1){if(eventParam == 4){oled.invertedText=1;}}
-      oled.drawText(0,2,oled.invertedText,"Slew:"+String(eventSetSlew));
+      oled.drawText(0,2,oled.invertedText,"Slew:"+slewString(eventSetSlew));
       oled.invertedText=0;
       if(selParam == 1){if(eventParam == 5){oled.invertedText=1;}}
       if(eventQuantMode[channel]==0){oled.drawText(8,2,oled.invertedText,"Quant:Scl");}
@@ -772,7 +819,7 @@ void Gen::drawMatrix(){
         oled.drawText(((i%4)*2)+8,(i/4)+4,oled.invertedText,zeroPoint(eventProbMax[channel][i+(division*16)]));  
       }
       else if(eventParam < 6){
-        oled.drawText(((i%4)*2)+0,(i/4)+4,oled.invertedText,zeroPoint(eventSlew[channel][i+(division*16)]));
+        oled.drawText(((i%4)*2)+0,(i/4)+4,oled.invertedText,slewStringPoint(eventSlew[channel][i+(division*16)]));
         oled.invertedText = 0;
         if(eventQuantMode[channel] == 0){
           if(i<12){
