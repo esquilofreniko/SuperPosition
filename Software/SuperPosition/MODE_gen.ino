@@ -11,31 +11,27 @@ Gen::Gen(){
 }  
 
 void Gen::run(){
+  reset();
   clock();
   controls();
   if(oled.redraw == 1){drawBg();}
+  if(showLEDS == 1){kp.show();showLEDS = 0;}
 }
 
-void Gen::clock(){
-  //reset
-  if(adc.trig[1] == 1){
+void Gen::reset(){
+  if(adc.gate[1] == 1){
     for(int i=0;i<4;i++){
+      if(channel == i){drawKey(pos[i]);showLEDS = 1;}
       pos[i] = lengthMin[i]-1;
       posNote[i] = -1;
       clockDivCount[i] = -1;
       eventDivCount[i] = -1;
     }
-    updatePosition();
   }
+}
+
+void Gen::clock(){
   if(adc.trig[0] == 1){
-    if(adc.gate[1] == 1){
-      for(int i=0;i<4;i++){
-        pos[i] = lengthMin[i]-1;
-        posNote[i] = -1;
-        clockDivCount[i] = -1;
-        eventDivCount[i] = -1;
-      }
-    }
     updatePosition();
     morphNote();
     morphPatt();
@@ -125,7 +121,7 @@ void Gen::writeNewPosition(){
       kp.set(posNote[channel],6);
     }
   }
-  kp.show();
+  showLEDS = 1;
 }
 
 void Gen::morphPatt(){
@@ -506,7 +502,7 @@ void Gen::setStep(int key){
     }
   }
   drawKey(key);
-  kp.show();
+  showLEDS = 1;
 }
 
 void Gen::drawBg(){
@@ -885,7 +881,7 @@ void Gen::drawKey(int key){
 void Gen::drawMatrixLED(){
   for(int i=0;i<16;i++){drawKey(i);}
   writeNewPosition();
-  kp.show();
+  showLEDS = 1;
 }
 
 void Gen::drawDivision(){

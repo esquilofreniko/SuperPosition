@@ -1,5 +1,6 @@
 class Gen {
     public:
+    bool showLEDS = 0;
     bool menu = 0;
     bool view = 0;
     short set = 0;
@@ -53,6 +54,7 @@ class Gen {
     Gen();
     void run();
     void clock();
+    void reset();
     void updatePosition();
     void writeNewPosition();
     void morphPatt();
