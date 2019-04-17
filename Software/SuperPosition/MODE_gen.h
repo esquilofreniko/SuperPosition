@@ -14,7 +14,7 @@ class Gen {
     bool patt[4][64];
     short clockDiv[4][64];
     short setBurst = 2;
-    short setBurstProb = 1;
+    short setBurstProb = 10;
     short ratchet[4] = {0,0,0,0};
     short ratchetTrig[4] = {0,0,0,0};
     long ratchetCounter[4] = {0,0,0,0};
@@ -35,6 +35,8 @@ class Gen {
     bool selParam = 0;
     short timeParam = 0;
     short eventParam = 0;
+    short timeParamMax = 5;
+    short eventParamMax = 7;
     short timeMenuParam = 0;
     short eventMenuParam = 0;
     short eventMode[4];

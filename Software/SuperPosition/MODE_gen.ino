@@ -4,6 +4,7 @@ Gen::Gen(){
       if(j<64){
         eventProbActive[i][j] = 1;
         eventProbMax[i][j] = eventProbSetMax;
+        burstProb[i][j] = 10;
       }
       eventQuant[i][j] = 1;
     }
@@ -191,7 +192,7 @@ void Gen::morphNote(){
     }
   }
 }
-
+//
 void Gen::output(){
   //Out
   for(int i=3;i>-1;i--){
@@ -322,18 +323,20 @@ void Gen::controls(){
     if(channel<0){channel=3;}
   }
   if(enc2.rotation != 0){
+    if(eventStep[channel]==0){eventParamMax = 5;}
+    else{eventParamMax = 7;}
     if(menu==0){
       drawLEDS = 1;
       if(selParam == 0){
         if(set == 0){
           timeParam += enc2.rotation;
-          if(timeParam > 5){timeParam = 0;}
-          else if(timeParam < 0){timeParam = 5;}
+          if(timeParam > timeParamMax){timeParam = 0;}
+          else if(timeParam < 0){timeParam = timeParamMax;}
         }
         else if(set == 1){
           eventParam += enc2.rotation;
-          if(eventParam > 7){eventParam = 0;}
-          else if(eventParam < 0){eventParam = 7;}
+          if(eventParam > eventParamMax){eventParam = 0;}
+          else if(eventParam < 0){eventParam = eventParamMax;}
         }
       }
       else if(selParam == 1){
@@ -425,6 +428,10 @@ void Gen::controls(){
           else if(eventMenuParam == 1){
             eventStep[channel] += enc2.rotation;
             eventStep[channel] = limit(eventStep[channel],0,2);
+            if(eventStep[channel]==0){eventParamMax = 5;}
+            else{eventParamMax = 7;}
+            if(eventParam > eventParamMax){eventParam = 0;}
+            drawLEDS = 1;
           }
           else if(eventMenuParam == 2){
             eventSkip[channel] += enc2.rotation;
@@ -607,7 +614,7 @@ void Gen::drawParams(){
       oled.drawText(0,2,oled.invertedText,"Morph:" + dectohex(pattMorph));
       oled.invertedText=0;
       if(selParam == 1){if(timeParam == 1){oled.invertedText=1;}}
-      oled.drawText(8,2,oled.invertedText,"Prob:" + dectohex(prob));
+      oled.drawText(8,2,oled.invertedText,"Prob:" + String(prob));
       oled.invertedText=0;  
     }
     else if(timeParam < 4){
@@ -615,7 +622,7 @@ void Gen::drawParams(){
       oled.drawText(0,2,oled.invertedText,"Burst:" + dectohex(setBurst));
       oled.invertedText=0;
       if(selParam == 1){if(timeParam == 3){oled.invertedText=1;}}
-      oled.drawText(8,2,oled.invertedText,"BProb:" + dectohex(setBurstProb));
+      oled.drawText(8,2,oled.invertedText,"BProb:" + String(setBurstProb));
       oled.invertedText=0;  
     }
     else if(timeParam < 6){
@@ -699,13 +706,13 @@ void Gen::drawMatrix(){
             oled.drawText((i%4)+(k*4),(i/4)+4,oled.invertedText,boolString(patt[k][i+(division*16)]));
           }
           else if(timeParam==1){
-            oled.drawText((i%4)+(k*4),(i/4)+4,oled.invertedText,dectohexPoint(probs[k][i+(division*16)]));
+            oled.drawText((i%4)+(k*4),(i/4)+4,oled.invertedText,probString(probs[k][i+(division*16)]));
           }
           else if(timeParam == 2){
             oled.drawText((i%4)+(k*4),(i/4)+4,oled.invertedText,dectohexPoint(burst[k][i+(division*16)]));
           }
           else if(timeParam == 3){
-            oled.drawText((i%4)+(k*4),(i/4)+4,oled.invertedText,dectohexPoint(burstProb[k][i+(division*16)]));
+            oled.drawText((i%4)+(k*4),(i/4)+4,oled.invertedText,probString(burstProb[k][i+(division*16)]));
           }
           else if(timeParam==4){
             oled.drawText((i%4)+(k*4),(i/4)+4,oled.invertedText,dectohexPoint(clockDiv[k][i+(division*16)]));
@@ -728,13 +735,13 @@ void Gen::drawMatrix(){
             oled.drawText(i,k+4,oled.invertedText,boolString(patt[k][i+(division*16)]));
           }
           else if(timeParam==1){
-            oled.drawText(i,k+4,oled.invertedText,dectohexPoint(probs[k][i+(division*16)]));
+            oled.drawText(i,k+4,oled.invertedText,probString(probs[k][i+(division*16)]));
           }
           else if(timeParam==2){
             oled.drawText(i,k+4,oled.invertedText,dectohexPoint(burst[k][i+(division*16)]));
           }
           else if(timeParam==3){
-            oled.drawText(i,k+4,oled.invertedText,dectohexPoint(burstProb[k][i+(division*16)]));
+            oled.drawText(i,k+4,oled.invertedText,probString(burstProb[k][i+(division*16)]));
           }
           else if(timeParam==4){
             oled.drawText(i,k+4,oled.invertedText,dectohexPoint(clockDiv[k][i+(division*16)]));
