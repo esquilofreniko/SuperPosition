@@ -70,7 +70,6 @@ class Gen {
     void drawKey(int key);
     void setStep(int key);
     void drawInfo();
-    void drawDivision();
     void drawParams();
     void drawMenu();
 };
