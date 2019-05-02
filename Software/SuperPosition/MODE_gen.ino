@@ -245,12 +245,14 @@ void Gen::output(){
     }
     //Digital Output
     if(clockDivCount[i]==0){
-      // gate.write(i,patt[i][pos[i]]);
-      if(patt[i][pos[i]]==1){
-        for(int j=0;j<4;j++){
-          if(gateOut[i][j] == 1){
-            gate.write(j,1);
-            ratchetCounter[i] = millis();
+      for(int j=0;j<4;j++){
+        if(gateOut[i][j] == 1){
+          if(gate.trigger[j] == 0){gate.write(j,patt[i][pos[i]]);}
+          else if(gate.trigger[j] == 1){
+            if(patt[i][pos[i]]==1){
+              gate.write(j,1);
+              ratchetCounter[i] = millis();
+            }
           }
         }
       }
@@ -465,6 +467,10 @@ void Gen::controls(){
           if(timeMenuParam == 0){
             view += enc2.rotation;
             view = limit(view,0,1);
+          }
+          else if(timeMenuParam == 1){
+            gate.trigger[channel] += enc2.rotation;
+            gate.trigger[channel] = limit(gate.trigger[channel],0,1);
           }
         }
         else if(set == 1){
@@ -1133,6 +1139,9 @@ void Gen::drawMenu(){
     if(selParam == 1){if(timeMenuParam == 0){oled.invertedText=1;}}
     if(view == 0){oled.drawText(0,1,oled.invertedText,"(G)View:Vertical");}
     else if(view == 1){oled.drawText(0,1,oled.invertedText,"(G)View:Horizontal");}
+    oled.invertedText = 0;
+    if(selParam == 1){if(timeMenuParam == 1){oled.invertedText=1;}}
+    oled.drawText(0,2,oled.invertedText,"Trigger: " + String(gate.trigger[channel]));
     oled.invertedText = 0;
     if(selParam == 0){oled.drawBox(0,(timeMenuParam+1)*8,128,8,0);}
   }
