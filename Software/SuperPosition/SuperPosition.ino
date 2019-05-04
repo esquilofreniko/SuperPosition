@@ -5,6 +5,8 @@ int oldmode = mode;
 
 void setup(){
   hardware_init();
+  // delay(1000);
+  // loadPreset();
 }
 
 void loop(){

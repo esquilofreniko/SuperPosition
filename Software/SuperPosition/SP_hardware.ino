@@ -324,5 +324,6 @@ void hardware_read(){
   enc1.read();
   enc2.read();
   kp.read();
+  if(mode == 0){if(enc1.held_t == 1){writePreset();}}
   if(enc1.held_t == 1){mode = 0;}
 }

@@ -1,3 +1,67 @@
+#include <EEPROM.h>
+
+void writePreset(){
+  for(int i=0;i<64;i++){
+    for(int j=0;j<4;j++){
+      int t = i + (j*64);
+      EEPROM.write(t+(256*0),gen.patt[i][j]);
+      EEPROM.write(t+(256*1),gen.probs[i][j]);
+      EEPROM.write(t+(256*2),gen.clockDiv[i][j]);
+      EEPROM.write(t+(256*3),gen.burst[i][j]);
+      EEPROM.write(t+(256*4),gen.burstProb[i][j]);
+      EEPROM.write(t+(256*5),gen.eventNote[i][j]);
+      EEPROM.write(t+(256*6),gen.eventProbActive[i][j]);
+      EEPROM.write(t+(256*7),gen.eventProbMin[i][j]);
+      EEPROM.write(t+(256*8),gen.eventProbMax[i][j]);
+      EEPROM.write(t+(256*9),gen.eventSlew[i][j]);
+    }
+  }
+  for(int i=0;i<96;i++){
+    for(int j=0;j<4;j++){
+      int t = i + (j*96);
+      EEPROM.write(t+(256*10),gen.eventQuant[i][j]);
+    }
+  }
+  for(int i=0;i<4;i++){
+    int t = ((256*10) + (96*4)) + i;
+    EEPROM.write(t+(4*0),gen.lengthMin[i]);
+    EEPROM.write(t+(4*1),gen.lengthMax[i]);
+    EEPROM.write(t+(4*2),gen.eventSizeMin[i]);
+    EEPROM.write(t+(4*3),gen.eventSizeMax[i]);
+  }
+}
+
+void loadPreset(){
+  for(int i=0;i<64;i++){
+    for(int j=0;j<4;j++){
+      int t = i + (j*64);
+      gen.patt[i][j] = EEPROM.read(t+(256*0));
+      gen.probs[i][j] = EEPROM.read(t+(256*1));
+      gen.clockDiv[i][j]= EEPROM.read(t+(256*2));
+      gen.burst[i][j] = EEPROM.read(t+(256*3));
+      gen.burstProb[i][j] = EEPROM.read(t+(256*4));
+      gen.eventNote[i][j] = EEPROM.read(t+(256*5));
+      gen.eventProbActive[i][j] = EEPROM.read(t+(256*6));
+      gen.eventProbMin[i][j] = EEPROM.read(t+(256*7));
+      gen.eventProbMax[i][j] = EEPROM.read(t+(256*8));
+      gen.eventSlew[i][j] = EEPROM.read(t+(256*9));
+    }
+  }
+  for(int i=0;i<96;i++){
+    for(int j=0;j<4;j++){
+      int t = i + (j*96);
+      gen.eventQuant[i][j] = EEPROM.read(t+(256*10));
+    }
+  }
+  for(int i=0;i<4;i++){
+    int t = ((256*10) + (96*4)) + i;
+    gen.lengthMin[i] = EEPROM.read(t+(4*0));
+    gen.lengthMax[i] = EEPROM.read(t+(4*1));
+    gen.eventSizeMin[i] = EEPROM.read(t+(4*2));
+    gen.eventSizeMax[i] = EEPROM.read(t+(4*3));
+  }
+}
+
 float noteToVolt(int note){
   float vout = note * 0.0833333;
   return vout;

@@ -81,10 +81,10 @@ DAC dac(_a1,_a2,_a3,_a4);
 class Button {
   private:
   const byte pin;
-  bool state;
   unsigned long buttonDownMs;
 
   public:
+  bool state;
   bool clicked;
   bool held;
   bool held_t;

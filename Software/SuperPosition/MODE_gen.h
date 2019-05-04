@@ -16,19 +16,31 @@ class Gen {
     long slewBegin[4];
     float slewOut[4];
     short pos[4];
-    short probs[4][64];
+
     bool patt[4][64];
+    short probs[4][64];
     short clockDiv[4][64];
+    short burst[4][64];
+    short burstProb[4][64];
+    short eventNote[4][64];
+    bool eventProbActive[4][64];
+    short eventProbMin[4][64];
+    short eventProbMax[4][64];
+    short eventSlew[4][64];
+
+    bool eventQuant[4][96];
+
+    short lengthMin[4] = {0,0,0,0};
+    short lengthMax[4] = {15,15,15,15};
+    short eventSizeMin[4] = {0,0,0,0};
+    short eventSizeMax[4] = {15,15,15,15};
+
     short setBurst = 2;
     short setBurstProb = 10;
     short ratchet[4] = {0,0,0,0};
     short ratchetTrig[4] = {0,0,0,0};
     long ratchetCounter[4] = {0,0,0,0};
-    short burst[4][64];
-    short burstProb[4][64];
     short clockDivCount[4];
-    short lengthMin[4] = {0,0,0,0};
-    short lengthMax[4] = {15,15,15,15};
     short clockDivOp;
     short clockDivision = 2;
     short lengthMinTemp = 0;
@@ -37,7 +49,6 @@ class Gen {
     short pattMorph = 0;
     short posNote[4];
     short posNoteOld[4];
-    short note[4][64];
     bool selParam = 0;
     short timeParam = 0;
     short eventParam = 0;
@@ -52,24 +63,17 @@ class Gen {
     const String eventStepName[3] = {"Follow","Sync","Trig"};
     const String eventSkipName[2] = {"Skip","Sleep"};
     bool eventSizeSet = 1;
-    short eventSizeMin[4] = {0,0,0,0};
-    short eventSizeMax[4] = {15,15,15,15};
-    short eventNote[4][64];
     short eventMorph[4];
     short eventProbSetMin = 0;
     short eventProbSetMax = 96;
-    bool eventProbActive[4][64];
     short eventProbSetNote = 0;
-    short eventProbMin[4][64];
-    short eventProbMax[4][64];
     short eventQuantMode[4];
     short eventDivision = 2;
     short eventDiv[4][64];
     short eventDivCount[4];
-    bool eventQuant[4][96];
-    short eventSlew[4][64];
     short eventSetSlew;
     bool gateOut[4][4] = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
+    bool selPreset = 0;
 
     Gen();
     void run();
@@ -91,4 +95,7 @@ class Gen {
     void drawMenu();
     void ratcheting();
     void slew();
+    void drawPreset();
+    void writePreset(byte index);
+    void loadPreset(byte index);
 };
