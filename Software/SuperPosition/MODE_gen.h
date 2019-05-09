@@ -74,6 +74,7 @@ class Gen {
     short eventSetSlew;
     bool gateOut[4][4] = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
     bool selPreset = 0;
+    long resetTime = 0;
 
     Gen();
     void run();

@@ -324,6 +324,7 @@ void hardware_read(){
   enc1.read();
   enc2.read();
   kp.read();
-  if(mode == 0){if(enc1.held_t == 1){writePreset();}}
+  // if(mode == 0){if(enc1.held_t == 1){oled.drawText(4,4,1,"WRITE");writePreset();}}
+  // if(mode == 0){if(enc2.held_t == 1){oled.drawText(4,4,1,"READ");loadPreset();}}
   if(enc1.held_t == 1){mode = 0;}
 }

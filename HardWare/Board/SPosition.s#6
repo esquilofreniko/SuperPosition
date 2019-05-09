@@ -1926,7 +1926,7 @@ EC12E series with push-on switch</description>
 <pad name="SDA" x="4.572" y="-26.924" drill="0.6"/>
 <hole x="-15.4905" y="0.5067" drill="2.8" locked="yes"/>
 <hole x="14.4815" y="0.5067" drill="2.8" locked="yes"/>
-<hole x="-2.4445" y="15.5207" drill="2.8" locked="yes"/>
+<hole x="1.5555" y="15.5207" drill="2.8" locked="yes"/>
 <hole x="-2.4445" y="-14.4793" drill="2.8" locked="yes"/>
 </package>
 </packages>

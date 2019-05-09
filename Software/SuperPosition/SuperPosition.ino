@@ -4,9 +4,8 @@ int mode = 2;
 int oldmode = mode;
 
 void setup(){
-  hardware_init();
-  // delay(1000);
   // loadPreset();
+  hardware_init();
 }
 
 void loop(){

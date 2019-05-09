@@ -54,17 +54,20 @@ void Gen::reset(){
   morphPatt();
   output();
   writeNewPosition();
+  resetTime = millis();
 }
 
 void Gen::clock(){
   if(adc.trig[0] == 1){
-    clockSpeed = millis() - lastTrig;
-    lastTrig = millis();
-    updatePosition();
-    morphNote();
-    morphPatt();
-    output();
-    writeNewPosition();
+    if(millis() - resetTime > 1){
+      clockSpeed = millis() - lastTrig;
+      lastTrig = millis();
+      updatePosition();
+      morphNote();
+      morphPatt();
+      output();
+      writeNewPosition();
+    }
   }
 }
 
@@ -561,7 +564,7 @@ void Gen::setStep(int key){
         }
         drawLEDS = 1;
       }
-      if(view == 1){
+      else if(view == 1){
         if(lengthSet==0){
           lengthMin[key/4] = (key%4) + (channel*4) + (division*16);
         }
