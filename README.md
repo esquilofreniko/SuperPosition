@@ -23,7 +23,9 @@
 |Capacitor 100n SMD 0805|6 |Ceramic Capacitor 					|					|
 
 [1] https://www.amazon.co.uk/IZOKEE-Display-SSD1306-Raspberry-White-IIC/dp/B076PKKTRP/ref=sr_1_fkmr0_1?keywords=ssd1306%2Bspy%2B0.96%27%27&qid=1557409352&s=electronics&sr=1-1-fkmr0&th=1
+
 [2] https://www.adafruit.com/product/3954
+
 [3] https://www.adafruit.com/product/1611
 
 **Build Guide (work in progress):**  
