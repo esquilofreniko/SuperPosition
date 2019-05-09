@@ -26,11 +26,7 @@
 [2] https://www.adafruit.com/product/3954
 [3] https://www.adafruit.com/product/1611
 
-  
-
-**Build Guide (work in progress):**
-
-  
+**Build Guide (work in progress):**  
 
 1. Solder the 2 10u 0805 SMT Capacitors in the front;
 
